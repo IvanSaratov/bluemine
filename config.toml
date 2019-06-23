@@ -1,0 +1,3 @@
+Postgresql = "postgresql://develop@localhost:26257/bluemine?ssl=true&sslmode=require&sslrootcert=/to do/"
+Memcache = "localhost:26257"
+Bind = ":8082"
