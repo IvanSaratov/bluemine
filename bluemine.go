@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bluemine/config"
 	"crypto/md5"
 	"crypto/sha1"
 	"database/sql"
@@ -13,6 +12,7 @@ import (
 	"time"
 
 	"github.com/IvanSaratov/bluemine/config"
+	"github.com/IvanSaratov/bluemine/session"
 	_ "github.com/cockroachdb/cockroach-go/crdb"
 )
 
@@ -85,6 +85,12 @@ func loginUser(userLogin, userPassword string) (sessionId string, err error) {
 	}
 
 	return
+}
+
+func LogoutHandler(w http.ResponseWriter, req *http.Request) {
+	http.SetCookie(w, &http.Cookie{Name: "id"})
+	w.Header().Add("Location", "/")
+	w.WriteHeader(302)
 }
 
 func passwordHash(password string) string {
