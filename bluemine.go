@@ -32,8 +32,9 @@ func main() {
 	}
 	defer db.Close()
 
-	http.Handle("/login", LoginHandler)
+	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 
+	http.Handle("/login", LoginHandler)
 }
 
 func LoginHandler(w http.ResponseWriter, req *http.Request) {
