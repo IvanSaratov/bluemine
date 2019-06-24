@@ -21,7 +21,7 @@ func main() {
 		configPath string
 	)
 
-	flag.StringVar(&configPath, "c", "config.toml", "Path to server configuration")
+	flag.StringVar(&configPath, "c", "conf.toml", "Path to server configuration")
 	flag.Parse()
 
 	config.ParceConfig(configPath)
