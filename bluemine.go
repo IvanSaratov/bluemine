@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bluemine/config"
+	"github.com/IvanSaratov/bluemine/config"
 	"crypto/md5"
 	"crypto/sha1"
 	"database/sql"
