@@ -13,6 +13,8 @@ type (
 		Postgresql string
 		Memcache   string
 		Bind       string
+		BindTLS    string
+		Host       string
 	}
 )
 

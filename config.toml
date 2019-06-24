@@ -1,3 +1,5 @@
-Postgresql = "postgresql://develop@localhost:26257/bluemine?ssl=true&sslmode=require&sslrootcert=/to do/"
-Memcache = "localhost:26257"
-Bind = ":8082"
+Postgresql = "postgresql://root@beaver.sgu.ru:26257/bluemine?sslmode=disable"
+Memcache = "localhost:11211"
+Bind = ":80"
+BindTls = ":443"
+Host = "beaver.sgu.ru"

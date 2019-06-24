@@ -25,4 +25,5 @@ func main() {
 		log.Fatal("Can't connect to database " + err.Error())
 	}
 	defer db.Close()
+
 }
