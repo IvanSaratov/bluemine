@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/IvanSaratov/bluemine/config"
+	"bluemine/config"
 	"crypto/md5"
 	"crypto/sha1"
 	"database/sql"
@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/IvanSaratov/bluemine/config"
 	_ "github.com/cockroachdb/cockroach-go/crdb"
 )
 
@@ -34,7 +35,17 @@ func main() {
 
 	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 
-	http.Handle("/login", LoginHandler)
+	http.HandleFunc("/login", LoginHandler)
+	http.HandleFunc("/logout", LogoutHandler)
+
+	go listen(config.Conf.Bind)
+
+	var nilCh chan bool
+	<-nilCh
+}
+
+func listen(addr string) {
+	log.Fatal("ListenAndServe: ", http.ListenAndServe(addr, nil))
 }
 
 func LoginHandler(w http.ResponseWriter, req *http.Request) {
