@@ -2,14 +2,14 @@ package main
 
 import (
 	"bluemine/config"
-	"flag"
-	"database/sql"
-	"log"
-	"net/http"
-	"fmt"
-	"io"
 	"crypto/md5"
 	"crypto/sha1"
+	"database/sql"
+	"flag"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
 	"time"
 
 	_ "github.com/cockroachdb/cockroach-go/crdb"
@@ -51,11 +51,11 @@ func LoginHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	cookie := &http.Cookie {
-		Name: "id",
-		Value: string(sessionId),
-		Path: "/",
-		Domain: req.Header.Get("Host"),
+	cookie := &http.Cookie{
+		Name:    "id",
+		Value:   string(sessionId),
+		Path:    "/",
+		Domain:  req.Header.Get("Host"),
 		Expires: time.Now().Add(360 * 24 * time.Hour),
 	}
 
@@ -66,17 +66,16 @@ func LoginHandler(w http.ResponseWriter, req *http.Request) {
 
 func loginUser(userLogin, userPassword string) (sessionId string, err error) {
 	var password, login string
-	
 
 	if passwordHash(userPassword) != password {
 		err = errors.New("Incorrect password")
 		return
 	}
-	
+
 	return
 }
 
-func passwordHash(password string) string {	
+func passwordHash(password string) string {
 	sh := sha1.New()
 	io.WriteString(sh, password)
 
