@@ -6,11 +6,11 @@ import (
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/server"
-	"github.com/gorilla/mux"
 
 	"github.com/go-ldap/ldap"
 )
 
+//AlreadyLogin check user log status
 func AlreadyLogin(r *http.Request) bool {
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
 	return session.Values["userName"] != nil
@@ -50,40 +50,40 @@ func auth(login, password string) (string, error) {
 	return username, err
 }
 
-//AuthHandler handle login page
-func AuthHandler(w http.ResponseWriter, r *http.Request) {
+//LoginHandler handle login page
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
-	vars := mux.Vars(r)
-	pagetype := vars["type"]
 
-	switch pagetype {
-	case "login":
-		if r.Method == "GET" {
-			http.ServeFile(w, r, "public/html/login.html")
-		} else if r.Method == "POST" {
-			r.ParseForm()
-			login := r.FormValue("username")
-			password := r.FormValue("password")
+	if r.Method == "GET" {
+		http.ServeFile(w, r, "public/html/login.html")
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		login := r.FormValue("username")
+		password := r.FormValue("password")
 
-			if AlreadyLogin(r) {
-				http.Redirect(w, r, "/map", 301)
-				return
-			}
-
-			if userName, err := auth(login, password); err != nil {
-				http.Redirect(w, r, "/admin/login", 301)
-				return
-			} else {
-				session.Values["userName"] = userName
-				session.Values["user"] = login
-				session.Save(r, w)
-				http.Redirect(w, r, "/"+login, 301)
-			}
+		if AlreadyLogin(r) {
+			http.Redirect(w, r, "/"+login, 301)
+			return
 		}
-	case "logout":
-		session.Values["userName"] = nil
-		session.Values["user"] = nil
-		session.Save(r, w)
-		http.Redirect(w, r, "/admin/login", 301)
+
+		if userName, err := auth(login, password); err != nil {
+			http.Redirect(w, r, "/login", 301)
+			return
+		} else {
+			session.Values["userName"] = userName
+			session.Values["user"] = login
+			session.Save(r, w)
+			http.Redirect(w, r, "/"+login, 301)
+		}
 	}
+}
+
+//LogoutHandler handle logout page
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	session, _ := server.Core.Store.Get(r, "bluemine_session")
+
+	session.Values["userName"] = nil
+	session.Values["user"] = nil
+	session.Save(r, w)
+	http.Redirect(w, r, "/login", 301)
 }
