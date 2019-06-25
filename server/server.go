@@ -3,6 +3,7 @@ package server
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"math/rand"
 	"time"
@@ -16,6 +17,20 @@ import (
 var Core struct {
 	DB    *sql.DB
 	Store *sessions.CookieStore
+}
+
+func Init(sessionKey string) (err error) {
+	Core.DB, err = sql.Open("postgres", config.Conf.Postgresql)
+	if err != nil {
+		return err
+	}
+
+	if sessionKey == "" {
+		return errors.New("Empty session key")
+	}
+	Core.Store = sessions.NewCookieStore([]byte(sessionKey))
+
+	return nil
 }
 
 type (

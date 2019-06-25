@@ -1,13 +1,13 @@
 package main
 
 import (
-	"database/sql"
 	"flag"
 	"log"
 	"net/http"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/handlers"
+	"github.com/IvanSaratov/bluemine/server"
 
 	//"github.com/IvanSaratov/bluemine/session"
 
@@ -26,11 +26,10 @@ func main() {
 		log.Fatal("Error parsing config: ", err)
 	}
 
-	db, err := sql.Open("postgres", config.Conf.Postgresql)
+	err = server.Init(config.Conf.SessionKey)
 	if err != nil {
-		log.Fatal("Can't connect to database " + err.Error())
+		log.Fatal("Error initializing server: ", err)
 	}
-	defer db.Close()
 
 	router := mux.NewRouter()
 
