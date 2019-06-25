@@ -1,0 +1,11 @@
+html, body{
+    width: auto;
+    height: 100% !important;
+    min-width: 100%;
+    min-height: 100% !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    overflow: hidden;
+}
