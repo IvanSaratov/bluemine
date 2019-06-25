@@ -34,8 +34,8 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
-	router.Handle("/login/{type}", handlers.AuthHandler)
+	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
+	router.HandleFunc("/login/{type}", handlers.AuthHandler)
 
 	log.Fatal(http.ListenAndServe(config.Conf.Bind, router))
 
