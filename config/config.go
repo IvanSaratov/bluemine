@@ -2,13 +2,12 @@ package config
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 
 	"github.com/BurntSushi/toml"
 )
 
-var Conf struct{
+var Conf struct {
 	Postgresql string
 	Memcache   string
 	Bind       string
@@ -16,20 +15,21 @@ var Conf struct{
 	Host       string
 }
 
-func ParceConfig(configPath string) {
+func ParceConfig(configPath string) error {
 	file, err := os.Open(configPath)
 	if err != nil {
-		log.Fatal("Can't open config file " + err.Error())
+		return err
 	}
-
 	defer file.Close()
 
 	contents, err := ioutil.ReadAll(file)
 	if err != nil {
-		log.Fatal("Can't read contents from config file " + err.Error())
+		return err
 	}
 
 	if _, err = toml.Decode(string(contents), &Conf); err != nil {
-		log.Fatal("Can't parce config file " + err.Error())
+		return err
 	}
+
+	return nil
 }
