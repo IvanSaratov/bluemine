@@ -8,19 +8,13 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-type (
-	Config struct {
-		Postgresql string
-		Memcache   string
-		Bind       string
-		BindTLS    string
-		Host       string
-	}
-)
-
-var (
-	Conf Config
-)
+var Conf struct{
+	Postgresql string
+	Memcache   string
+	Bind       string
+	BindTLS    string
+	Host       string
+}
 
 func ParceConfig(configPath string) {
 	file, err := os.Open(configPath)
