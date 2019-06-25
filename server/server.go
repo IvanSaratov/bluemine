@@ -19,16 +19,16 @@ var Core struct {
 	Store *sessions.CookieStore
 }
 
-func Init(sessionKey string) (err error) {
+func Init() (err error) {
 	Core.DB, err = sql.Open("postgres", config.Conf.Postgresql)
 	if err != nil {
 		return err
 	}
 
-	if sessionKey == "" {
+	if config.Conf.SessionKey == "" {
 		return errors.New("Empty session key")
 	}
-	Core.Store = sessions.NewCookieStore([]byte(sessionKey))
+	Core.Store = sessions.NewCookieStore([]byte(config.Conf.SessionKey))
 
 	return nil
 }

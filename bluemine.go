@@ -26,7 +26,7 @@ func main() {
 		log.Fatal("Error parsing config: ", err)
 	}
 
-	err = server.Init(config.Conf.SessionKey)
+	err = server.Init()
 	if err != nil {
 		log.Fatal("Error initializing server: ", err)
 	}
