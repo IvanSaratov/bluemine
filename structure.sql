@@ -8,7 +8,7 @@ CREATE TABLE profiles (
     rating INT DEFAULT 0,
     department INT,
     group_id INT,
-    isAdmin BOOLEAN DEFAULT FALSE,
+    isAdmin BOOLEAN DEFAULT false,
 );
 
 CREATE TABLE tasks (
@@ -24,8 +24,9 @@ CREATE TABLE tasks (
 CREATE TABLE checkboxs (
     id INT,
     task_id INT,
-    checked BOOLEAN DEFAULT FALSE,
+    checked BOOLEAN DEFAULT false,
     desk STRING NOT NULL,
+    UNIQUE (task_id)
 );
 
 CREATE TABLE groups (
