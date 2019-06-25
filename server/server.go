@@ -1,14 +1,22 @@
-package session
+package server
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"math/rand"
 	"time"
 
+	"github.com/gorilla/sessions"
+
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/bradfitz/gomemcache/memcache"
 )
+
+type Core struct {
+	DB    *sql.DB
+	Store *sessions.CookieStore
+}
 
 type (
 	SessionInfo struct {
