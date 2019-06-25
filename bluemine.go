@@ -10,7 +10,8 @@ import (
 	"strings"
 
 	"github.com/IvanSaratov/bluemine/config"
-	"github.com/IvanSaratov/bluemine/handler"
+	"github.com/IvanSaratov/bluemine/handlers"
+
 	//"github.com/IvanSaratov/bluemine/session"
 
 	"github.com/gorilla/mux"
@@ -19,14 +20,16 @@ import (
 
 func main() {
 	var (
-		err        error
 		configPath string
 	)
 
 	flag.StringVar(&configPath, "c", "conf.toml", "Path to server configuration")
 	flag.Parse()
 
-	config.ParceConfig(configPath)
+	err := config.ParceConfig(configPath)
+	if err != nil {
+		log.Fatal("Error parsing config: ", err)
+	}
 
 	db, err := sql.Open("postgres", config.Conf.Postgresql)
 	if err != nil {
@@ -38,8 +41,8 @@ func main() {
 
 	router.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 
-	router.HandleFunc("/login", handler.LoginHandler)
-	router.HandleFunc("/logout", handler.LoginHandler)
+	router.HandleFunc("/login", handlers.LoginHandler)
+	router.HandleFunc("/logout", handlers.LoginHandler)
 
 	go listen(config.Conf.Bind)
 
