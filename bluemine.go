@@ -17,7 +17,7 @@ import (
 
 func main() {
 	var (
-		port       = "2021"
+		port       = ":2021"
 		configPath string
 	)
 
