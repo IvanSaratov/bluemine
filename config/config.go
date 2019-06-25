@@ -8,11 +8,15 @@ import (
 )
 
 var Conf struct {
-	Postgresql string
-	Memcache   string
-	Bind       string
-	BindTLS    string
-	Host       string
+	Postgresql   string
+	Memcache     string
+	Bind         string
+	BindTLS      string
+	Host         string
+	LdapServer   string
+	LdapBaseDN   string
+	LdapUser     string
+	LdapPassword string
 }
 
 func ParceConfig(configPath string) error {
