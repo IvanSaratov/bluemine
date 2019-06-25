@@ -7,7 +7,8 @@ import (
 	"net/http"
 
 	"github.com/IvanSaratov/bluemine/config"
-	"github.com/IvanSaratov/bluemine/handler"
+	"github.com/IvanSaratov/bluemine/handlers"
+
 	//"github.com/IvanSaratov/bluemine/session"
 	_ "github.com/cockroachdb/cockroach-go/crdb"
 )
@@ -31,8 +32,8 @@ func main() {
 
 	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 
-	http.HandleFunc("/login", handler.LoginHandler)
-	http.HandleFunc("/logout", handler.LoginHandler)
+	http.HandleFunc("/login", handlers.LoginHandler)
+	http.HandleFunc("/logout", handlers.LoginHandler)
 
 	go listen(config.Conf.Bind)
 
