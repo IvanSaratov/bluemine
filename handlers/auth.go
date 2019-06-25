@@ -50,8 +50,8 @@ func auth(login, password string) (string, error) {
 	return username, err
 }
 
-//Handler handle login page
-func Handler(w http.ResponseWriter, r *http.Request) {
+//AuthHandler handle login page
+func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
 	vars := mux.Vars(r)
 	pagetype := vars["type"]
