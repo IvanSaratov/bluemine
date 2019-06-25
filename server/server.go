@@ -19,6 +19,13 @@ var Core struct {
 	Store *sessions.CookieStore
 }
 
+type (
+	SessionInfo struct {
+		Id   uint64
+		Name string
+	}
+)
+
 func Init() (err error) {
 	Core.DB, err = sql.Open("postgres", config.Conf.Postgresql)
 	if err != nil {
@@ -32,13 +39,6 @@ func Init() (err error) {
 
 	return nil
 }
-
-type (
-	SessionInfo struct {
-		Id   uint64
-		Name string
-	}
-)
 
 var mc *memcache.Client
 
