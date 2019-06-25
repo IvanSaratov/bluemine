@@ -17,6 +17,7 @@ var Conf struct {
 	LdapBaseDN   string
 	LdapUser     string
 	LdapPassword string
+	SessionKey   string
 }
 
 func ParceConfig(configPath string) error {
