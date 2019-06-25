@@ -16,10 +16,7 @@ import (
 )
 
 func main() {
-	var (
-		port       = ":2021"
-		configPath string
-	)
+	var configPath string
 
 	flag.StringVar(&configPath, "c", "conf.toml", "Path to server configuration")
 	flag.Parse()
@@ -40,7 +37,7 @@ func main() {
 	router.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	router.Handle("/login/{type}", handlers.AuthHandler)
 
-	log.Fatal(http.ListenAndServe(port, router))
+	log.Fatal(http.ListenAndServe(config.Conf.Bind, router))
 
 	var nilCh chan bool
 	<-nilCh

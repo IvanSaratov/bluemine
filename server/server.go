@@ -13,7 +13,7 @@ import (
 	"github.com/bradfitz/gomemcache/memcache"
 )
 
-type Core struct {
+var Core struct {
 	DB    *sql.DB
 	Store *sessions.CookieStore
 }
