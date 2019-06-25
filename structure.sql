@@ -8,7 +8,7 @@ CREATE TABLE profiles (
     rating INT DEFAULT 0,
     department INT,
     group_id INT,
-    isAdmin BOOLEAN DEFAULT false,
+    isAdmin BOOLEAN DEFAULT false
 );
 
 CREATE TABLE tasks (
@@ -18,7 +18,7 @@ CREATE TABLE tasks (
     path_to_desc STRING,
     stat SMALLINT DEFAULT 0,
     date_start DATE NOT NULL,
-    date_end DATE DEFAULT 0,
+    date_end DATE
 );
 
 CREATE TABLE checkboxs (
@@ -31,12 +31,12 @@ CREATE TABLE checkboxs (
 
 CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
-    group_name STRING NOT NULL,
+    group_name STRING NOT NULL
 );
 
 CREATE TABLE wiki (
     id SERIAL PRIMARY KEY,
     father_id INT,
     title STRING NOT NULL,
-    path_to_article STRING NOT NULL,
+    path_to_article STRING NOT NULL
 );
