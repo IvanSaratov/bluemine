@@ -2,20 +2,15 @@ package db
 
 import (
 	"database/sql"
-	"log"
 )
 
-var (
-	Db *sql.DB
-)
-
-func prepareStmt(db *sql.DB, stmt string) *sql.Stmt{
-	result, err := db.Prepare(stmt)
+func prepareStmt(db *sql.DB, stmt string) (*sql.Stmt, error) {
+	res, err := db.Prepare(stmt)
 	if err != nil {
-		log.Fatal("Could not prepare `" + stmt + "`: " + err.Error())
+		return nil, err
 	}
 
-	return result
+	return res, nil
 }
 
 func InitStmts() {
