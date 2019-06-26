@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql"
 	"errors"
 	"net/http"
 
@@ -34,20 +35,37 @@ func auth(login, password string) (string, error) {
 	}
 
 	searchRequest := ldap.NewSearchRequest(
-		config.Conf.LdapBaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, "(&(sAMAccountName="+login+"))", []string{"sAMAccountName"}, nil,
+		config.Conf.LdapBaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, "(&(sAMAccountName="+login+"))", []string{"cn"}, nil,
 	)
 
 	if sr, err := l.Search(searchRequest); err != nil || len(sr.Entries) != 1 {
 		return username, errors.New("User not found")
 	} else {
-		username = sr.Entries[0].GetAttributeValue("sAMAccountName")
+		username = sr.Entries[0].GetAttributeValue("cn")
 	}
 
 	if err = l.Bind(username, password); err != nil {
 		return "", err
 	}
 
+	if err = userExists(login); err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		createStmt := "INSERT INTO profiles (username, user_fio) VALUES ($1, $2)"
+		if _, err = server.Core.DB.Exec(createStmt, login, login+"testfio"); err != nil {
+			return "", err
+		}
+	}
+
 	return username, err
+}
+
+func userExists(login string) error {
+	userStmt := "SELECT username FROM profiles WHERE username = $1"
+	err := server.Core.DB.QueryRow(userStmt, login).Scan(&login)
+	return err
 }
 
 //LoginHandler handle login page
