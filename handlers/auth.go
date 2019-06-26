@@ -62,7 +62,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		password := r.FormValue("password")
 
 		if AlreadyLogin(r) {
-			http.Redirect(w, r, "/"+login, 301)
+			http.Redirect(w, r, "/profile/"+login, 301)
 			return
 		}
 
@@ -73,7 +73,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			session.Values["userName"] = userName
 			session.Values["user"] = login
 			session.Save(r, w)
-			http.Redirect(w, r, "/"+login, 301)
+			http.Redirect(w, r, "/profile/"+login, 301)
 		}
 	}
 }
