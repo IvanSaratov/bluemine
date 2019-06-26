@@ -34,13 +34,13 @@ func auth(login, password string) (string, error) {
 	}
 
 	searchRequest := ldap.NewSearchRequest(
-		config.Conf.LdapBaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, "(&(sAMAccountName="+login+"))", []string{"cn"}, nil,
+		config.Conf.LdapBaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, "(&(sAMAccountName="+login+"))", []string{"sAMAccountName"}, nil,
 	)
 
 	if sr, err := l.Search(searchRequest); err != nil || len(sr.Entries) != 1 {
 		return username, errors.New("User not found")
 	} else {
-		username = sr.Entries[0].GetAttributeValue("cn")
+		username = sr.Entries[0].GetAttributeValue("sAMAccountName")
 	}
 
 	if err = l.Bind(username, password); err != nil {
