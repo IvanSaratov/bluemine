@@ -5,8 +5,24 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"html/template"
 	"io"
+	"net/http"
+
+	"github.com/IvanSaratov/bluemine/data"
 )
+
+func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
+	data := data.ViewData{
+		UserData: data.User{
+			UserName:       "test",
+			UserDepartment: 2,
+		},
+	}
+
+	tmpl, _ := template.ParseFiles("public/html/profile.html")
+	tmpl.Execute(w, data)
+}
 
 func loginUser(userLogin, userPassword string) (sessionId string, err error) {
 	var password string
