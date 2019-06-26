@@ -1,0 +1,54 @@
+#topbar{
+    display: flex;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+    background-color: #1973BD;
+    color: white;
+}
+#topbar #service{
+    width: 120px;
+    line-height: 35px;
+    text-align: center;
+    font-size: 24px;
+    background-color: rgb(29, 29, 29);
+    color: #1973BD;
+}
+#topbar #user{
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+#topbar #user a{
+    text-decoration: none;
+    color: white;
+}
+#content{
+    width: 100%;
+    height: calc(100% - 35px);
+}
+#content #userinfo{
+    width: 40%;
+    height: calc(100% - 40px);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 20px 0 0 20px;
+    background-color: whitesmoke;
+}
+#content #userinfo #userabout{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 10px;
+}
+#content #userinfo #userdepart{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 10px;
+}
+#content #userinfo #userdepart a{
+    text-decoration: none;
+    color: black;
+}
