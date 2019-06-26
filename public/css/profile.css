@@ -23,6 +23,12 @@
 }
 #topbar #user a{
     text-decoration: none;
+    font-weight: bold;
+    color: white;
+}
+#topbar #user #out{
+    text-decoration: none;
+    font-weight: normal;
     color: white;
 }
 #content{
