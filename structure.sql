@@ -5,20 +5,20 @@ CREATE TABLE profiles (
     id SERIAL PRIMARY KEY,
     username STRING NOT NULL,
     user_fio STRING NOT NULL,
-    rating INT DEFAULT 0,
     department INT,
     group_id INT,
-    isAdmin BOOLEAN DEFAULT false
+    isAdmin BOOLEAN DEFAULT false,
+    rating INT DEFAULT 0
 );
 
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     task_name STRING NOT NULL,
-    rating INT DEFAULT 0,
     path_to_desc STRING,
     stat SMALLINT DEFAULT 0,
     date_start DATE NOT NULL,
-    date_end DATE
+    date_end DATE,
+    rating INT DEFAULT 0
 );
 
 CREATE TABLE checkboxs (
