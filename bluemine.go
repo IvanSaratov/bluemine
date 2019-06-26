@@ -36,6 +36,7 @@ func main() {
 	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
 	router.HandleFunc("/login", handlers.LoginHandler)
 	router.HandleFunc("/logout", handlers.LogoutHandler)
+	router.HandleFunc("/profile", handlers.UserProfileHandler)
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if !handlers.AlreadyLogin(r) {
 			http.Redirect(w, r, "/login", 301)
