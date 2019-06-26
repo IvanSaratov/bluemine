@@ -16,6 +16,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	data := data.ViewData{
 		UserData: data.User{
 			UserName:       "test",
+			UserFIO:        "test_testovich",
 			UserDepartment: 2,
 		},
 	}
