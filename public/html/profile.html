@@ -11,14 +11,14 @@
         <div id="topbar">
             <div id="service">BlueMine</div>
             <div id="user">You're log in as 
-                <a href="/profile/{{ .user.UserName}}">{{ .user.UserName}}</a>
+                <a href="/profile/{{ .UserData.UserName}}">{{ .UserData.UserName}}</a>
                 <a href="/logout">(logout)</a>
             </div>
         </div>
         <div id="content">
             <div id="userinfo">
                 <div id="userabout">{{ .user.UserFIO}}</div>
-                <div id="userdepart"><a href="/department/{{.user.UserDepartment}}">{{ .user.UserDepartment}}</a></div>
+                <div id="userdepart"><a href="/department/{{.UserData.UserDepartment}}">{{ .UserData.UserDepartment}}</a></div>
             </div>
         </div>
     </body>
