@@ -2,14 +2,13 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/handlers"
 	"github.com/IvanSaratov/bluemine/server"
-
-	//"github.com/IvanSaratov/bluemine/session"
 
 	_ "github.com/cockroachdb/cockroach-go/crdb"
 	"github.com/gorilla/mux"
@@ -37,6 +36,14 @@ func main() {
 	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
 	router.HandleFunc("/login", handlers.LoginHandler)
 	router.HandleFunc("/logout", handlers.LogoutHandler)
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if !handlers.AlreadyLogin(r) {
+			http.Redirect(w, r, "/login", 301)
+		} else {
+			session, _ := server.Core.Store.Get(r, "bluemine_session")
+			http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), 301)
+		}
+	})
 
 	log.Fatal(http.ListenAndServe(config.Conf.Bind, router))
 
