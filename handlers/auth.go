@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/server"
@@ -48,18 +49,26 @@ func auth(login, password string) (string, error) {
 		return "", err
 	}
 
-	if err = userExists(login); err != nil {
+	login = strings.ToLower(login)
+	err = userExists(login)
+	if err != nil {
 		if err != sql.ErrNoRows {
 			return "", err
 		}
 
-		createStmt := "INSERT INTO profiles (username, user_fio) VALUES ($1, $2)"
-		if _, err = server.Core.DB.Exec(createStmt, login, login+"testfio"); err != nil {
+		err = addUserToBD(login)
+		if err != nil {
 			return "", err
 		}
 	}
 
 	return username, err
+}
+
+func addUserToBD(login string) error {
+	createStmt := "INSERT INTO profiles (username, user_fio) VALUES ($1, $2)"
+	_, err := server.Core.DB.Exec(createStmt, login, login+"_test")
+	return err
 }
 
 func userExists(login string) error {
