@@ -17,10 +17,12 @@ import (
 func main() {
 	var configPath string
 
+	log.Println("Starting...")
+
 	flag.StringVar(&configPath, "c", "conf.toml", "Path to server configuration")
 	flag.Parse()
 
-	err := config.ParceConfig(configPath)
+	err := config.ParseConfig(configPath)
 	if err != nil {
 		log.Fatal("Error parsing config: ", err)
 	}
@@ -46,6 +48,7 @@ func main() {
 		}
 	})
 
+	log.Printf("Server listening on %s port", config.Conf.Bind)
 	log.Fatal(http.ListenAndServe(config.Conf.Bind, router))
 
 	var nilCh chan bool

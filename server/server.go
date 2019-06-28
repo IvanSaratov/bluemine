@@ -3,6 +3,7 @@ package server
 import (
 	"database/sql"
 	"errors"
+	"log"
 
 	"github.com/gorilla/sessions"
 
@@ -19,11 +20,13 @@ func Init() (err error) {
 	if err != nil {
 		return err
 	}
+	log.Println("Connected to database")
 
 	if config.Conf.SessionKey == "" {
 		return errors.New("Empty session key")
 	}
 	Core.Store = sessions.NewCookieStore([]byte(config.Conf.SessionKey))
+	log.Println("Created cookie store")
 
 	return nil
 }

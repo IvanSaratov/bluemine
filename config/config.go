@@ -2,11 +2,13 @@ package config
 
 import (
 	"io/ioutil"
+	"log"
 	"os"
 
 	"github.com/BurntSushi/toml"
 )
 
+//Conf storing main datas
 var Conf struct {
 	Postgresql   string
 	Memcache     string
@@ -20,7 +22,8 @@ var Conf struct {
 	SessionKey   string
 }
 
-func ParceConfig(configPath string) error {
+//ParseConfig to parse .toml config
+func ParseConfig(configPath string) error {
 	file, err := os.Open(configPath)
 	if err != nil {
 		return err
@@ -35,6 +38,8 @@ func ParceConfig(configPath string) error {
 	if _, err = toml.Decode(string(contents), &Conf); err != nil {
 		return err
 	}
+
+	log.Println("Config parsed!")
 
 	return nil
 }
