@@ -93,13 +93,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		userName, err := auth(login, password)
 		if err != nil {
-			log.Printf("Failed to log in from %s using \\'%s\\' username", r.Host, login)
+			log.Printf("Failed to log in from %s using \"%s\" username: %s", r.Host, login, err)
 
 			http.Redirect(w, r, "/login", 301)
 			return
 		}
 
-		log.Printf("User \\'%s\\' successfully log in from %s", login, r.Host)
+		log.Printf("User \"%s\" successfully log in from %s", login, r.Host)
 		session.Values["userName"] = userName
 		session.Values["user"] = login
 		session.Save(r, w)
