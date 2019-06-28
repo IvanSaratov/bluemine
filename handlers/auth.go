@@ -90,20 +90,16 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		login := r.FormValue("username")
 		password := r.FormValue("password")
 
-		if AlreadyLogin(r) {
-			http.Redirect(w, r, "/profile/"+login, 301)
+		userName, err := auth(login, password)
+		if err != nil {
+			http.Redirect(w, r, "/login", 301)
 			return
 		}
 
-		if userName, err := auth(login, password); err != nil {
-			http.Redirect(w, r, "/login", 301)
-			return
-		} else {
-			session.Values["userName"] = userName
-			session.Values["user"] = login
-			session.Save(r, w)
-			http.Redirect(w, r, "/profile/"+login, 301)
-		}
+		session.Values["userName"] = userName
+		session.Values["user"] = login
+		session.Save(r, w)
+		http.Redirect(w, r, "/profile/"+login, 301)
 	}
 }
 
