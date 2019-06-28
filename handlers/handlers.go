@@ -13,7 +13,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		UserData: data.User{
 			UserName:       "test",
 			UserFIO:        "test_testovich",
-			UserDepartment: 2,
+			UserDepartment: "Otdel_Debilov",
 		},
 	}
 
