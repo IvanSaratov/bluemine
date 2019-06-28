@@ -23,27 +23,29 @@ func auth(login, password string) (string, error) {
 		return "", errors.New("Empty password")
 	}
 
-	username := ""
-
 	l, err := ldap.Dial("tcp", config.Conf.LdapServer)
 	if err != nil {
-		return username, err
+		return "", err
 	}
 	defer l.Close()
 
 	if err := l.Bind(config.Conf.LdapUser, config.Conf.LdapPassword); err != nil {
-		return username, err
+		return "", err
 	}
 
 	searchRequest := ldap.NewSearchRequest(
 		config.Conf.LdapBaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, "(&(sAMAccountName="+login+"))", []string{"cn"}, nil,
 	)
 
-	if sr, err := l.Search(searchRequest); err != nil || len(sr.Entries) != 1 {
-		return username, errors.New("User not found")
-	} else {
-		username = sr.Entries[0].GetAttributeValue("cn")
+	sr, err := l.Search(searchRequest)
+	if err != nil {
+		return "", err
 	}
+	if len(sr.Entries) != 1 {
+		return "", errors.New("User not found")
+	}
+
+	username := sr.Entries[0].GetAttributeValue("cn")
 
 	if err = l.Bind(username, password); err != nil {
 		return "", err
