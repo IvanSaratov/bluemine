@@ -7,6 +7,7 @@ import (
 	"github.com/IvanSaratov/bluemine/data"
 )
 
+//UserProfileHandler handle user's profile page
 func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	data := data.ViewData{
 		UserData: data.User{
