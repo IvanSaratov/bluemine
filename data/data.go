@@ -5,8 +5,8 @@ type User struct {
 	UserID         int
 	UserName       string
 	UserFIO        string
-	UserDepartment int
-	UserGroup      int
+	UserDepartment string
+	UserGroup      string
 	UserisAdmin    bool
 	UserRate       int
 }
@@ -15,7 +15,7 @@ type User struct {
 type Task struct {
 	TaskID        int
 	TaskName      string
-	TaskDesc      string
+	TaskDescPath  string
 	TaskStat      int
 	TaskDateStart string
 	TaskDateEnd   string
