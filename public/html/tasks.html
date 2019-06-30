@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BlueMine</title>
+        <link href="/public/css/main.css" rel="stylesheet">
+        <link href="/public/css/tasks.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="topbar">
+            <div id="service">BlueMine</div>
+            <div id="user">You're log in as 
+                <a href="/profile/{{ .UserData.UserName}}">{{ .UserData.UserName}}</a>
+                <a id="out" href="/logout">(logout)</a>
+            </div>
+        </div>
+        <div id="content">
+            <div id="tasklist">
+                <table>
+                    <thead>
+                        <th>Статус</th>
+                        <th>Проблема</th>
+                        <th>Отдел</th>
+                        <th>Назначена</th>
+                        <th>Тип</th>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
