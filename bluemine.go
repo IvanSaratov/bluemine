@@ -42,6 +42,7 @@ func main() {
 	router.HandleFunc("/login", handlers.LoginHandler)
 	router.HandleFunc("/logout", handlers.LogoutHandler)
 	router.HandleFunc("/profile", handlers.UserProfileHandler)
+	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if !handlers.AlreadyLogin(r) {
 			http.Redirect(w, r, "/login", 301)
@@ -53,7 +54,7 @@ func main() {
 
 	ch := make(chan os.Signal)
 	signal.Notify(ch, os.Interrupt, os.Kill)
-	go func(ch <-chan os.Signal){
+	go func(ch <-chan os.Signal) {
 		<-ch
 		manners.Close()
 	}(ch)
