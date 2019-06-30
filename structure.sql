@@ -13,6 +13,7 @@ CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     task_name STRING NOT NULL,
     path_to_desc STRING,
+    executor_id INT,
     stat SMALLINT DEFAULT 0,
     date_start DATE NOT NULL,
     date_end DATE,
