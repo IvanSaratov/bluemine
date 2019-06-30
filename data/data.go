@@ -16,8 +16,8 @@ type Task struct {
 	TaskID        int
 	TaskName      string
 	TaskDescPath  string
-	TaskExecuter  int
-	TaskStat      int
+	TaskExecuter  string
+	TaskStat      string
 	TaskDateStart string
 	TaskDateEnd   string
 	TaskRate      int
@@ -27,4 +27,5 @@ type Task struct {
 type ViewData struct {
 	UserData User
 	TaskData Task
+	Tasks    []Task
 }
