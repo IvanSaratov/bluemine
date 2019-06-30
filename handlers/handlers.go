@@ -43,8 +43,8 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		},
 		TaskData: data.Task{
 			TaskName:     "test",
-			TaskExecuter: 1337,
-			TaskStat:     1,
+			TaskExecuter: "Lox",
+			TaskStat:     "V_Pizde",
 		},
 	}
 
@@ -62,15 +62,20 @@ func readTasks() error {
 	var tasksList []data.Task
 	for rows.Next() {
 		var name string
-		var stat int
-		var executerID int
+		//TODO: Transform Status and ExecutorID from int to string
+		/*var stat int
+		var executerID int*/
+		var (
+			stat       string
+			executorID string
+		)
 
-		err = rows.Scan(&name, &stat, &executerID)
+		err = rows.Scan(&name, &stat, &executorID)
 		if err != nil {
 			return err
 		}
 
-		tasksList = append(tasksList, data.Task{TaskName: name, TaskStat: stat, TaskExecuter: executerID})
+		tasksList = append(tasksList, data.Task{TaskName: name, TaskStat: stat, TaskExecutor: executorID})
 	}
 
 	return nil
