@@ -13,12 +13,6 @@ import (
 	"github.com/go-ldap/ldap"
 )
 
-//AlreadyLogin check user log status
-func AlreadyLogin(r *http.Request) bool {
-	session, _ := server.Core.Store.Get(r, "bluemine_session")
-	return session.Values["userName"] != nil
-}
-
 func auth(login, password string) (string, error) {
 	if password == "" {
 		return "", errors.New("Empty password")
