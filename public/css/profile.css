@@ -3,7 +3,7 @@
     height: calc(100% - 40px);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 20px 0 0 20px;
-    background-color: whitesmoke;
+    background-color: rgb(221, 221, 221);
 }
 #content #userinfo #userabout{
     width: 100%;
