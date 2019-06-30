@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/handlers"
 	"github.com/IvanSaratov/bluemine/server"
 
+	"github.com/braintree/manners"
 	_ "github.com/cockroachdb/cockroach-go/crdb"
 	"github.com/gorilla/mux"
 )
@@ -48,9 +51,13 @@ func main() {
 		}
 	})
 
-	log.Printf("Server listening on %s port", config.Conf.Bind)
-	log.Fatal(http.ListenAndServe(config.Conf.Bind, router))
+	ch := make(chan os.Signal)
+	signal.Notify(ch, os.Interrupt, os.Kill)
+	go func(ch <-chan os.Signal){
+		<-ch
+		manners.Close()
+	}(ch)
 
-	var nilCh chan bool
-	<-nilCh
+	log.Printf("Server listening on %s port", config.Conf.Bind)
+	log.Fatal(manners.ListenAndServe(config.Conf.Bind, router))
 }
