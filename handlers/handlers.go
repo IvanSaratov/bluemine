@@ -5,11 +5,17 @@ import (
 	"net/http"
 
 	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
 )
 
 //UserProfileHandler handle user's profile page
 func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 301)
+		return
+	}
+
 	data := data.ViewData{
 		UserData: data.User{
 			UserName:       "test",
@@ -24,6 +30,11 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 
 //TasksHandler handle page with tasks
 func TasksHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 301)
+		return
+	}
+
 	data := data.ViewData{
 		UserData: data.User{
 			UserName:       "test",
@@ -31,9 +42,9 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 			UserDepartment: "Otdel_Debilov",
 		},
 		TaskData: data.Task{
-			TaskName: "test",
+			TaskName:     "test",
 			TaskExecuter: 1337,
-			TaskStat: 1,
+			TaskStat:     1,
 		},
 	}
 
