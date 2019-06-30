@@ -9,3 +9,40 @@ html, body{
     margin-right: 0px;
     overflow: hidden;
 }
+#topbar{
+    display: flex;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+    background-color: #1973BD;
+    color: white;
+}
+#topbar #service{
+    width: 120px;
+    line-height: 35px;
+    text-align: center;
+    font-size: 24px;
+    background-color: rgb(29, 29, 29);
+    color: #1973BD;
+}
+#topbar #user{
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+#topbar #user a{
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+}
+#topbar #user #out{
+    text-decoration: none;
+    font-weight: normal;
+    color: white;
+}
+#content{
+    width: 100%;
+    height: calc(100% - 35px);
+}
