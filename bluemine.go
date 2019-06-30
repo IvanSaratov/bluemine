@@ -10,6 +10,7 @@ import (
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/handlers"
+	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
 
 	"github.com/braintree/manners"
@@ -44,7 +45,7 @@ func main() {
 	router.HandleFunc("/profile", handlers.UserProfileHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if !handlers.AlreadyLogin(r) {
+		if !helpers.AlreadyLogin(r) {
 			http.Redirect(w, r, "/login", 301)
 		} else {
 			session, _ := server.Core.Store.Get(r, "bluemine_session")
