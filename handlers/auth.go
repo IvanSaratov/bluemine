@@ -59,7 +59,7 @@ func auth(login, password string) (string, error) {
 			return "", err
 		}
 
-		err = addUserToBD(login, l)
+		err = addUserToDB(login, l)
 		if err != nil {
 			return "", err
 		}
@@ -68,7 +68,7 @@ func auth(login, password string) (string, error) {
 	return username, err
 }
 
-func addUserToBD(login string, l *ldap.Conn) error {
+func addUserToDB(login string, l *ldap.Conn) error {
 	result, err := l.Search(ldap.NewSearchRequest(
 		config.Conf.LdapBaseDN,
 		ldap.ScopeWholeSubtree,
