@@ -5,8 +5,6 @@ CREATE TABLE profiles (
     id SERIAL PRIMARY KEY,
     username STRING NOT NULL,
     user_fio STRING NOT NULL,
-    department INT,
-    group_id INT,
     isAdmin BOOLEAN DEFAULT false,
     rating INT DEFAULT 0
 );
@@ -27,6 +25,11 @@ CREATE TABLE checkboxs (
     checked BOOLEAN DEFAULT false,
     desk STRING NOT NULL,
     UNIQUE (task_id)
+);
+
+CREATE TABLE groups_profiles (
+    group_id INT NOT NULL,
+    profile_id INT NOT NULL
 );
 
 CREATE TABLE groups (
