@@ -20,3 +20,17 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles("public/html/profile.html")
 	tmpl.Execute(w, data)
 }
+
+//TasksHandler handle page with tasks
+func TasksHandler(w http.ResponseWriter, r *http.Request) {
+	data := data.ViewData{
+		UserData: data.User{
+			UserName:       "test",
+			UserFIO:        "test_testovich",
+			UserDepartment: "Otdel_Debilov",
+		},
+	}
+
+	tmpl, _ := template.ParseFiles("public/html/tasks.html")
+	tmpl.Execute(w, data)
+}
