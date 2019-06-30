@@ -19,12 +19,19 @@
             <div id="tasklist">
                 <table>
                     <thead>
-                        <th>Статус</th>
-                        <th>Проблема</th>
-                        <th>Отдел</th>
-                        <th>Назначена</th>
-                        <th>Тип</th>
+                        <tr>
+                            <th>Имя задачи</th>
+                            <th>Статус</th>
+                            <th>Кому Назначена</th>
+                        </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ .TaskData.TaskName }}</td>
+                            <td>{{ .TaskData.TaskStat }}</td>
+                            <td>{{ .TaskData.TaskExecuter }}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
