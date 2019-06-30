@@ -43,12 +43,37 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		},
 		TaskData: data.Task{
 			TaskName:     "test",
-			TaskExecuter: "Lox",
+			TaskExecutor: "Lox",
 			TaskStat:     "V_Pizde",
 		},
 	}
 
 	tmpl, _ := template.ParseFiles("public/html/tasks.html")
+	tmpl.Execute(w, data)
+}
+
+//TaskPageHandler handle page of task
+func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 301)
+		return
+	}
+
+	data := data.ViewData{
+		UserData: data.User{
+			UserName:       "test",
+			UserFIO:        "test_testovich",
+			UserDepartment: "Otdel_Debilov",
+		},
+		TaskData: data.Task{
+			TaskName:     "test",
+			TaskDescPath: "/private/docs/test.txt",
+			TaskExecutor: "Lox",
+			TaskStat:     "V_Pizde",
+		},
+	}
+
+	tmpl, _ := template.ParseFiles("public/html/taskpage.html")
 	tmpl.Execute(w, data)
 }
 
