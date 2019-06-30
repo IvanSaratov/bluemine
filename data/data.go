@@ -16,6 +16,7 @@ type Task struct {
 	TaskID        int
 	TaskName      string
 	TaskDescPath  string
+	TaskExecuter  int
 	TaskStat      int
 	TaskDateStart string
 	TaskDateEnd   string
