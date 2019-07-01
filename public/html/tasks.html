@@ -26,11 +26,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{range .Tasks}}
                         <tr>
-                            <td>{{ .TaskData.TaskName }}</td>
-                            <td>{{ .TaskData.TaskStat }}</td>
-                            <td>{{ .TaskData.TaskExecuter }}</td>
+                            <td>{{ .TaskName }}</td>
+                            <td>{{ .TaskStat }}</td>
+                            <td>{{ .TaskExecuter }}</td>
                         </tr>
+                        {{end}}
                     </tbody>
                 </table>
             </div>
