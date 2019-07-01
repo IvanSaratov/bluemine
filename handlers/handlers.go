@@ -3,7 +3,6 @@ package handlers
 import (
 	"html/template"
 	"log"
-	"database/sql"
 	"net/http"
 
 	"github.com/IvanSaratov/bluemine/data"
@@ -102,71 +101,31 @@ func readTasks() ([]data.Task, error) {
 			return nil, err
 		}
 
-		stat, err = getStatus(statInt)
+		executor, stat, err = helpers.ConvertIDandStat(executorID, statInt)
 		if err != nil {
 			return nil, err
 		}
 
-		executor, err = getExecutor(executorID)
-		if err != nil {
-			return nil, err
-		}
-
-		tasksList = append(tasksList, data.Task{TaskID:taskID, TaskName: name, TaskStat: stat, TaskExecutor: executor})
+		tasksList = append(tasksList, data.Task{TaskID: taskID, TaskName: name, TaskStat: stat, TaskExecutor: executor})
 	}
 
 	return tasksList, nil
 }
 
-func getStatus(stat int) (string, error) {
-	switch stat {
-	case 0:
-		return "Открыта", nil
-	case 1:
-		return "В процессе", nil
-	case 2:
-		return "Закрыта", nil
-	default:
-		return "", nil
-	}
-}
-
-func getExecutor(ID int) (string, error) {
-	var executer string
-
-	err := server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", ID).Scan(&executer)
-	if err != nil {
-		if err != sql.ErrNoRows {
-			return "", err
-		}
-		err = server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", ID).Scan(&executer)
-		if err != sql.ErrNoRows {
-			return "", err
-		}
-	}
-
-	return executer, nil
-}
-
 func readTask(taskID int) (data.Task, error) {
 	var (
-		task data.Task
+		task       data.Task
 		executorID int
-		statInt int
+		statInt    int
 	)
 
 	err := server.Core.DB.QueryRow("SELECT * FROM tasks WHERE id = $1", taskID).Scan(&task.TaskID, &task.TaskName, &task.TaskDescPath,
-	&statInt, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate, &executorID)
+		&statInt, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate, &executorID)
 	if err != nil {
 		return task, err
 	}
 
-	task.TaskExecutor, err = getExecutor(executorID)
-	if err != nil {
-		return task, err
-	}
-
-	task.TaskStat, err = getStatus(statInt)
+	task.TaskExecutor, task.TaskStat, err = helpers.ConvertIDandStat(executorID, statInt)
 	if err != nil {
 		return task, err
 	}
