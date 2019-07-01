@@ -12,11 +12,11 @@ CREATE TABLE profiles (
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     task_name STRING NOT NULL,
-    path_to_desc STRING,
-    executor_id INT,
+    path_to_desc STRING NOT NULL,
+    executor_id INT NOT NULL,
     stat SMALLINT DEFAULT 0,
-    date_start DATE NOT NULL,
-    date_end DATE,
+    date_start STRING NOT NULL,
+    date_end STRING NOT NULL,
     rating INT DEFAULT 0
 );
 
