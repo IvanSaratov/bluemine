@@ -54,6 +54,7 @@ func main() {
 	router.HandleFunc("/profile", handlers.UserProfileHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/tasks/{id}", handlers.TaskPageHandler)
+	router.HandleFunc("/tasks/add", handlers.AddTaskHandler)
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if !helpers.AlreadyLogin(r) {
 			http.Redirect(w, r, "/login", 301)
