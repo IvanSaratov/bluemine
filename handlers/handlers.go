@@ -3,6 +3,7 @@ package handlers
 import (
 	"html/template"
 	"log"
+	"database/sql"
 	"net/http"
 
 	"github.com/IvanSaratov/bluemine/data"
@@ -109,14 +110,15 @@ func readTasks() ([]data.Task, error) {
 			stat = "Закрыта"
 		}
 
-		user, err := server.Core.DB.Query("SELECT username, user_fio FROM profiles WHERE id = $1", executorID)
+		err := server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", executorID).Scan(&executor)
 		if err != nil {
-			return nil, err
-		}
-
-		err = user.Scan(&executor)
-		if err != nil {
-			return nil, err
+			if err != sql.ErrNoRows {
+				return nil, err
+			}
+			server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", executorID).Scan(&executor)
+			if err != sql.ErrNoRows {
+				return nil, err
+			}
 		}
 
 		tasksList = append(tasksList, data.Task{TaskName: name, TaskStat: stat, TaskExecutor: executor})
