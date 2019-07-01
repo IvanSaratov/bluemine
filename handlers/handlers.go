@@ -80,7 +80,7 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func readTasks() ([]data.Task, error) {
-	rows, err := server.Core.DB.Query("SELECT task_name, stat, executor_id FROM tasks")
+	rows, err := server.Core.DB.Query("SELECT id, task_name, stat, executor_id FROM tasks")
 	if err != nil {
 		return nil, err
 	}
@@ -89,6 +89,7 @@ func readTasks() ([]data.Task, error) {
 	var tasksList []data.Task
 	for rows.Next() {
 		var (
+			taskID     int
 			name       string
 			statInt    int
 			executorID int
@@ -96,33 +97,79 @@ func readTasks() ([]data.Task, error) {
 			executor   string
 		)
 
-		err = rows.Scan(&name, &statInt, &executorID)
+		err = rows.Scan(&taskID, &name, &statInt, &executorID)
 		if err != nil {
 			return nil, err
 		}
 
-		switch statInt {
-		case 0:
-			stat = "Открыта"
-		case 1:
-			stat = "В процессе"
-		case 2:
-			stat = "Закрыта"
-		}
-
-		err := server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", executorID).Scan(&executor)
+		stat, err = getStatus(statInt)
 		if err != nil {
-			if err != sql.ErrNoRows {
-				return nil, err
-			}
-			server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", executorID).Scan(&executor)
-			if err != sql.ErrNoRows {
-				return nil, err
-			}
+			return nil, err
 		}
 
-		tasksList = append(tasksList, data.Task{TaskName: name, TaskStat: stat, TaskExecutor: executor})
+		executor, err = getExecutor(executorID)
+		if err != nil {
+			return nil, err
+		}
+
+		tasksList = append(tasksList, data.Task{TaskID:taskID, TaskName: name, TaskStat: stat, TaskExecutor: executor})
 	}
 
 	return tasksList, nil
+}
+
+func getStatus(stat int) (string, error) {
+	switch stat {
+	case 0:
+		return "Открыта", nil
+	case 1:
+		return "В процессе", nil
+	case 2:
+		return "Закрыта", nil
+	default:
+		return "", nil
+	}
+}
+
+func getExecutor(ID int) (string, error) {
+	var executer string
+
+	err := server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", ID).Scan(&executer)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+		err = server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", ID).Scan(&executer)
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+	}
+
+	return executer, nil
+}
+
+func readTask(taskID int) (data.Task, error) {
+	var (
+		task data.Task
+		executorID int
+		statInt int
+	)
+
+	err := server.Core.DB.QueryRow("SELECT * FROM tasks WHERE id = $1", taskID).Scan(&task.TaskID, &task.TaskName, &task.TaskDescPath,
+	&statInt, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate, &executorID)
+	if err != nil {
+		return task, err
+	}
+
+	task.TaskExecutor, err = getExecutor(executorID)
+	if err != nil {
+		return task, err
+	}
+
+	task.TaskStat, err = getStatus(statInt)
+	if err != nil {
+		return task, err
+	}
+
+	return task, nil
 }
