@@ -58,3 +58,9 @@ html, body{
     margin-left: 15px;
     font-size: 24px;
 }
+@font-face{
+    font-family: "icomoon";
+    src: url("../font/IcoMoon-Free.ttf");
+    font-style: normal; 
+    font-weight: normal;
+}
