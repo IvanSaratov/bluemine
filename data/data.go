@@ -23,6 +23,7 @@ type Task struct {
 	TaskRate         int
 }
 
+//Wiki struct describe wiki article
 type Wiki struct {
 	WikiID       int
 	WikiAuthorID int

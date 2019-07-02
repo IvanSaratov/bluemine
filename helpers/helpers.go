@@ -15,13 +15,14 @@ func AlreadyLogin(r *http.Request) bool {
 	return session.Values["userName"] != nil
 }
 
-func ConvertIDToExec(ID int, executor_type string) (string, error) {
+//ConvertIDToExec convert executor ID to executor string
+func ConvertIDToExec(ID int, executorType string) (string, error) {
 	var (
 		executor string
 		err      error
 	)
 
-	switch executor_type {
+	switch executorType {
 	case "user":
 		err = server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", ID).Scan(&executor)
 	case "group":
@@ -33,13 +34,14 @@ func ConvertIDToExec(ID int, executor_type string) (string, error) {
 	return executor, err
 }
 
-func ConvertExecToID(executor string, executor_type string) (int, error) {
+//ConvertExecToID convert executor string to executor ID
+func ConvertExecToID(executor string, executorType string) (int, error) {
 	var (
 		executorID int
 		err        error
 	)
 
-	switch executor_type {
+	switch executorType {
 	case "user":
 		err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE user_fio = $1", executor).Scan(&executorID)
 	case "group":
@@ -51,6 +53,7 @@ func ConvertExecToID(executor string, executor_type string) (int, error) {
 	return executorID, err
 }
 
+//GetCurrentUser gets info about current logged user
 func GetCurrentUser(r *http.Request) data.User {
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
 

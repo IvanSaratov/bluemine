@@ -66,6 +66,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//AddWikiHandler handle wiki adding page
 func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", 301)
