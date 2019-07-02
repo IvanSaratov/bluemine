@@ -49,4 +49,12 @@ html, body{
 #content{
     width: 100%;
     height: calc(100% - 35px);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+#content #pagetitle{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 15px;
+    font-size: 24px;
 }
