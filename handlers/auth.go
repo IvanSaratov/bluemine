@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/IvanSaratov/bluemine/config"
+	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/server"
 
 	"github.com/go-ldap/ldap"
@@ -28,9 +29,7 @@ func auth(login, password string) (string, error) {
 		return "", err
 	}
 
-	searchRequest := ldap.NewSearchRequest(
-		config.Conf.LdapBaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, "(&(sAMAccountName="+login+"))", []string{"cn"}, nil,
-	)
+	searchRequest := ldap.NewSearchRequest(config.Conf.LdapBaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, "(&(sAMAccountName="+login+"))", []string{"cn"}, nil)
 
 	sr, err := l.Search(searchRequest)
 	if err != nil {
@@ -53,7 +52,7 @@ func auth(login, password string) (string, error) {
 			return "", err
 		}
 
-		err = addUserToDB(login, l)
+		err = db.RegisterUser(server.Core.DB, login, username)
 		if err != nil {
 			return "", err
 		}
