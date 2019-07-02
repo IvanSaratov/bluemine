@@ -3,6 +3,7 @@ package handlers
 import (
 	"html/template"
 	"net/http"
+	"os"
 	"log"
 	"strconv"
 
@@ -52,6 +53,16 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, stat, date_start, date_end, rating, executor_type, executor_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id", task.TaskName, task.TaskStat, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, task.TaskExecutorType, executorID).Scan(&task.TaskID)
+		if err != nil {
+			log.Print(err)
+		}
+
+		f, err := os.OpenFile("/private/docs/" + strconv.Itoa(task.TaskID) + ".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Print(err)
+		}
+		
+		_, err = f.WriteString(description)
 		if err != nil {
 			log.Print(err)
 		}
