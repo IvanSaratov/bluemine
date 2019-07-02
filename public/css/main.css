@@ -60,7 +60,7 @@ html, body{
 }
 @font-face{
     font-family: "icomoon";
-    src: url("../font/icomoon.ttf");
+    src: url("/public/font/icomoon.ttf");
     font-style: normal; 
     font-weight: normal;
 }
