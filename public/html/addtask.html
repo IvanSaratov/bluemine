@@ -35,6 +35,7 @@
                 <div id="containerexec">
                     <div id="exec">Назначена</div>
                     <select id="inputexec">
+                        <option disabled selected>Работники</option>
                         {{range .Users}}
                         <option value="{{ .UserFIO}}">{{ .UserFIO}}</option>
                         {{end}}
