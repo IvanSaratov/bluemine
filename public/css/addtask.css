@@ -69,6 +69,22 @@
 #content #addtask #containerdesc #inputdesc:focus{
     border: 1px solid #1973BD;
 }
+#content #addtask #containerexec{
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+}
+#content #addtask #containerexec #exec{
+    display: inline-block;
+    font-size: 18px;
+    height: 25px;
+    line-height: 25px;
+}
+#content #addtask #containerexec #inputexec{
+    width: 30%;
+    margin-left: 5px;
+}
+
 #content #addtask #containerdesc #elements #bold::before{
     content: "\ea62";
 }

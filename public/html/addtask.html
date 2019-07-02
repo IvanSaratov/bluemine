@@ -32,6 +32,18 @@
                     </div>
                     <textarea id="inputdesc"></textarea>
                 </div>
+                <div id="containerexec">
+                    <div id="exec">Назначена</div>
+                    <select id="inputexec">
+                        {{range .Users}}
+                        <option value="{{ .UserFIO}}"></option>
+                        {{end}}
+                        <option disabled>Группы</option>
+                        {{range .Groups}}
+                        <option value="{{ .GroupName}}"></option>
+                        {{end}}
+                    </select>
+                </div>
             </div>
         </div>
     </body>
