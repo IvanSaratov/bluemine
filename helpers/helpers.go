@@ -2,8 +2,10 @@ package helpers
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
+	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/server"
 )
 
@@ -47,4 +49,10 @@ func ConvertExecToID(executor string, executor_type string) (int, error) {
 	}
 
 	return executorID, err
+}
+
+func GetCurrentUser(r *http.Request) data.User {
+	session, _ := server.Core.Store.Get(r, "bluemine_session")
+
+	return data.User{UserName: fmt.Sprint(session.Values["user"]), UserFIO: fmt.Sprint(session.Values["username"])}
 }
