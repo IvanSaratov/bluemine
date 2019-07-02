@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
 )
@@ -73,9 +74,21 @@ func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	users, err := db.GetAllUsers(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting users list: %s", err)
+	}
+
+	groups, err := db.GetAllGroups(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting groups list: %s", err)
+	}
+
 	if r.Method == "GET" {
 		data := data.ViewData{
 			CurrentUser: helpers.GetCurrentUser(r),
+			Users:       users,
+			Groups:      groups,
 		}
 
 		tmpl, _ := template.ParseFiles("public/html/addtask.html")
