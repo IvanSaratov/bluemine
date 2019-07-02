@@ -7,8 +7,10 @@ import (
 	"net/http"
 
 	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
+	"github.com/gorilla/mux"
 )
 
 //UserProfileHandler handle user's profile page
@@ -19,12 +21,20 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
 
+	vars := mux.Vars(r)
+	username := vars["user"]
+
+	user, err := db.GetUserInfo(server.Core.DB, username)
+	if err != nil {
+		log.Printf("Error getting info about %s: %s", username, err)
+	}
+
 	data := data.ViewData{
-		UserData: data.User{
-			UserName:       fmt.Sprint(session.Values["user"]),
-			UserFIO:        fmt.Sprint(session.Values["username"]),
-			UserDepartment: "Otdel_Debilov",
+		CurrentUser: data.User{
+			UserName: fmt.Sprint(session.Values["user"]),
+			UserFIO:  fmt.Sprint(session.Values["username"]),
 		},
+		UserData: user,
 	}
 
 	tmpl, _ := template.ParseFiles("public/html/profile.html")
