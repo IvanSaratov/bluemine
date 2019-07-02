@@ -14,7 +14,7 @@
     text-align: center;
     align-self: center;
     margin: 0 auto;
-    color: #1973BD;
+    color: rgb(54, 161, 248);
 }
 #login input[type=text], input[type=password] {
     font-family: sans-serif;
@@ -33,7 +33,7 @@
     transition: 0.3s;
 }
 #login input[type=text]:focus, input[type=password]:focus{
-    border-bottom: 2px solid #1973BD;
+    border-bottom: 2px solid rgb(54, 161, 248);
 }
 #login button{
     cursor: pointer;
@@ -42,7 +42,7 @@
     width: 60%;
     height: 40px;
     color: white;
-    background-color: #1973BD;
+    background-color: rgb(54, 161, 248);
     border: none;
     padding: 12px 20px;
     margin-top: 10px;
