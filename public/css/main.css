@@ -20,6 +20,7 @@ html, body{
     color: white;
 }
 #topbar #service{
+    cursor: default;
     width: 120px;
     line-height: 35px;
     text-align: center;
@@ -28,16 +29,19 @@ html, body{
     color: rgb(54, 161, 248);
 }
 #topbar #user{
+    cursor: default;
     position: absolute;
     right: 0;
     margin-right: 10px;
 }
 #topbar #user a{
+    cursor: pointer;
     text-decoration: none;
     font-weight: bold;
     color: white;
 }
 #topbar #user #out{
+    cursor: pointer;
     text-decoration: none;
     font-weight: normal;
     color: white;
