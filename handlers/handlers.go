@@ -48,17 +48,18 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	taskList, err := readTasks()
+	if err != nil {
+		log.Printf("Error reading tasks: %s", err)
+	}
+
 	data := data.ViewData{
 		UserData: data.User{
 			UserName:       "test",
 			UserFIO:        "test_testovich",
 			UserDepartment: "Otdel_Debilov",
 		},
-		TaskData: data.Task{
-			TaskName:     "test",
-			TaskExecutor: "Lox",
-			TaskStat:     "V_Pizde",
-		},
+		Tasks: taskList,
 	}
 
 	tmpl, _ := template.ParseFiles("public/html/tasks.html")
@@ -72,18 +73,17 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	taskList, err := readTasks()
-	if err != nil {
-		log.Printf("Error reading tasks: %s", err)
-	}
-
 	data := data.ViewData{
 		UserData: data.User{
 			UserName:       "test",
 			UserFIO:        "test_testovich",
 			UserDepartment: "Otdel_Debilov",
 		},
-		Tasks: taskList,
+		TaskData: data.Task{
+			TaskName:     "test",
+			TaskExecutor: "Lox",
+			TaskStat:     "In progress",
+		},
 	}
 
 	tmpl, _ := template.ParseFiles("public/html/taskpage.html")
