@@ -45,7 +45,6 @@ func auth(login, password string) (string, error) {
 		return "", err
 	}
 
-	login = strings.ToLower(login)
 	err = userExists(login)
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -132,6 +131,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		login := r.FormValue("username")
 		password := r.FormValue("password")
+
+		login = strings.ToLower(login)
 
 		userName, err := auth(login, password)
 		if err != nil {
