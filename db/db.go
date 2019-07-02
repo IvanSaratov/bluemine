@@ -2,6 +2,8 @@ package db
 
 import (
 	"database/sql"
+
+	"github.com/IvanSaratov/bluemine/data"
 )
 
 //RegisterUser adds user to DB
@@ -14,6 +16,19 @@ func RegisterUser(DB *sql.DB, login, userFIO string) error {
 	}
 
 	return nil
+}
+
+//GetUserInfo gets user info from DB
+func GetUserInfo(DB *sql.DB, login string) (data.User, error) {
+	var user data.User
+
+	stmt := "SELECT * FROM profiles WHERE username = $1"
+	err := DB.QueryRow(stmt, login).Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }
 
 func prepareStmt(db *sql.DB, stmt string) (*sql.Stmt, error) {
