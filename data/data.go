@@ -25,7 +25,8 @@ type Task struct {
 
 //ViewData struct to show data on page
 type ViewData struct {
-	UserData User
-	TaskData Task
-	Tasks    []Task
+	CurrentUser User
+	UserData    User
+	TaskData    Task
+	Tasks       []Task
 }
