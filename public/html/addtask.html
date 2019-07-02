@@ -36,11 +36,11 @@
                     <div id="exec">Назначена</div>
                     <select id="inputexec">
                         {{range .Users}}
-                        <option value="{{ .UserFIO}}"></option>
+                        <option value="{{ .UserFIO}}">{{ .UserFIO}}</option>
                         {{end}}
                         <option disabled>Группы</option>
                         {{range .Groups}}
-                        <option value="{{ .GroupName}}"></option>
+                        <option value="{{ .GroupName}}">{{ .GroupName}}</option>
                         {{end}}
                     </select>
                 </div>
