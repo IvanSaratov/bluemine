@@ -1,0 +1,74 @@
+#content #addtask{
+    width: calc(100% - 60px);
+    height: calc(100% - 60px);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0 0 0 30px;
+    padding: 10px;
+    background-color: rgb(221, 221, 221);
+}
+#content #addtask #containertaskname{
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+}
+#content #addtask #containertaskname #taskname{
+    display: inline-block;
+    font-size: 18px;
+    height: 25px;
+    line-height: 25px;
+}
+#content #addtask #containertaskname #inputtaskname{
+    margin-left: 5px;
+    width: 70%;
+    height: 19px;
+    border: 1px solid black;
+}
+#content #addtask #containertaskname #inputtaskname:focus{
+    border: 2px solid #1973BD;
+}
+#content #addtask #containerdesc{
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+}
+#content #addtask #containerdesc #desc{
+    display: inline-block;
+    font-size: 18px;
+    height: 25px;
+    line-height: 25px;
+}
+#content #addtask #containerdesc #elements{
+    display: inline-block;
+}
+#content #addtask #containerdesc #elements .elem{
+    cursor: pointer;
+    display: inline-block;
+    font-family: icomoon;
+    width: 23px;
+    height: 23px;
+    border: 1px solid rgb(29, 29, 29);
+    background-color: whitesmoke;
+    color: black;
+}
+#content #addtask #containerdesc #elements .elem:hover{
+    border: 1px solid #1973BD;
+    background-color: white;
+    color: black;
+}
+#content #addtask #containerdesc #inputdesc{
+    resize: none;
+    width: 100%;
+    height: 200px;
+}
+#content #addtask #containerdesc #elements #bold::before{
+    content: "\ea62";
+}
+#content #addtask #containerdesc #elements #italic::before{
+    content: "\ea64";
+}
+#content #addtask #containerdesc #elements #underline::before{
+    content: "\ea63";
+}
+#content #addtask #containerdesc #elements #strike::before{
+    content: "\ea65";
+}
