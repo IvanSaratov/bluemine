@@ -132,7 +132,7 @@ func readTask(taskID int) (data.Task, error) {
 		executorType string
 	)
 
-	err := server.Core.DB.QueryRow("SELECT * FROM tasks WHERE id = $1", taskID).Scan(&task.TaskID, &task.TaskName, &task.TaskDescPath, &executorType, &executorID,
+	err := server.Core.DB.QueryRow("SELECT * FROM tasks WHERE id = $1", taskID).Scan(&task.TaskID, &task.TaskName, &executorType, &executorID,
 		&task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 	if err != nil {
 		return task, err

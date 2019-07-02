@@ -13,15 +13,14 @@ type User struct {
 
 //Task struct describe tasks
 type Task struct {
-	TaskID        int
-	TaskName      string
-	TaskDescPath  string
+	TaskID           int
+	TaskName         string
 	TaskExecutorType string
-	TaskExecutor  string
-	TaskStat      string
-	TaskDateStart string
-	TaskDateEnd   string
-	TaskRate      int
+	TaskExecutor     string
+	TaskStat         string
+	TaskDateStart    string
+	TaskDateEnd      string
+	TaskRate         int
 }
 
 //ViewData struct to show data on page

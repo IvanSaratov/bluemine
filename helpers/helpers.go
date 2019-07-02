@@ -27,14 +27,14 @@ func ConvertIDToExec(ID int, executor_type string) (string, error) {
 	default:
 		return "", errors.New("Wrong executor_type")
 	}
-	
+
 	return executor, err
 }
 
 func ConvertExecToID(executor string, executor_type string) (int, error) {
 	var (
 		executorID int
-		err error
+		err        error
 	)
 
 	switch executor_type {
@@ -45,6 +45,6 @@ func ConvertExecToID(executor string, executor_type string) (int, error) {
 	default:
 		return -1, errors.New("Wrong executor_type")
 	}
-	
+
 	return executorID, err
 }
