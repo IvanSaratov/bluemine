@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -63,6 +64,46 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		_, err = f.WriteString(description)
+		if err != nil {
+			log.Print(err)
+		}
+	}
+}
+
+func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 301)
+		return
+	}
+
+	if r.Method == "GET" {
+		data := data.ViewData{
+			UserData: data.User{
+				UserName:       "test",
+				UserFIO:        "test_testovich",
+				UserDepartment: "Otdel_Debilov",
+			},
+		}
+
+		tmpl, _ := template.ParseFiles("public/html/addtask.html")
+		tmpl.Execute(w, data)
+	} else if r.Method == "POST" {
+		var (
+			wiki       data.Wiki
+			authorName string
+			err        error
+		)
+
+		wiki.WikiName = r.FormValue("wiki_name")
+
+		session, _ := server.Core.Store.Get(r, "bluemine_session")
+		authorName = fmt.Sprint(session.Values["userName"])
+		wiki.WikiAuthorID, err = helpers.ConvertExecToID(authorName, "user")
+		if err != nil {
+			log.Print(err)
+		}
+
+		_, err = server.Core.DB.Exec("INSERT INTO wiki (wiki_name, author_id) VALUES ($1, $2)", wiki.WikiName, wiki.WikiAuthorID)
 		if err != nil {
 			log.Print(err)
 		}

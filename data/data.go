@@ -23,6 +23,13 @@ type Task struct {
 	TaskRate         int
 }
 
+type Wiki struct {
+	WikiID       int
+	WikiAuthorID int
+	WikiFatherID int
+	WikiName     string
+}
+
 //ViewData struct to show data on page
 type ViewData struct {
 	CurrentUser User
