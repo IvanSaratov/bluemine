@@ -51,7 +51,7 @@ func main() {
 	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
 	router.HandleFunc("/login", handlers.LoginHandler)
 	router.HandleFunc("/logout", handlers.LogoutHandler)
-	router.HandleFunc("/profile", handlers.UserProfileHandler)
+	router.HandleFunc("/profile/{user}", handlers.UserProfileHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
 	router.HandleFunc("/tasks/new", handlers.AddTaskHandler)

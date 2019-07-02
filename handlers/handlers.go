@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -16,11 +17,12 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 301)
 		return
 	}
+	session, _ := server.Core.Store.Get(r, "bluemine_session")
 
 	data := data.ViewData{
 		UserData: data.User{
-			UserName:       "test",
-			UserFIO:        "test_testovich",
+			UserName:       fmt.Sprint(session.Values["user"]),
+			UserFIO:        fmt.Sprint(session.Values["username"]),
 			UserDepartment: "Otdel_Debilov",
 		},
 	}
