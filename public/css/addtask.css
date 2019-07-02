@@ -61,6 +61,10 @@
     resize: none;
     width: 100%;
     height: 200px;
+    border: 1px solid black;
+}
+#content #addtask #containerdesc #inputdesc:focus{
+    border: 2px solid #1973BD;
 }
 #content #addtask #containerdesc #elements #bold::before{
     content: "\ea62";
