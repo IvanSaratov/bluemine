@@ -13,7 +13,7 @@ func AlreadyLogin(r *http.Request) bool {
 	return session.Values["userName"] != nil
 }
 
-func ConvertIDandStat(ID, stat int, executor_type string) (string, string, error) {
+func ConvertIDToExec(ID int, executor_type string) (string, error) {
 	var (
 		executor string
 		err      error
@@ -25,17 +25,26 @@ func ConvertIDandStat(ID, stat int, executor_type string) (string, string, error
 	case "group":
 		err = server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", ID).Scan(&executor)
 	default:
-		return executor, "", errors.New("Wrong executor_type")
+		return "", errors.New("Wrong executor_type")
 	}
+	
+	return executor, err
+}
 
-	switch stat {
-	case 0:
-		return executor, "В процессе", err
-	case 1:
-		return executor, "Отложена", err
-	case 2:
-		return executor, "Закрыта", err
+func ConvertExecToID(executor string, executor_type string) (int, error) {
+	var (
+		executorID int
+		err error
+	)
+
+	switch executor_type {
+	case "user":
+		err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE user_fio = $1", executor).Scan(&executorID)
+	case "group":
+		err = server.Core.DB.QueryRow("SELECT id FROM groups WHERE group_name = $1", executor).Scan(&executorID)
 	default:
-		return executor, "", errors.New("Wrong stat")
+		return -1, errors.New("Wrong executor_type")
 	}
+	
+	return executorID, err
 }

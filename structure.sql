@@ -15,7 +15,7 @@ CREATE TABLE tasks (
     path_to_desc STRING NOT NULL,
     executor_type STRING NOT NULL,
     executor_id INT NOT NULL,
-    stat SMALLINT DEFAULT 0,
+    stat STRING DEFAULT 'В процессе',
     date_start STRING NOT NULL,
     date_end STRING NOT NULL,
     rating INT DEFAULT 0

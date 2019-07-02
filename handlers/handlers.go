@@ -114,7 +114,7 @@ func readTasks() ([]data.Task, error) {
 			return nil, err
 		}
 
-		executor, stat, err = helpers.ConvertIDandStat(executorID, statInt, executorType)
+		executor, err = helpers.ConvertIDToExec(executorID, executorType)
 		if err != nil {
 			return nil, err
 		}
@@ -130,16 +130,15 @@ func readTask(taskID int) (data.Task, error) {
 		task         data.Task
 		executorID   int
 		executorType string
-		statInt      int
 	)
 
 	err := server.Core.DB.QueryRow("SELECT * FROM tasks WHERE id = $1", taskID).Scan(&task.TaskID, &task.TaskName, &task.TaskDescPath, &executorType, &executorID,
-		&statInt, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+		&task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 	if err != nil {
 		return task, err
 	}
 
-	task.TaskExecutor, task.TaskStat, err = helpers.ConvertIDandStat(executorID, statInt, executorType)
+	task.TaskExecutor, err = helpers.ConvertIDToExec(executorID, executorType)
 	if err != nil {
 		return task, err
 	}
