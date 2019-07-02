@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"database/sql"
+	"errors"
 	"net/http"
 
 	"github.com/IvanSaratov/bluemine/server"
@@ -13,28 +13,29 @@ func AlreadyLogin(r *http.Request) bool {
 	return session.Values["userName"] != nil
 }
 
-func ConvertIDandStat(ID, stat int) (string, string, error) {
-	var executer string
+func ConvertIDandStat(ID, stat int, executor_type string) (string, string, error) {
+	var (
+		executor string
+		err      error
+	)
 
-	err := server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", ID).Scan(&executer)
-	if err != nil {
-		if err != sql.ErrNoRows {
-			return "", "", err
-		}
-		err = server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", ID).Scan(&executer)
-		if err != sql.ErrNoRows {
-			return "", "", err
-		}
+	switch executor_type {
+	case "user":
+		err = server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", ID).Scan(&executor)
+	case "group":
+		err = server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", ID).Scan(&executor)
+	default:
+		return executor, "", errors.New("Wrong executor_type")
 	}
 
 	switch stat {
 	case 0:
-		return executer, "В процессе", nil
+		return executor, "В процессе", err
 	case 1:
-		return executer, "Отложена", nil
+		return executor, "Отложена", err
 	case 2:
-		return executer, "Закрыта", nil
+		return executor, "Закрыта", err
 	default:
-		return "", "", nil
+		return executor, "", errors.New("Wrong stat")
 	}
 }

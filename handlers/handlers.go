@@ -91,7 +91,7 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func readTasks() ([]data.Task, error) {
-	rows, err := server.Core.DB.Query("SELECT id, task_name, stat, executor_id FROM tasks")
+	rows, err := server.Core.DB.Query("SELECT id, task_name, stat, executor_id, executor_type FROM tasks")
 	if err != nil {
 		return nil, err
 	}
@@ -100,20 +100,21 @@ func readTasks() ([]data.Task, error) {
 	var tasksList []data.Task
 	for rows.Next() {
 		var (
-			taskID     int
-			name       string
-			statInt    int
-			executorID int
-			stat       string
-			executor   string
+			taskID       int
+			name         string
+			statInt      int
+			executorID   int
+			executorType string
+			stat         string
+			executor     string
 		)
 
-		err = rows.Scan(&taskID, &name, &statInt, &executorID)
+		err = rows.Scan(&taskID, &name, &statInt, &executorID, &executorType)
 		if err != nil {
 			return nil, err
 		}
 
-		executor, stat, err = helpers.ConvertIDandStat(executorID, statInt)
+		executor, stat, err = helpers.ConvertIDandStat(executorID, statInt, executorType)
 		if err != nil {
 			return nil, err
 		}
@@ -126,18 +127,19 @@ func readTasks() ([]data.Task, error) {
 
 func readTask(taskID int) (data.Task, error) {
 	var (
-		task       data.Task
-		executorID int
-		statInt    int
+		task         data.Task
+		executorID   int
+		executorType string
+		statInt      int
 	)
 
 	err := server.Core.DB.QueryRow("SELECT * FROM tasks WHERE id = $1", taskID).Scan(&task.TaskID, &task.TaskName, &task.TaskDescPath,
-		&statInt, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate, &executorID)
+		&statInt, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate, &executorID, &executorType)
 	if err != nil {
 		return task, err
 	}
 
-	task.TaskExecutor, task.TaskStat, err = helpers.ConvertIDandStat(executorID, statInt)
+	task.TaskExecutor, task.TaskStat, err = helpers.ConvertIDandStat(executorID, statInt, executorType)
 	if err != nil {
 		return task, err
 	}
