@@ -22,11 +22,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 		data := data.ViewData{
-			UserData: data.User{
-				UserName:       "test",
-				UserFIO:        "test_testovich",
-				UserDepartment: "Otdel_Debilov",
-			},
+			CurrentUser: helpers.GetCurrentUser(r),
 		}
 
 		tmpl, _ := template.ParseFiles("public/html/addtask.html")
@@ -78,11 +74,7 @@ func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 		data := data.ViewData{
-			UserData: data.User{
-				UserName:       "test",
-				UserFIO:        "test_testovich",
-				UserDepartment: "Otdel_Debilov",
-			},
+			CurrentUser: helpers.GetCurrentUser(r),
 		}
 
 		tmpl, _ := template.ParseFiles("public/html/addtask.html")

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -19,7 +18,6 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 301)
 		return
 	}
-	session, _ := server.Core.Store.Get(r, "bluemine_session")
 
 	vars := mux.Vars(r)
 	username := vars["user"]
@@ -30,11 +28,8 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := data.ViewData{
-		CurrentUser: data.User{
-			UserName: fmt.Sprint(session.Values["user"]),
-			UserFIO:  fmt.Sprint(session.Values["username"]),
-		},
-		UserData: user,
+		CurrentUser: helpers.GetCurrentUser(r),
+		UserData:    user,
 	}
 
 	tmpl, _ := template.ParseFiles("public/html/profile.html")
@@ -54,12 +49,8 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := data.ViewData{
-		UserData: data.User{
-			UserName:       "test",
-			UserFIO:        "test_testovich",
-			UserDepartment: "Otdel_Debilov",
-		},
-		Tasks: taskList,
+		CurrentUser: helpers.GetCurrentUser(r),
+		Tasks:       taskList,
 	}
 
 	tmpl, _ := template.ParseFiles("public/html/tasks.html")
@@ -74,11 +65,7 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := data.ViewData{
-		UserData: data.User{
-			UserName:       "test",
-			UserFIO:        "test_testovich",
-			UserDepartment: "Otdel_Debilov",
-		},
+		CurrentUser: helpers.GetCurrentUser(r),
 		TaskData: data.Task{
 			TaskName:     "test",
 			TaskExecutor: "Lox",
