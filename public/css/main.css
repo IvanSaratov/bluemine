@@ -52,6 +52,7 @@ html, body{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 #content #pagetitle{
+    cursor: default;
     width: 100%;
     height: 30px;
     line-height: 30px;
