@@ -23,6 +23,12 @@ type Task struct {
 	TaskRate         int
 }
 
+//Group struct describe group
+type Group struct {
+	GroupID   int
+	GroupName string
+}
+
 //Wiki struct describe wiki article
 type Wiki struct {
 	WikiID       int
@@ -36,5 +42,6 @@ type ViewData struct {
 	CurrentUser User
 	UserData    User
 	TaskData    Task
+	Users       []User
 	Tasks       []Task
 }
