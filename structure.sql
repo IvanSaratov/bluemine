@@ -40,7 +40,6 @@ CREATE TABLE groups (
 
 CREATE TABLE wiki (
     id SERIAL PRIMARY KEY,
-    father_id INT,
+    father_id INT DEFAULT 0,
     title STRING NOT NULL,
-    path_to_article STRING NOT NULL
 );
