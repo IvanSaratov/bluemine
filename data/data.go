@@ -1,7 +1,5 @@
 package data
 
-import "time"
-
 //User struct describe user
 type User struct {
 	UserID         int
@@ -20,8 +18,8 @@ type Task struct {
 	TaskExecutorType string
 	TaskExecutor     string
 	TaskStat         string
-	TaskDateStart    time.Time
-	TaskDateEnd      time.Time
+	TaskDateStart    string
+	TaskDateEnd      string
 	TaskRate         int
 }
 
