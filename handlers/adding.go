@@ -53,9 +53,9 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		//task.TaskStat = r.FormValue("task_stat")
 		task.TaskStat = "В процессе"
 		//task.TaskDateStart = r.FormValue("task_start")
-		task.TaskDateStart = time.Now()
+		task.TaskDateStart = time.Now().Format("2012-01-01")
 		//task.TaskDateEnd = r.FormValue("task_end")
-		task.TaskDateEnd = time.Now()
+		task.TaskDateEnd = time.Now().Format("2012-01-02")
 		task.TaskExecutorType = r.FormValue("exec_type")
 		task.TaskExecutor = r.FormValue("exec_name")
 		//task.TaskRate, _ = strconv.Atoi(r.FormValue("task_rate"))

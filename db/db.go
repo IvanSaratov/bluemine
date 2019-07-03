@@ -2,8 +2,6 @@ package db
 
 import (
 	"database/sql"
-	"log"
-	"strconv"
 
 	"github.com/IvanSaratov/bluemine/helpers"
 
@@ -75,14 +73,10 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 
 	for rows.Next() {
 		var task data.Task
-		err = rows.Scan(&task.TaskID, &task.TaskName, &task.TaskExecutorType, &task.TaskExecutor, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+		var execID int
+		err = rows.Scan(&task.TaskID, &task.TaskName, &task.TaskExecutorType, &execID, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 		if err != nil {
 			return tasks, err
-		}
-
-		execID, err := strconv.Atoi(task.TaskExecutor)
-		if err != nil {
-			log.Printf("Error converting string to int for %s task: %s", task.TaskName, err)
 		}
 
 		task.TaskExecutor, err = helpers.ConvertIDToExec(execID, task.TaskExecutorType)
