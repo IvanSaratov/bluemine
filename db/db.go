@@ -72,8 +72,10 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var task data.Task
-		var execID int
+		var (
+			task   data.Task
+			execID int
+		)
 		err = rows.Scan(&task.TaskID, &task.TaskName, &task.TaskExecutorType, &execID, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 		if err != nil {
 			return tasks, err
@@ -82,6 +84,20 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 		task.TaskExecutor, err = helpers.ConvertIDToExec(execID, task.TaskExecutorType)
 		if err != nil {
 			return tasks, err
+		}
+
+		switch task.TaskExecutorType {
+		case "user":
+			{
+				err = DB.QueryRow("SELECT username FROM profiles WHERE user_fio = $1", task.TaskExecutor).Scan(&task.TaskExecutorName)
+				if err != nil {
+					return tasks, err
+				}
+			}
+		case "group":
+			{
+				task.TaskExecutorName = task.TaskExecutor
+			}
 		}
 
 		tasks = append(tasks, task)
