@@ -10,13 +10,13 @@ function tAdd(){
             url: "/tasks/new",
             method: "POST",
             data: {
-                name: name,
-                desc: desc,
-                exec: exec,
+                task_name: name,
+                task_desc: desc,
+                exec_name: exec,
                 exec_type: exec_type
             },
             success: function(){
-                location.replace("/tasks");
+                location.href = "/tasks";
             }
         });
     }
