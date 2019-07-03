@@ -1,26 +1,12 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BlueMine</title>
-        <link href="/public/css/main.css" rel="stylesheet">
-        <link href="/public/css/addtask.css" rel="stylesheet">
-        <script type="text/javascript" src="/public/js/plugins/jquery-3.4.1.min.js"></script>
-    </head>
-    <body>
-        <div id="topbar">
-            <div id="service">BlueMine</div>
-            <span id="icotasks" class="topbar_icons" onclick="location='/tasks'"></span>
-            <span id="icoprofile" class="topbar_icons" onclick="location='/profile/{{ .CurrentUser.UserName}}'"></span>
-            <span id="icowiki" class="topbar_icons" onclick="location='/wiki'"></span>
-            <span id="iconew" class="topbar_icons" onclick="location='/tasks/new'"></span>
-            <div id="user">You're log in as 
-                <a href="/profile/{{ .CurrentUser.UserName}}">{{ .CurrentUser.UserName}}</a>
-                <a id="out" href="/logout">(logout)</a>
-            </div>
-        </div>
-        <div id="content">
+{{define "styles"}}
+<link href="/public/css/main.css" rel="stylesheet">
+<link href="/public/css/addtask.css" rel="stylesheet">
+{{end}}
+{{define "scripts"}}
+<script type="text/javascript" src="/public/js/plugins/jquery-3.4.1.min.js"></script>
+{{end}}        
+{{define "content"}}
+<div id="content">
             <div id="pagetitle">Новая задача</div>
             <div id="addtask">
                 <div id="container_task_name">
@@ -54,5 +40,4 @@
             </div>
         </div>
         <script type="text/javascript" src="/public/js/add.js"></script>
-    </body>
-</html>
+{{end}}

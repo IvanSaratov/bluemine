@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"html/template"
 	"log"
 	"net/http"
 
@@ -32,8 +31,10 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		UserData:    user,
 	}
 
-	tmpl, _ := template.ParseFiles("public/html/profile.html")
-	tmpl.Execute(w, data)
+	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", data)
+	if err != nil {
+		log.Print(err)
+	}
 }
 
 //TasksHandler handle page with tasks
@@ -53,8 +54,10 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		Tasks:       tasks,
 	}
 
-	tmpl, _ := template.ParseFiles("public/html/tasks.html")
-	tmpl.Execute(w, data)
+	err = server.Core.Templates["tasks"].ExecuteTemplate(w, "base", data)
+	if err != nil {
+		log.Print(err)
+	}
 }
 
 //TaskPageHandler handle page of task
@@ -73,8 +76,10 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	tmpl, _ := template.ParseFiles("public/html/taskpage.html")
-	tmpl.Execute(w, data)
+	err := server.Core.Templates["taskPage"].ExecuteTemplate(w, "base", data)
+	if err != nil {
+		log.Print(err)
+	}
 }
 
 func readTasks() ([]data.Task, error) {

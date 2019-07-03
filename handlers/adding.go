@@ -39,8 +39,10 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 			Groups:      groups,
 		}
 
-		tmpl, _ := template.ParseFiles("public/html/addtask.html")
-		tmpl.Execute(w, data)
+		err := server.Core.Templates["addTask"].ExecuteTemplate(w, "base", data)
+		if err != nil {
+			log.Print(err)
+		}
 	} else if r.Method == "POST" {
 		var (
 			task        data.Task

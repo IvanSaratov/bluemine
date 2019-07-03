@@ -1,53 +1,38 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BlueMine</title>
-        <link href="/public/css/main.css" rel="stylesheet">
-        <link href="/public/css/tasks.css" rel="stylesheet">
-        <script type="text/javascript" src="/public/js/plugins/jquery-3.4.1.min.js"></script>
-        <div id="topbar">
-            <div id="service">BlueMine</div>
-            <span id="icotasks" class="topbar_icons" onclick="location='/tasks'"></span>
-            <span id="icoprofile" class="topbar_icons" onclick="location='/profile/{{ .CurrentUser.UserName}}'"></span>
-            <span id="icowiki" class="topbar_icons" onclick="location='/wiki'"></span>
-            <span id="iconew" class="topbar_icons" onclick="location='/tasks/new'"></span>
-            <div id="user">You're log in as 
-                <a href="/profile/{{ .CurrentUser.UserName}}">{{ .CurrentUser.UserName}}</a>
-                <a id="out" href="/logout">(logout)</a>
-            </div>
+{{define "styles"}}
+    <link href="/public/css/main.css" rel="stylesheet">
+    <link href="/public/css/tasks.css" rel="stylesheet">
+{{end}}
+{{define "scripts"}}
+    <script type="text/javascript" src="/public/js/plugins/jquery-3.4.1.min.js"></script>
+{{end}}
+{{define "content"}}
+    <div id="content">
+        <div id="pagetitle">Список задач</div>
+        <div id="tasklist">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Имя задачи</th>
+                        <th>Статус</th>
+                        <th>Кому Назначена</th>
+                        <th>Добавлена</th>
+                        <th>Закончить до</th>
+                        <th>Рейтинг</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Tasks}}
+                    <tr>
+                        <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
+                        <td>{{ .TaskStat }}</td>
+                        <td><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutor }}</a></td>
+                        <td>{{ .TaskDateStart }}</td>
+                        <td>{{ .TaskDateEnd }}</td>
+                        <td>{{ .TaskRate }}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
         </div>
-    </head>
-    <body>
-        <div id="content">
-            <div id="pagetitle">Список задач</div>
-            <div id="tasklist">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Имя задачи</th>
-                            <th>Статус</th>
-                            <th>Кому Назначена</th>
-                            <th>Добавлена</th>
-                            <th>Закончить до</th>
-                            <th>Рейтинг</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{range .Tasks}}
-                        <tr>
-                            <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
-                            <td>{{ .TaskStat }}</td>
-                            <td><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutor }}</a></td>
-                            <td>{{ .TaskDateStart }}</td>
-                            <td>{{ .TaskDateEnd }}</td>
-                            <td>{{ .TaskRate }}</td>
-                        </tr>
-                        {{end}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </body>
-</html>
+    </div>
+{{end}}
