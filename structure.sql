@@ -12,6 +12,7 @@ CREATE TABLE profiles (
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     task_name STRING NOT NULL,
+    task_creator INT NOT NULL,
     executor_type STRING NOT NULL,
     executor_id INT NOT NULL,
     stat STRING DEFAULT 'В процессе',
