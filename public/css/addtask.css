@@ -84,6 +84,19 @@
     width: 30%;
     margin-left: 5px;
 }
+#content #addtask #send{
+    cursor: pointer;
+    margin-top: 10px;
+    width: 120px;
+    height: 25px;
+    border: none;
+    background-color: #1973BD;
+    color: white;
+    transition: 0.2s;
+}
+#content #addtask #send:hover{
+    background-color: rgb(54, 161, 248);
+}
 
 #content #addtask #containerdesc #elements #bold::before{
     content: "\ea62";
