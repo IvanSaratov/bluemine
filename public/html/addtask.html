@@ -23,11 +23,11 @@
         <div id="content">
             <div id="pagetitle">Новая задача</div>
             <div id="addtask">
-                <div id="containertaskname">
-                    <div id="taskname">Название задачи</div>
-                    <input id="inputtaskname" type="text" required>
+                <div id="container_task_name">
+                    <div id="task_name">Название задачи</div>
+                    <input id="input_task_name" type="text" required>
                 </div>
-                <div id="containerdesc">
+                <div id="container_desc">
                     <div id="desc">Описание</div>
                     <div id="elements">
                         <span class="elem" id="bold"></span>
@@ -35,11 +35,11 @@
                         <span class="elem" id="underline"></span>
                         <span class="elem" id="strike"></span>
                     </div>
-                    <textarea id="inputdesc"></textarea>
+                    <textarea id="input_desc"></textarea>
                 </div>
-                <div id="containerexec">
+                <div id="container_exec">
                     <div id="exec">Назначена</div>
-                    <select id="inputexec">
+                    <select id="input_exec">
                         <option disabled selected>Работники</option>
                         {{range .Users}}
                         <option class="user" value="{{ .UserFIO}}">{{ .UserFIO}}</option>

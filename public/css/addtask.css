@@ -6,42 +6,42 @@
     padding: 10px;
     background-color: rgb(221, 221, 221);
 }
-#content #addtask #containertaskname{
+#content #addtask #container_task_name{
     width: 100%;
     height: 25px;
     line-height: 25px;
 }
-#content #addtask #containertaskname #taskname{
+#content #addtask #container_task_name #task_name{
     display: inline-block;
     font-size: 18px;
     height: 25px;
     line-height: 25px;
 }
-#content #addtask #containertaskname #inputtaskname{
+#content #addtask #container_task_name #input_task_name{
     margin-left: 5px;
     width: 70%;
     height: 19px;
     border: 1px solid black;
     transition: 0.2s;
 }
-#content #addtask #containertaskname #inputtaskname:focus{
+#content #addtask #container_task_name #input_task_name:focus{
     border: 1px solid #1973BD;
 }
-#content #addtask #containerdesc{
+#content #addtask #container_desc{
     display: inline-block;
     width: 100%;
     margin-top: 10px;
 }
-#content #addtask #containerdesc #desc{
+#content #addtask #container_desc #desc{
     display: inline-block;
     font-size: 18px;
     height: 25px;
     line-height: 25px;
 }
-#content #addtask #containerdesc #elements{
+#content #addtask #container_desc #elements{
     display: inline-block;
 }
-#content #addtask #containerdesc #elements .elem{
+#content #addtask #container_desc #elements .elem{
     cursor: pointer;
     display: inline-block;
     text-align: center;
@@ -53,12 +53,12 @@
     background-color: whitesmoke;
     color: black;
 }
-#content #addtask #containerdesc #elements .elem:hover{
+#content #addtask #container_desc #elements .elem:hover{
     border: 1px solid #1973BD;
     background-color: white;
     color: black;
 }
-#content #addtask #containerdesc #inputdesc{
+#content #addtask #container_desc #input_desc{
     margin-top: 5px;
     resize: none;
     width: 100%;
@@ -66,21 +66,21 @@
     border: 1px solid black;
     transition: 0.2s;
 }
-#content #addtask #containerdesc #inputdesc:focus{
+#content #addtask #container_desc #input_desc:focus{
     border: 1px solid #1973BD;
 }
-#content #addtask #containerexec{
+#content #addtask #container_exec{
     display: inline-block;
     width: 100%;
     margin-top: 10px;
 }
-#content #addtask #containerexec #exec{
+#content #addtask #container_exec #exec{
     display: inline-block;
     font-size: 18px;
     height: 25px;
     line-height: 25px;
 }
-#content #addtask #containerexec #inputexec{
+#content #addtask #container_exec #input_exec{
     width: 30%;
     margin-left: 5px;
 }
@@ -98,15 +98,15 @@
     background-color: rgb(54, 161, 248);
 }
 
-#content #addtask #containerdesc #elements #bold::before{
+#content #addtask #container_desc #elements #bold::before{
     content: "\ea62";
 }
-#content #addtask #containerdesc #elements #italic::before{
+#content #addtask #container_desc #elements #italic::before{
     content: "\ea64";
 }
-#content #addtask #containerdesc #elements #underline::before{
+#content #addtask #container_desc #elements #underline::before{
     content: "\ea63";
 }
-#content #addtask #containerdesc #elements #strike::before{
+#content #addtask #container_desc #elements #strike::before{
     content: "\ea65";
 }
