@@ -83,6 +83,9 @@ html, body{
 #icowiki::before{
     content: "\eac8";
 }
+#iconew::before{
+    content: "\ea0a"
+}
 
 @font-face{
     font-family: "icomoon";
