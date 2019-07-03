@@ -29,6 +29,9 @@
                             <th>Имя задачи</th>
                             <th>Статус</th>
                             <th>Кому Назначена</th>
+                            <th>Добавлена</th>
+                            <th>Закончить до</th>
+                            <th>Рейтинг</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +40,9 @@
                             <td>{{ .TaskName }}</td>
                             <td>{{ .TaskStat }}</td>
                             <td>{{ .TaskExecutor }}</td>
+                            <td>{{ .TaskDateStart }}</td>
+                            <td>{{ .TaskDateEnd }}</td>
+                            <td>{{ .TaskRate }}</td>
                         </tr>
                         {{end}}
                     </tbody>

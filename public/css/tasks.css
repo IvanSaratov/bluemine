@@ -16,3 +16,9 @@
     background-color: rgb(29, 29, 29);
     color: white;
 }
+#content #tasklist table thead th{
+    border: 1px solid white;
+}
+#content #tasklist table td{
+    border: 1px solid white;
+}
