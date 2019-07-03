@@ -58,6 +58,33 @@ func GetAllUsers(DB *sql.DB) ([]data.User, error) {
 	return users, nil
 }
 
+//GetAllTasks gets all tasks from DB
+func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
+	var tasks []data.Task
+
+	stmt := "SELECT * FROM tasks"
+	rows, err := DB.Query(stmt)
+	if err != nil {
+		return tasks, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var task data.Task
+		err = rows.Scan(&task.TaskID, &task.TaskName, &task.TaskExecutorType, &task.TaskExecutor, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+		if err != nil {
+			return tasks, err
+		}
+
+		tasks = append(tasks, task)
+	}
+	if rows.Err() != nil {
+		return tasks, err
+	}
+
+	return tasks, nil
+}
+
 //GetAllGroups gets all users from DB
 func GetAllGroups(DB *sql.DB) ([]data.Group, error) {
 	var groups []data.Group
