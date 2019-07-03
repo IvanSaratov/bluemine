@@ -43,14 +43,14 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	taskList, err := readTasks()
+	tasks, err := db.GetAllTasks(server.Core.DB)
 	if err != nil {
-		log.Printf("Error reading tasks: %s", err)
+		log.Printf("Error getting tasks list: %s", err)
 	}
 
 	data := data.ViewData{
 		CurrentUser: helpers.GetCurrentUser(r),
-		Tasks:       taskList,
+		Tasks:       tasks,
 	}
 
 	tmpl, _ := template.ParseFiles("public/html/tasks.html")
