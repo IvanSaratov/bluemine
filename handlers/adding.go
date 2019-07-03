@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/db"
@@ -49,12 +50,16 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		task.TaskName = r.FormValue("task_name")
-		task.TaskStat = r.FormValue("task_stat")
-		task.TaskDateStart = r.FormValue("task_start")
-		task.TaskDateEnd = r.FormValue("task_end")
-		task.TaskExecutorType = r.FormValue("executor_type")
-		task.TaskExecutor = r.FormValue("executor_name")
-		task.TaskRate, _ = strconv.Atoi(r.FormValue("task_rate"))
+		//task.TaskStat = r.FormValue("task_stat")
+		task.TaskStat = "В процессе"
+		//task.TaskDateStart = r.FormValue("task_start")
+		task.TaskDateStart = time.Now()
+		//task.TaskDateEnd = r.FormValue("task_end")
+		task.TaskDateEnd = time.Now()
+		task.TaskExecutorType = r.FormValue("exec_type")
+		task.TaskExecutor = r.FormValue("exec_name")
+		//task.TaskRate, _ = strconv.Atoi(r.FormValue("task_rate"))
+		task.TaskRate = 50
 		description = r.FormValue("task_desc")
 
 		executorID, err = helpers.ConvertExecToID(task.TaskExecutor, task.TaskExecutorType)
@@ -67,7 +72,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 			log.Print(err)
 		}
 
-		f, err := os.OpenFile("/private/docs/"+strconv.Itoa(task.TaskID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		f, err := os.OpenFile("private/docs/"+strconv.Itoa(task.TaskID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			log.Print(err)
 		}
