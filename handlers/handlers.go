@@ -89,14 +89,13 @@ func readTasks() ([]data.Task, error) {
 		var (
 			taskID       int
 			name         string
-			statInt      int
 			executorID   int
 			executorType string
 			stat         string
 			executor     string
 		)
 
-		err = rows.Scan(&taskID, &name, &statInt, &executorID, &executorType)
+		err = rows.Scan(&taskID, &name, &stat, &executorID, &executorType)
 		if err != nil {
 			return nil, err
 		}
