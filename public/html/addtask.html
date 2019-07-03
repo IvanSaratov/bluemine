@@ -37,11 +37,11 @@
                     <select id="inputexec">
                         <option disabled selected>Работники</option>
                         {{range .Users}}
-                        <option value="{{ .UserFIO}}">{{ .UserFIO}}</option>
+                        <option class="user" value="{{ .UserFIO}}">{{ .UserFIO}}</option>
                         {{end}}
                         <option disabled>Группы</option>
                         {{range .Groups}}
-                        <option value="{{ .GroupName}}">{{ .GroupName}}</option>
+                        <option class="group" value="{{ .GroupName}}">{{ .GroupName}}</option>
                         {{end}}
                     </select>
                 </div>
