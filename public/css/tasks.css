@@ -17,8 +17,17 @@
     color: white;
 }
 #content #tasklist table thead th{
+    cursor: default;
     border: 1px solid white;
 }
 #content #tasklist table td{
+    cursor: default;
     border: 1px solid white;
+}
+#content #tasklist table td a{
+    text-decoration: none;
+    color: black;
+}
+#content #tasklist table td a:hover{
+    color: rgb(54, 161, 248);
 }
