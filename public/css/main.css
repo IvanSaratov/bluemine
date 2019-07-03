@@ -59,6 +59,31 @@ html, body{
     margin-left: 15px;
     font-size: 24px;
 }
+
+.topbar_icons{
+    cursor: pointer;
+    width: 35px;
+    text-align: center;
+    font-family: icomoon;
+    font-size: 18px;
+}
+#icoprofile{
+    font-size: 20px;
+}
+#icowiki{
+    font-size: 24px;
+}
+
+#icotasks::before{
+    content: "\e9ba";
+}
+#icoprofile::before{
+    content: "\e971";
+}
+#icowiki::before{
+    content: "\eac8";
+}
+
 @font-face{
     font-family: "icomoon";
     src: url("/public/font/icomoon.ttf");

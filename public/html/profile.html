@@ -11,6 +11,9 @@
     <body>
         <div id="topbar">
             <div id="service">BlueMine</div>
+            <span id="icotasks" class="topbar_icons" onclick="location='/tasks'"></span>
+            <span id="icoprofile" class="topbar_icons" onclick="location='/profile/{{ .CurrentUser.UserName}}'"></span>
+            <span id="icowiki" class="topbar_icons" onclick="location='/wiki'"></span>
             <div id="user">You're log in as 
                 <a href="/profile/{{ .CurrentUser.UserName}}">{{ .CurrentUser.UserName}}</a>
                 <a id="out" href="/logout">(logout)</a>
