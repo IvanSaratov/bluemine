@@ -42,5 +42,5 @@ CREATE TABLE wiki (
     id SERIAL PRIMARY KEY,
     author_id INT NOT NULL,
     father_id INT DEFAULT 0,
-    title STRING NOT NULL,
+    title STRING NOT NULL
 );
