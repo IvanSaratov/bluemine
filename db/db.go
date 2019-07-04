@@ -63,12 +63,18 @@ func GetAllUsers(DB *sql.DB) ([]data.User, error) {
 //GetTask gets info of task from DB
 func GetTask(DB *sql.DB, ID int) (data.Task, error) {
 	var (
-		task   data.Task
-		execID int
+		task      data.Task
+		execID    int
+		creatorID int
 	)
 
 	stmt := "SELECT * FROM tasks WHERE id = $1"
-	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &task.TaskExecutorType, &execID, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &creatorID, &task.TaskExecutorType, &execID, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+	if err != nil {
+		return task, err
+	}
+
+	task.TaskCreator, err = helpers.ConvertIDToExec(creatorID, "user")
 	if err != nil {
 		return task, err
 	}
