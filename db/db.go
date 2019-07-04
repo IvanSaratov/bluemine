@@ -92,6 +92,11 @@ func GetTask(DB *sql.DB, ID int) (data.Task, error) {
 		}
 	}
 
+	err = DB.QueryRow("SELECT username FROM profiles WHERE user_fio = $1", task.TaskCreator).Scan(&task.TaskCreatorName)
+	if err != nil {
+		return task, err
+	}
+
 	return task, nil
 }
 
@@ -139,6 +144,11 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 			{
 				task.TaskExecutorName = task.TaskExecutor
 			}
+		}
+
+		err = DB.QueryRow("SELECT username FROM profiles WHERE user_fio = $1", task.TaskCreator).Scan(&task.TaskCreatorName)
+		if err != nil {
+			return tasks, err
 		}
 
 		tasks = append(tasks, task)
