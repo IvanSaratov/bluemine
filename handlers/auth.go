@@ -51,68 +51,13 @@ func auth(login, password string) (string, error) {
 			return "", err
 		}
 
-		err = db.RegisterUser(server.Core.DB, login, username)
+		err = db.RegisterUser(server.Core.DB, l, login, username)
 		if err != nil {
 			return "", err
 		}
 	}
 
 	return username, err
-}
-
-func addUserToDB(login string, l *ldap.Conn) error {
-	result, err := l.Search(ldap.NewSearchRequest(
-		config.Conf.LdapBaseDN,
-		ldap.ScopeWholeSubtree,
-		ldap.NeverDerefAliases,
-		0,
-		0,
-		false,
-		"(&(sAMAccountName="+login+"))",
-		[]string{"memberOf", "cn"},
-		nil,
-	))
-	if err != nil {
-		return err
-	}
-
-	userFIO := result.Entries[0].GetAttributeValue("cn")
-	var listOfMembers []string
-	for _, x := range result.Entries[0].GetAttributeValues("memberOf") {
-		listOfMembers = append(listOfMembers, x[strings.Index(x, "CN=")+3:strings.Index(x, ",")])
-	}
-
-	createUserStmt := "INSERT INTO profiles (id, username, user_fio) VALUES (DEFAULT, $1, $2) RETURNING id"
-	var userID int64
-	err = server.Core.DB.QueryRow(createUserStmt, login, userFIO).Scan(&userID)
-	if err != nil {
-		return err
-	}
-
-	rows, err := server.Core.DB.Query("SELECT id, group_name FROM groups")
-	if err != nil {
-		return err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var groupID int
-		var groupName string
-		if err = rows.Scan(&groupID, &groupName); err != nil {
-			log.Fatal(err)
-		}
-		for _, ldapGroupName := range listOfMembers {
-			if groupName == ldapGroupName {
-				_, err = server.Core.DB.Exec("INSERT INTO groups_profiles (group_id, profile_id) VALUES ($1, $2)", groupID, userID)
-				if err != nil {
-					return err
-				}
-				break
-			}
-		}
-	}
-
-	return nil
 }
 
 func userExists(login string) error {

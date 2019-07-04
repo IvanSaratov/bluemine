@@ -2,19 +2,64 @@ package db
 
 import (
 	"database/sql"
+	"strings"
 
 	"github.com/IvanSaratov/bluemine/helpers"
-
 	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/config"
+
+	"github.com/go-ldap/ldap"
 )
 
 //RegisterUser adds user to DB
-func RegisterUser(DB *sql.DB, login, userFIO string) error {
-	stmt := "INSERT INTO profiles (id, username, user_fio) VALUES (DEFAULT, $1, $2) RETURNING id"
-	var userID int64
-	err := DB.QueryRow(stmt, login, userFIO).Scan(&userID)
+func RegisterUser(DB *sql.DB, l *ldap.Conn, login, userFIO string) error {
+	result, err := l.Search(ldap.NewSearchRequest(
+		config.Conf.LdapBaseDN,
+		ldap.ScopeWholeSubtree,
+		ldap.NeverDerefAliases,
+		0,
+		0,
+		false,
+		"(&(sAMAccountName="+login+"))",
+		[]string{"memberOf"},
+		nil,
+	))
 	if err != nil {
 		return err
+	}
+
+	var listOfMembers []string
+	for _, x := range result.Entries[0].GetAttributeValues("memberOf") {
+		listOfMembers = append(listOfMembers, x[strings.Index(x, "CN=")+3:strings.Index(x, ",")])
+	}
+ 
+	var userID int64
+	err = DB.QueryRow("INSERT INTO profiles (username, user_fio) VALUES ($1, $2) RETURNING id", login, userFIO).Scan(&userID)
+	if err != nil {
+		return err
+	}
+
+	rows, err := DB.Query("SELECT id, group_name FROM groups")
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var groupID int
+		var groupName string
+		if err = rows.Scan(&groupID, &groupName); err != nil {
+			return err
+		}
+		for _, ldapGroupName := range listOfMembers {
+			if groupName == ldapGroupName {
+				_, err = DB.Exec("INSERT INTO groups_profiles (group_id, profile_id) VALUES ($1, $2)", groupID, userID)
+				if err != nil {
+					return err
+				}
+				break
+			}
+		}
 	}
 
 	return nil
