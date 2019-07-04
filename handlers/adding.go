@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/db"
@@ -54,14 +53,11 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		task.TaskName = r.FormValue("task_name")
 		//task.TaskStat = r.FormValue("task_stat")
 		task.TaskStat = "В процессе"
-		//task.TaskDateStart = r.FormValue("task_start")
-		task.TaskDateStart = time.Now().Format("2012-01-01")
-		//task.TaskDateEnd = r.FormValue("task_end")
-		task.TaskDateEnd = time.Now().Format("2012-01-02")
+		task.TaskDateStart = r.FormValue("task_start")
+		task.TaskDateEnd = r.FormValue("task_end")
 		task.TaskExecutorType = r.FormValue("exec_type")
 		task.TaskExecutor = r.FormValue("exec_name")
-		//task.TaskRate, _ = strconv.Atoi(r.FormValue("task_rate"))
-		task.TaskRate = 50
+		task.TaskRate, _ = strconv.Atoi(r.FormValue("task_rate"))
 		description = r.FormValue("task_desc")
 
 		executorID, err = helpers.ConvertExecToID(task.TaskExecutor, task.TaskExecutorType)
