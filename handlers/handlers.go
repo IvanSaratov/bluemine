@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/db"
@@ -67,16 +68,25 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := data.ViewData{
-		CurrentUser: helpers.GetCurrentUser(r),
-		TaskData: data.Task{
-			TaskName:     "test",
-			TaskExecutor: "Lox",
-			TaskStat:     "In progress",
-		},
+	vars := mux.Vars(r)
+	taskIDstr := vars["id"]
+
+	taskIDint, err := strconv.Atoi(taskIDstr)
+	if err != nil {
+		log.Printf("Error converting string to int on %s task page: %s", taskIDstr, err)
 	}
 
-	err := server.Core.Templates["taskPage"].ExecuteTemplate(w, "base", data)
+	task, err := db.GetTask(server.Core.DB, taskIDint)
+	if err != nil {
+		log.Printf("Error getting task info from DB on %s task page: %s", taskIDstr, err)
+	}
+
+	data := data.ViewData{
+		CurrentUser: helpers.GetCurrentUser(r),
+		TaskData:    task,
+	}
+
+	err = server.Core.Templates["taskPage"].ExecuteTemplate(w, "base", data)
 	if err != nil {
 		log.Print(err)
 	}
