@@ -5,3 +5,28 @@
     margin: 0 0 0 30px;
     background-color: rgb(221, 221, 221);
 }
+
+#content #task #task_about{
+    display: inline-block;
+    margin: 10px 0 0 10px;
+}
+#content #task #task_about a{
+    text-decoration: none;
+    color: black;
+}
+#content #task #task_about a:hover{
+    color: rgb(54, 161, 248);
+}
+
+#content #task #task_about #task_creator{
+    border-bottom: 1px solid rgb(29, 29, 29);
+}
+
+#content #task #task_about #task_info_left{
+    width: 45%;
+    float: left;
+}
+#content #task #task_about #task_info_right{
+    width: 45%;
+    float: right;
+}
