@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"flag"
 	"fmt"
 	"log"
@@ -31,11 +32,12 @@ func main() {
 		log.Fatal("Error parsing config: ", err)
 	}
 
-	err = server.Init()
+	server.Core.DB, err = sql.Open("postgres", config.Conf.Postgresql)
 	if err != nil {
-		log.Fatal("Error initializing server: ", err)
+		log.Fatal("Error connect to database: ", err)
 	}
 	defer server.Core.DB.Close()
+	log.Println("Connected to database successeful")
 
 	router := mux.NewRouter()
 
