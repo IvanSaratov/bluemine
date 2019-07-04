@@ -108,15 +108,21 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 
 	for rows.Next() {
 		var (
-			task   data.Task
-			execID int
+			task      data.Task
+			creatorID int
+			execID    int
 		)
-		err = rows.Scan(&task.TaskID, &task.TaskName, &task.TaskExecutorType, &execID, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+		err = rows.Scan(&task.TaskID, &task.TaskName, &creatorID, &task.TaskExecutorType, &execID, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 		if err != nil {
 			return tasks, err
 		}
 
 		task.TaskExecutor, err = helpers.ConvertIDToExec(execID, task.TaskExecutorType)
+		if err != nil {
+			return tasks, err
+		}
+
+		task.TaskCreator, err = helpers.ConvertIDToExec(creatorID, "user")
 		if err != nil {
 			return tasks, err
 		}

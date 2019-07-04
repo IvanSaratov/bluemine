@@ -65,7 +65,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Print(err)
 		}
-		
+
 		taskCreatorID, err := helpers.ConvertExecToID(task.TaskCreator, "user")
 		if err != nil {
 			log.Print(err)

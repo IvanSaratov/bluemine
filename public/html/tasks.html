@@ -14,7 +14,8 @@
                     <tr>
                         <th>Имя задачи</th>
                         <th>Статус</th>
-                        <th>Кому Назначена</th>
+                        <th>Открыта кем</th>
+                        <th>Кому назначена</th>
                         <th>Добавлена</th>
                         <th>Закончить до</th>
                         <th>Рейтинг</th>
@@ -25,6 +26,7 @@
                     <tr>
                         <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
                         <td>{{ .TaskStat }}</td>
+                        <td>{{ .TaskCreator }}</td>
                         <td><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutor }}</a></td>
                         <td>{{ .TaskDateStart }}</td>
                         <td>{{ .TaskDateEnd }}</td>
