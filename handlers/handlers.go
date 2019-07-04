@@ -19,6 +19,11 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
 	vars := mux.Vars(r)
 	username := vars["user"]
 
@@ -28,7 +33,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := data.ViewData{
-		CurrentUser: helpers.GetCurrentUser(r),
+		CurrentUser: currentUser,
 		UserData:    user,
 	}
 
@@ -45,13 +50,18 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
 	tasks, err := db.GetAllTasks(server.Core.DB)
 	if err != nil {
 		log.Printf("Error getting tasks list: %s", err)
 	}
 
 	data := data.ViewData{
-		CurrentUser: helpers.GetCurrentUser(r),
+		CurrentUser: currentUser,
 		Tasks:       tasks,
 	}
 
@@ -68,6 +78,11 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
 	vars := mux.Vars(r)
 	taskIDstr := vars["id"]
 
@@ -82,7 +97,7 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := data.ViewData{
-		CurrentUser: helpers.GetCurrentUser(r),
+		CurrentUser: currentUser,
 		TaskData:    task,
 	}
 

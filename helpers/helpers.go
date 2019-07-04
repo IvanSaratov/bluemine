@@ -54,8 +54,15 @@ func ConvertExecToID(executor string, executorType string) (int, error) {
 }
 
 //GetCurrentUser gets info about current logged user
-func GetCurrentUser(r *http.Request) data.User {
+func GetCurrentUser(r *http.Request) (data.User, error) {
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
 
-	return data.User{UserName: fmt.Sprint(session.Values["user"]), UserFIO: fmt.Sprint(session.Values["username"])}
+	var user data.User
+
+	err := server.Core.DB.QueryRow("SELECT * FROM profiles WHERE username = $1", fmt.Sprint(session.Values["user"])).Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }

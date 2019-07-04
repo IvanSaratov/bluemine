@@ -21,6 +21,11 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
 	users, err := db.GetAllUsers(server.Core.DB)
 	if err != nil {
 		log.Printf("Error getting users list: %s", err)
@@ -33,7 +38,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 		data := data.ViewData{
-			CurrentUser: helpers.GetCurrentUser(r),
+			CurrentUser: currentUser,
 			Users:       users,
 			Groups:      groups,
 		}
@@ -51,7 +56,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		task.TaskName = r.FormValue("task_name")
-		task.TaskCreator = "support"
+		task.TaskCreator = currentUser.UserFIO
 		//task.TaskStat = r.FormValue("task_stat")
 		task.TaskStat = "В процессе"
 		task.TaskDateStart = r.FormValue("task_start")
@@ -95,9 +100,14 @@ func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
 	if r.Method == "GET" {
 		data := data.ViewData{
-			CurrentUser: helpers.GetCurrentUser(r),
+			CurrentUser: currentUser,
 		}
 
 		tmpl, _ := template.ParseFiles("public/html/addtask.html")
