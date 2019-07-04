@@ -68,11 +68,8 @@ func userExists(login string) error {
 
 //LoginHandler handle login page
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	session, err := server.Core.Store.Get(r, "bluemine_session")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	session, _ := server.Core.Store.Get(r, "bluemine_session")
+
 	if r.Method == "GET" {
 		http.ServeFile(w, r, "public/html/login.html")
 	} else if r.Method == "POST" {
