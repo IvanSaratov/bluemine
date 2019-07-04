@@ -15,7 +15,7 @@ import (
 //UserProfileHandler handle user's profile page
 func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 301)
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
 
@@ -46,7 +46,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 //TasksHandler handle page with tasks
 func TasksHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 301)
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
 
@@ -74,7 +74,7 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 //TaskPageHandler handle page of task
 func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 301)
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
 
