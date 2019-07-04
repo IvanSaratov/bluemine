@@ -108,6 +108,12 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	session.Values["userName"] = nil
 	session.Values["user"] = nil
-	session.Save(r, w)
-	http.Redirect(w, r, "/login", 301)
+	session.Options.MaxAge = -1
+
+	err = session.Save(r, w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	http.Redirect(w, r, "/login", http.StatusFound)
 }
