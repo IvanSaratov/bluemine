@@ -1,8 +1,8 @@
 #content #tasklist{
-    width: 60%;
+    width: calc(100% - 60px);
     height: calc(100% - 60px);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin: 0 0 0 20px;
+    margin: 0 0 0 30px;
     background-color: rgb(221, 221, 221);
 }
 #content #tasklist table{
@@ -20,6 +20,9 @@
     cursor: default;
     border: 1px solid white;
 }
+#content #tasklist table tbody tr:hover{
+    background-color: rgb(54, 161, 248);
+}
 #content #tasklist table td{
     cursor: default;
     border: 1px solid white;
@@ -29,5 +32,5 @@
     color: black;
 }
 #content #tasklist table td a:hover{
-    color: rgb(54, 161, 248);
+    color: white;
 }
