@@ -15,6 +15,7 @@ type User struct {
 type Task struct {
 	TaskID           int
 	TaskName         string
+	TaskCreator		 string
 	TaskExecutorType string
 	TaskExecutor     string
 	TaskExecutorName string

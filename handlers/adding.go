@@ -51,6 +51,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		task.TaskName = r.FormValue("task_name")
+		task.TaskCreator = "support"
 		//task.TaskStat = r.FormValue("task_stat")
 		task.TaskStat = "В процессе"
 		task.TaskDateStart = r.FormValue("task_start")
@@ -64,8 +65,13 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Print(err)
 		}
+		
+		taskCreatorID, err := helpers.ConvertExecToID(task.TaskCreator, "user")
+		if err != nil {
+			log.Print(err)
+		}
 
-		err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, stat, date_start, date_end, rating, executor_type, executor_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id", task.TaskName, task.TaskStat, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, task.TaskExecutorType, executorID).Scan(&task.TaskID)
+		err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, stat, date_start, date_end, rating, executor_type, executor_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id", task.TaskName, taskCreatorID, task.TaskStat, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, task.TaskExecutorType, executorID).Scan(&task.TaskID)
 		if err != nil {
 			log.Print(err)
 		}
