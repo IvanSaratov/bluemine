@@ -23,18 +23,28 @@
                     </div>
                     <textarea id="input_desc"></textarea>
                 </div>
-                <div id="container_exec">
-                    <div id="exec">Назначена</div>
-                    <select id="input_exec">
-                        <option disabled selected>Работники</option>
-                        {{range .Users}}
-                        <option class="user" value="{{ .UserFIO}}">{{ .UserFIO}}</option>
-                        {{end}}
-                        <option disabled>Группы</option>
-                        {{range .Groups}}
-                        <option class="group" value="{{ .GroupName}}">{{ .GroupName}}</option>
-                        {{end}}
-                    </select>
+                <div id="container_bottom">
+                    <div id="container_exec">
+                        <div id="exec">Назначена</div>
+                        <select id="input_exec">
+                            <option disabled selected>Работники</option>
+                            {{range .Users}}
+                            <option class="user" value="{{ .UserFIO}}">{{ .UserFIO}}</option>
+                            {{end}}
+                            <option disabled>Группы</option>
+                            {{range .Groups}}
+                            <option class="group" value="{{ .GroupName}}">{{ .GroupName}}</option>
+                            {{end}}
+                        </select>
+                        <div id="rate">Рейтинг</div>
+                        <input id="input_rate" type="number">
+                    </div>
+                    <div id="container_date">
+                        <div id="date_start">Дата начала</div>
+                        <input id="input_date_start" type="date">
+                        <div id="date_end">Дата окончания</div>
+                        <input id="input_date_end" type="date">
+                    </div>
                 </div>
                 <button id="send" onclick="tAdd()">Добавить</button>
             </div>

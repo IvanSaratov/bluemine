@@ -6,6 +6,7 @@
     background-color: rgb(221, 221, 221);
     overflow: auto;
 }
+
 #content #addtask #container_task_name{
     width: calc(100% - 20px);
     height: 25px;
@@ -29,6 +30,7 @@
 #content #addtask #container_task_name #input_task_name:focus{
     border: 1px solid #1973BD;
 }
+
 #content #addtask #container_desc{
     display: inline-block;
     width: calc(100% - 20px);
@@ -73,11 +75,16 @@
 #content #addtask #container_desc #input_desc:focus{
     border: 1px solid #1973BD;
 }
-#content #addtask #container_exec{
+
+#content #addtask #container_bottom{
     display: inline-block;
     width: calc(100% - 20px);
     margin-top: 10px;
     margin-left: 10px;
+}
+#content #addtask #container_exec{
+    display: inline-block;
+    width: 50%;
 }
 #content #addtask #container_exec #exec{
     display: inline-block;
@@ -86,9 +93,40 @@
     line-height: 25px;
 }
 #content #addtask #container_exec #input_exec{
+    width: 50%;
+    margin-left: 5px;
+}
+
+#content #addtask #container_exec #rate{
+    margin-left: 10px;
+    display: inline-block;
+    font-size: 18px;
+    height: 25px;
+    line-height: 25px;
+}
+
+#content #addtask #container_date{
+    width: 50%;
+    float: right;
+}
+#content #addtask #container_date #date_start{
+    display: inline-block;
+    font-size: 18px;
+}
+#content #addtask #container_date #input_date_start{
     width: 30%;
     margin-left: 5px;
 }
+#content #addtask #container_date #date_end{
+    margin-left: 10px;
+    display: inline-block;
+    font-size: 18px;
+}
+#content #addtask #container_date #input_date_end{
+    width: 30%;
+    margin-left: 5px;
+}
+
 #content #addtask #send{
     cursor: pointer;
     margin-top: 10px;
