@@ -13,9 +13,9 @@ import (
 
 //Core struct contains main vars of server
 var Core struct {
-	DB    *sql.DB
-	Store *sessions.CookieStore
-	Templates  map[string]*template.Template
+	DB        *sql.DB
+	Store     *sessions.CookieStore
+	Templates map[string]*template.Template
 }
 
 //Init function initializes server
@@ -41,6 +41,7 @@ func Init() (err error) {
 	Core.Templates["addTask"] = temp
 	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/taskpage.html"))
 	Core.Templates["taskPage"] = temp
+	log.Println("All templates parsed")
 
 	return nil
 }
