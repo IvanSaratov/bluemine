@@ -2,7 +2,6 @@ package config
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 
 	"github.com/BurntSushi/toml"
@@ -38,8 +37,6 @@ func ParseConfig(configPath string) error {
 	if _, err = toml.Decode(string(contents), &Conf); err != nil {
 		return err
 	}
-
-	log.Println("Config parsed!")
 
 	return nil
 }

@@ -27,6 +27,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error parsing config: ", err)
 	}
+	log.Println("Config parsed!")
 
 	server.Core.DB, err = sql.Open("postgres", config.Conf.Postgresql)
 	if err != nil {
