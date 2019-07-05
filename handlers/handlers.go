@@ -18,7 +18,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
-	
+
 	currentUser, err := helpers.GetCurrentUser(r)
 	if err != nil {
 		log.Printf("Error getting current user: %s", err)
@@ -43,12 +43,13 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//GroupHandler handle group's profile page
 func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
-	
+
 	currentUser, err := helpers.GetCurrentUser(r)
 	if err != nil {
 		log.Printf("Error getting current user: %s", err)
@@ -64,7 +65,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := data.ViewData{
 		CurrentUser: currentUser,
-		Users: users,
+		Users:       users,
 	}
 
 	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", data)
