@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"strings"
 
-	"github.com/IvanSaratov/bluemine/helpers"
-	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/config"
+	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/helpers"
 
 	"github.com/go-ldap/ldap"
 )
@@ -32,7 +32,7 @@ func RegisterUser(DB *sql.DB, l *ldap.Conn, login, userFIO string) error {
 	for _, x := range result.Entries[0].GetAttributeValues("memberOf") {
 		listOfMembers = append(listOfMembers, x[strings.Index(x, "CN=")+3:strings.Index(x, ",")])
 	}
- 
+
 	var userID int64
 	err = DB.QueryRow("INSERT INTO profiles (username, user_fio) VALUES ($1, $2) RETURNING id", login, userFIO).Scan(&userID)
 	if err != nil {
@@ -108,7 +108,7 @@ func GetAllUsers(DB *sql.DB) ([]data.User, error) {
 func GetGroupUsers(DB *sql.DB, groupName string) ([]data.User, error) {
 	var (
 		groupID int
-		users []data.User
+		users   []data.User
 	)
 
 	stmt := "SELECT id FROM groups WHERE group_name = $1"
