@@ -137,3 +137,20 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 }
+
+//TaskCloseHandler handle page to close task
+func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	taskID, _ := strconv.Atoi(r.FormValue("id"))
+	task, err := db.GetTask(server.Core.DB, taskID)
+	if err != nil {
+		log.Print(err)
+	}
+
+	_, _ = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutor)
+	_, _ = server.Core.DB.Exec("UPDATE tasks SET stat = 'Закрыта' WHERE id = $1", task.TaskID)
+}
