@@ -34,7 +34,7 @@ func main() {
 
 	router.PathPrefix("/private/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !helpers.AlreadyLogin(r) {
-			http.Redirect(w, r, "/admin/login", 302)
+			http.Redirect(w, r, "/login", 302)
 			return
 		}
 
