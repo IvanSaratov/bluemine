@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -23,9 +22,6 @@ func main() {
 	var configPath string
 
 	log.Println("Starting...")
-
-	flag.StringVar(&configPath, "c", "conf.toml", "Path to server configuration")
-	flag.Parse()
 
 	err := config.ParseConfig(configPath)
 	if err != nil {
