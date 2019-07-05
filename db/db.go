@@ -105,6 +105,38 @@ func GetAllUsers(DB *sql.DB) ([]data.User, error) {
 	return users, nil
 }
 
+func GetGroupUsers(DB *sql.DB, groupName string) ([]data.User, error) {
+	var (
+		groupID int
+		users []data.User
+	)
+
+	stmt := "SELECT id FROM groups WHERE group_name = $1"
+	err := DB.QueryRow(stmt, groupName).Scan(&groupID)
+	if err != nil {
+		return users, err
+	}
+
+	rows, err := DB.Query("SELECT * FROM profiles WHERE id = (SELECT profile_id FROM groups_profiles WHERE group_id = $1", groupID)
+	if err != nil {
+		return users, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var user data.User
+
+		err = rows.Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
+		if err != nil {
+			return users, nil
+		}
+
+		users = append(users, user)
+	}
+
+	return users, nil
+}
+
 //GetTask gets info of task from DB
 func GetTask(DB *sql.DB, ID int) (data.Task, error) {
 	var (
