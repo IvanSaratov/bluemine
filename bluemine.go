@@ -32,15 +32,7 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.PathPrefix("/private/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !helpers.AlreadyLogin(r) {
-			http.Redirect(w, r, "/login", 302)
-			return
-		}
-
-		realHandler := http.StripPrefix("/private/", http.FileServer(http.Dir("./private/"))).ServeHTTP
-		realHandler(w, r)
-	})
+	router.PathPrefix("/private/").HandlerFunc(handlers.PrivateHandler)
 	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
 	router.HandleFunc("/login", handlers.LoginHandler)
 	router.HandleFunc("/logout", handlers.LogoutHandler)

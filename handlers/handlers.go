@@ -12,6 +12,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
+//PrivateHandler handle private file server
+func PrivateHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+
+	realHandler := http.StripPrefix("/private/", http.FileServer(http.Dir("./private/"))).ServeHTTP
+	realHandler(w, r)
+}
+
 //UserProfileHandler handle user's profile page
 func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
