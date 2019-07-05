@@ -65,12 +65,14 @@ func RegisterUser(DB *sql.DB, l *ldap.Conn, login, userFIO string) error {
 	return nil
 }
 
-//GetUserInfo gets user info from DB
-func GetUserInfo(DB *sql.DB, login string) (data.User, error) {
-	var user data.User
+//GetUserbyID gets user info from DB
+func GetUserbyID(DB *sql.DB, id int) (data.User, error) {
+	var (
+		user data.User
+		stmt = "SELECT * FROM profiles WHERE id = $1"
+	)
 
-	stmt := "SELECT * FROM profiles WHERE username = $1"
-	err := DB.QueryRow(stmt, login).Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
+	err := DB.QueryRow(stmt, id).Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
 	if err != nil {
 		return user, err
 	}
@@ -136,39 +138,20 @@ func GetTask(DB *sql.DB, ID int) (data.Task, error) {
 		task      data.Task
 		execID    int
 		creatorID int
+		stmt      = "SELECT * FROM tasks WHERE id = $1"
 	)
 
-	stmt := "SELECT * FROM tasks WHERE id = $1"
-	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &creatorID, &task.TaskExecutorType, &execID, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &creatorID, &execID, &task.TaskExecutorType, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 	if err != nil {
 		return task, err
 	}
 
-	task.TaskCreator, err = helpers.ConvertIDToExec(creatorID, "user")
+	task.TaskCreator, err = GetUserbyID(DB, creatorID)
 	if err != nil {
 		return task, err
 	}
 
-	task.TaskExecutor, err = helpers.ConvertIDToExec(execID, task.TaskExecutorType)
-	if err != nil {
-		return task, err
-	}
-
-	switch task.TaskExecutorType {
-	case "user":
-		{
-			err = DB.QueryRow("SELECT username FROM profiles WHERE user_fio = $1", task.TaskExecutor).Scan(&task.TaskExecutorName)
-			if err != nil {
-				return task, err
-			}
-		}
-	case "group":
-		{
-			task.TaskExecutorName = task.TaskExecutor
-		}
-	}
-
-	err = DB.QueryRow("SELECT username FROM profiles WHERE user_fio = $1", task.TaskCreator).Scan(&task.TaskCreatorName)
+	task.TaskExecutor, err = GetUserbyID(DB, execID)
 	if err != nil {
 		return task, err
 	}
