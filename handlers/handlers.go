@@ -32,12 +32,12 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting info about %s: %s", username, err)
 	}
 
-	data := data.ViewData{
+	viewData := data.ViewData{
 		CurrentUser: currentUser,
 		UserData:    user,
 	}
 
-	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", data)
+	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -63,12 +63,12 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting info about %s: %s", groupName, err)
 	}
 
-	data := data.ViewData{
+	viewData := data.ViewData{
 		CurrentUser: currentUser,
 		Users:       users,
 	}
 
-	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", data)
+	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -91,12 +91,12 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting tasks list: %s", err)
 	}
 
-	data := data.ViewData{
+	viewData := data.ViewData{
 		CurrentUser: currentUser,
 		Tasks:       tasks,
 	}
 
-	err = server.Core.Templates["tasks"].ExecuteTemplate(w, "base", data)
+	err = server.Core.Templates["tasks"].ExecuteTemplate(w, "base", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -127,12 +127,12 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting task info from DB on %s task page: %s", taskIDstr, err)
 	}
 
-	data := data.ViewData{
+	viewData := data.ViewData{
 		CurrentUser: currentUser,
 		TaskData:    task,
 	}
 
-	err = server.Core.Templates["taskPage"].ExecuteTemplate(w, "base", data)
+	err = server.Core.Templates["taskPage"].ExecuteTemplate(w, "base", viewData)
 	if err != nil {
 		log.Print(err)
 	}

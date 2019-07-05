@@ -37,13 +37,13 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == "GET" {
-		data := data.ViewData{
+		viewData := data.ViewData{
 			CurrentUser: currentUser,
 			Users:       users,
 			Groups:      groups,
 		}
 
-		err := server.Core.Templates["addTask"].ExecuteTemplate(w, "base", data)
+		err := server.Core.Templates["addTask"].ExecuteTemplate(w, "base", viewData)
 		if err != nil {
 			log.Print(err)
 		}
@@ -106,12 +106,12 @@ func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == "GET" {
-		data := data.ViewData{
+		viewData := data.ViewData{
 			CurrentUser: currentUser,
 		}
 
 		tmpl, _ := template.ParseFiles("public/html/addtask.html")
-		tmpl.Execute(w, data)
+		tmpl.Execute(w, viewData)
 	} else if r.Method == "POST" {
 		var (
 			wiki       data.Wiki
