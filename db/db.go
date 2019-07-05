@@ -162,7 +162,7 @@ func GetTaskbyID(DB *sql.DB, ID int) (data.Task, error) {
 func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 	var (
 		tasks []data.Task
-		stmt  = "SELECT * FROM tasks"
+		stmt  = "SELECT id FROM tasks"
 	)
 
 	rows, err := DB.Query(stmt)
@@ -172,22 +172,14 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var (
-			task      data.Task
-			creatorID int
-			execID    int
-		)
-		err = rows.Scan(&task.TaskID, &task.TaskName, &creatorID, &execID, &task.TaskExecutorType, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+		var task data.Task
+
+		err = rows.Scan(&task.TaskID)
 		if err != nil {
 			return tasks, err
 		}
 
-		task.TaskCreator, err = GetUserbyID(DB, creatorID)
-		if err != nil {
-			return tasks, err
-		}
-
-		task.TaskExecutor, err = GetUserbyID(DB, execID)
+		task, err = GetTaskbyID(DB, task.TaskID)
 		if err != nil {
 			return tasks, err
 		}
