@@ -50,7 +50,6 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 	} else if r.Method == "POST" {
 		var (
 			task        data.Task
-			executorID  int
 			description string
 			err         error
 		)
