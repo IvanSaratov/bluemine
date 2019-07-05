@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -9,7 +8,6 @@ import (
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/handlers"
-	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
 
 	"github.com/braintree/manners"
@@ -43,14 +41,7 @@ func main() {
 	router.HandleFunc("/tasks/new", handlers.AddTaskHandler)
 	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
 	router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if !helpers.AlreadyLogin(r) {
-			http.Redirect(w, r, "/login", 301)
-		} else {
-			session, _ := server.Core.Store.Get(r, "bluemine_session")
-			http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), 301)
-		}
-	})
+	router.HandleFunc("/", handlers.RootHandler)
 
 	ch := make(chan os.Signal)
 	signal.Notify(ch, os.Interrupt, os.Kill)

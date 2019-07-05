@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -11,6 +12,16 @@ import (
 	"github.com/IvanSaratov/bluemine/server"
 	"github.com/gorilla/mux"
 )
+
+//RootHandler handle root path
+func RootHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 301)
+	} else {
+		session, _ := server.Core.Store.Get(r, "bluemine_session")
+		http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), 301)
+	}
+}
 
 //PrivateHandler handle private file server
 func PrivateHandler(w http.ResponseWriter, r *http.Request) {
