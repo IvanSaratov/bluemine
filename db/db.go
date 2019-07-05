@@ -6,7 +6,6 @@ import (
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/data"
-	"github.com/IvanSaratov/bluemine/helpers"
 
 	"github.com/go-ldap/ldap"
 )
@@ -161,9 +160,11 @@ func GetTask(DB *sql.DB, ID int) (data.Task, error) {
 
 //GetAllTasks gets all tasks from DB
 func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
-	var tasks []data.Task
+	var (
+		tasks []data.Task
+		stmt  = "SELECT * FROM tasks"
+	)
 
-	stmt := "SELECT * FROM tasks"
 	rows, err := DB.Query(stmt)
 	if err != nil {
 		return tasks, err
@@ -176,36 +177,17 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 			creatorID int
 			execID    int
 		)
-		err = rows.Scan(&task.TaskID, &task.TaskName, &creatorID, &task.TaskExecutorType, &execID, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+		err = rows.Scan(&task.TaskID, &task.TaskName, &creatorID, &execID, &task.TaskExecutorType, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 		if err != nil {
 			return tasks, err
 		}
 
-		task.TaskExecutor, err = helpers.ConvertIDToExec(execID, task.TaskExecutorType)
+		task.TaskCreator, err = GetUserbyID(DB, creatorID)
 		if err != nil {
 			return tasks, err
 		}
 
-		task.TaskCreator, err = helpers.ConvertIDToExec(creatorID, "user")
-		if err != nil {
-			return tasks, err
-		}
-
-		switch task.TaskExecutorType {
-		case "user":
-			{
-				err = DB.QueryRow("SELECT username FROM profiles WHERE user_fio = $1", task.TaskExecutor).Scan(&task.TaskExecutorName)
-				if err != nil {
-					return tasks, err
-				}
-			}
-		case "group":
-			{
-				task.TaskExecutorName = task.TaskExecutor
-			}
-		}
-
-		err = DB.QueryRow("SELECT username FROM profiles WHERE user_fio = $1", task.TaskCreator).Scan(&task.TaskCreatorName)
+		task.TaskExecutor, err = GetUserbyID(DB, execID)
 		if err != nil {
 			return tasks, err
 		}
