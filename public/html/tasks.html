@@ -27,7 +27,11 @@
                         <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
                         <td>{{ .TaskStat }}</td>
                         <td><a href="/profile/{{ .TaskCreatorName }}">{{ .TaskCreator }}</a></td>
+                        {{ if (eq .TaskExecutorType "group") }}
+                        <td><a href="/group/{{ .TaskExecutorName }}">{{ .TaskExecutor }}</a></td>
+                        {{ else }}
                         <td><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutor }}</a></td>
+                        {{ end }}
                         <td>{{ .TaskDateStart }}</td>
                         <td>{{ .TaskDateEnd }}</td>
                         <td>{{ .TaskRate }}</td>

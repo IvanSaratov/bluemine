@@ -40,5 +40,7 @@ func init() {
 	Core.Templates["addTask"] = temp
 	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/taskpage.html"))
 	Core.Templates["taskPage"] = temp
+	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/group.html"))
+	Core.Templates["group"] = temp
 	log.Println("All templates parsed")
 }
