@@ -131,8 +131,8 @@ func GetGroupUsers(DB *sql.DB, groupName string) ([]data.User, error) {
 	return users, nil
 }
 
-//GetTask gets info of task from DB
-func GetTask(DB *sql.DB, ID int) (data.Task, error) {
+//GetTaskbyID gets task info from DB
+func GetTaskbyID(DB *sql.DB, ID int) (data.Task, error) {
 	var (
 		task      data.Task
 		execID    int
