@@ -143,22 +143,16 @@ func GetGroupUsers(DB *sql.DB, groupName string) ([]data.User, error) {
 func GetTaskbyID(DB *sql.DB, ID int) (data.Task, error) {
 	var (
 		task      data.Task
-		execID    int
 		creatorID int
 		stmt      = "SELECT * FROM tasks WHERE id = $1"
 	)
 
-	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &creatorID, &execID, &task.TaskExecutorType, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &creatorID, &task.TaskExecutor, &task.TaskExecutorType, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 	if err != nil {
 		return task, err
 	}
 
 	task.TaskCreator, err = GetUserbyID(DB, creatorID)
-	if err != nil {
-		return task, err
-	}
-
-	task.TaskExecutor, err = GetUserbyID(DB, execID)
 	if err != nil {
 		return task, err
 	}
@@ -199,6 +193,21 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 	}
 
 	return tasks, nil
+}
+
+//GetGroupbyID gets group info from DB
+func GetGroupbyID(DB *sql.DB, ID int) (data.Group, error) {
+	var (
+		group data.Group
+		stmt  = "SELECT * FROM groups"
+	)
+
+	err := DB.QueryRow(stmt, ID).Scan(&group.GroupID, &group.GroupName)
+	if err != nil {
+		return group, err
+	}
+
+	return group, nil
 }
 
 //GetAllGroups gets all users from DB
