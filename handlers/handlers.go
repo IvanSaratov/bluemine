@@ -18,7 +18,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
-
+	
 	currentUser, err := helpers.GetCurrentUser(r)
 	if err != nil {
 		log.Printf("Error getting current user: %s", err)
@@ -38,6 +38,36 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", data)
+	if err != nil {
+		log.Print(err)
+	}
+}
+
+func GroupHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+	
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
+	vars := mux.Vars(r)
+	groupName := vars["group"]
+
+	users, err := db.GetGroupUsers(server.Core.DB, groupName)
+	if err != nil {
+		log.Printf("Error getting info about %s: %s", groupName, err)
+	}
+
+	data := data.ViewData{
+		CurrentUser: currentUser,
+		Users: users,
+	}
+
+	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", data)
 	if err != nil {
 		log.Print(err)
 	}
