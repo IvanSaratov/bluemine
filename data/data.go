@@ -14,7 +14,7 @@ type Task struct {
 	TaskID           int
 	TaskName         string
 	TaskCreator      User
-	TaskExecutor     User
+	TaskExecutor     int
 	TaskExecutorType string
 	TaskStat         string
 	TaskDateStart    string
