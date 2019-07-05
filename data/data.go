@@ -2,24 +2,20 @@ package data
 
 //User struct describe user
 type User struct {
-	UserID         int
-	UserName       string
-	UserFIO        string
-	UserDepartment string
-	UserGroup      string
-	UserisAdmin    bool
-	UserRate       int
+	UserID      int
+	UserName    string
+	UserFIO     string
+	UserisAdmin bool
+	UserRate    int
 }
 
 //Task struct describe tasks
 type Task struct {
 	TaskID           int
 	TaskName         string
-	TaskCreator      string
-	TaskCreatorName  string
+	TaskCreator      User
+	TaskExecutor     User
 	TaskExecutorType string
-	TaskExecutor     string
-	TaskExecutorName string
 	TaskStat         string
 	TaskDateStart    string
 	TaskDateEnd      string
@@ -28,14 +24,15 @@ type Task struct {
 
 //Group struct describe group
 type Group struct {
-	GroupID   int
-	GroupName string
+	GroupID      int
+	GroupName    string
+	GroupMembers []User
 }
 
 //Wiki struct describe wiki article
 type Wiki struct {
 	WikiID       int
-	WikiAuthorID int
+	WikiAuthor   User
 	WikiFatherID int
 	WikiName     string
 }
@@ -44,6 +41,7 @@ type Wiki struct {
 type ViewData struct {
 	CurrentUser User
 	UserData    User
+	GroupData   Group
 	TaskData    Task
 	Users       []User
 	Groups      []Group
