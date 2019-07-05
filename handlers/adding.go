@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -96,7 +94,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 //AddWikiHandler handle wiki adding page
-func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
+/*func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", 301)
 		return
@@ -135,4 +133,4 @@ func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 			log.Print(err)
 		}
 	}
-}
+}*/

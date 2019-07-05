@@ -39,7 +39,7 @@ func main() {
 	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
 	router.HandleFunc("/tasks/new", handlers.AddTaskHandler)
 	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
-	router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
+	//router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
 	router.HandleFunc("/", handlers.RootHandler)
 
 	ch := make(chan os.Signal)
