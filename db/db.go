@@ -81,9 +81,11 @@ func GetUserbyID(DB *sql.DB, id int) (data.User, error) {
 
 //GetAllUsers gets all users from DB
 func GetAllUsers(DB *sql.DB) ([]data.User, error) {
-	var users []data.User
+	var (
+		users []data.User
+		stmt  = "SELECT id FROM profiles"
+	)
 
-	stmt := "SELECT * FROM profiles"
 	rows, err := DB.Query(stmt)
 	if err != nil {
 		return users, err
@@ -92,7 +94,13 @@ func GetAllUsers(DB *sql.DB) ([]data.User, error) {
 
 	for rows.Next() {
 		var user data.User
-		err = rows.Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
+
+		err = rows.Scan(&user.UserID)
+		if err != nil {
+			return users, err
+		}
+
+		user, err = GetUserbyID(DB, user.UserID)
 		if err != nil {
 			return users, err
 		}
