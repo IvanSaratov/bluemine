@@ -49,7 +49,14 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	username := vars["user"]
 
-	user, err := db.GetUserInfo(server.Core.DB, username)
+	var userID int
+
+	err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE username = $1", username).Scan(&userID)
+	if err != nil {
+		log.Printf("Error getting %s's id: %s", username, err)
+	}
+
+	user, err := db.GetUserbyID(server.Core.DB, userID)
 	if err != nil {
 		log.Printf("Error getting info about %s: %s", username, err)
 	}
@@ -144,7 +151,7 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error converting string to int on %s task page: %s", taskIDstr, err)
 	}
 
-	task, err := db.GetTask(server.Core.DB, taskIDint)
+	task, err := db.GetTaskbyID(server.Core.DB, taskIDint)
 	if err != nil {
 		log.Printf("Error getting task info from DB on %s task page: %s", taskIDstr, err)
 	}
@@ -168,7 +175,7 @@ func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	taskID, _ := strconv.Atoi(r.FormValue("id"))
-	task, err := db.GetTask(server.Core.DB, taskID)
+	task, err := db.GetTaskbyID(server.Core.DB, taskID)
 	if err != nil {
 		log.Print(err)
 	}

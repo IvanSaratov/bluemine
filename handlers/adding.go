@@ -56,27 +56,30 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		task.TaskName = r.FormValue("task_name")
-		task.TaskCreator = currentUser.UserFIO
-		//task.TaskStat = r.FormValue("task_stat")
-		task.TaskStat = "В процессе"
-		task.TaskDateStart = r.FormValue("task_start")
-		task.TaskDateEnd = r.FormValue("task_end")
+
+		task.TaskCreator = currentUser
+
+		task.TaskExecutor, err = strconv.Atoi(r.FormValue("exec_name"))
+		if err != nil {
+			log.Printf("Error converting executor's ID from string to int: %s", err)
+		}
+
 		task.TaskExecutorType = r.FormValue("exec_type")
-		task.TaskExecutor = r.FormValue("exec_name")
-		task.TaskRate, _ = strconv.Atoi(r.FormValue("task_rate"))
+
+		task.TaskStat = "В процессе"
+
+		task.TaskDateStart = r.FormValue("task_start")
+
+		task.TaskDateEnd = r.FormValue("task_end")
+
+		task.TaskRate, err = strconv.Atoi(r.FormValue("task_rate"))
+		if err != nil {
+			log.Printf("Error converting rating from string to int: %s", err)
+		}
+
 		description = r.FormValue("task_desc")
 
-		executorID, err = helpers.ConvertExecToID(task.TaskExecutor, task.TaskExecutorType)
-		if err != nil {
-			log.Print(err)
-		}
-
-		taskCreatorID, err := helpers.ConvertExecToID(task.TaskCreator, "user")
-		if err != nil {
-			log.Print(err)
-		}
-
-		err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, stat, date_start, date_end, rating, executor_type, executor_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id", task.TaskName, taskCreatorID, task.TaskStat, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, task.TaskExecutorType, executorID).Scan(&task.TaskID)
+		err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, executor_id, executor_type, stat, date_start, date_end, rating) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id", task.TaskName, task.TaskCreator.UserID, task.TaskExecutor, task.TaskExecutorType, task.TaskStat, task.TaskDateStart, task.TaskDateEnd, task.TaskRate).Scan(&task.TaskID)
 		if err != nil {
 			log.Print(err)
 		}
