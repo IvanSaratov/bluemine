@@ -21,14 +21,28 @@
 
 #content #task #task_about #task_creator{
     width: 100%;
+    margin-bottom: 5px;
     border-bottom: 1px solid rgb(29, 29, 29);
 }
 
 #content #task #task_about #task_info_left{
     width: 45%;
     float: left;
+    border-bottom: 1px solid rgb(29, 29, 29);
 }
 #content #task #task_about #task_info_right{
     width: 45%;
     float: right;
+    border-bottom: 1px solid rgb(29, 29, 29);
+}
+
+#content #task #task_desc{
+    width: calc(100% - 20px);
+    margin: 10px 0 0 10px;
+}
+#content #task #task_desc object{
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid rgb(29, 29, 29);
 }
