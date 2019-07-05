@@ -11,7 +11,6 @@ import (
 	"github.com/IvanSaratov/bluemine/server"
 
 	"github.com/braintree/manners"
-	_ "github.com/cockroachdb/cockroach-go/crdb"
 	"github.com/gorilla/mux"
 )
 

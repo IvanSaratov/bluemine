@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/IvanSaratov/bluemine/config"
+	_ "github.com/cockroachdb/cockroach-go/crdb"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 )
