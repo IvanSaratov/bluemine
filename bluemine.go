@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	var configPath string
+	var configPath = "conf.toml"
 
 	log.Println("Starting...")
 
