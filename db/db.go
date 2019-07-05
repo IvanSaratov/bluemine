@@ -105,19 +105,12 @@ func GetAllUsers(DB *sql.DB) ([]data.User, error) {
 	return users, nil
 }
 
+//GetGroupUsers gets all users of group from DB
 func GetGroupUsers(DB *sql.DB, groupName string) ([]data.User, error) {
-	var (
-		groupID int
-		users   []data.User
-	)
+	var users []data.User
 
-	stmt := "SELECT id FROM groups WHERE group_name = $1"
-	err := DB.QueryRow(stmt, groupName).Scan(&groupID)
-	if err != nil {
-		return users, err
-	}
-
-	rows, err := DB.Query("SELECT * FROM profiles WHERE id = (SELECT profile_id FROM groups_profiles WHERE group_id = $1", groupID)
+	stmt := "SELECT * FROM profiles WHERE id = (SELECT profile_id FROM groups_profiles WHERE group_id = (SELECT id FROM groups WHERE group_name = $1)"
+	rows, err := DB.Query(stmt, groupName)
 	if err != nil {
 		return users, err
 	}
