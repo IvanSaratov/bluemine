@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -29,12 +28,7 @@ func main() {
 	}
 	log.Println("Config parsed!")
 
-	server.Core.DB, err = sql.Open("postgres", config.Conf.Postgresql)
-	if err != nil {
-		log.Fatal("Error connect to database: ", err)
-	}
 	defer server.Core.DB.Close()
-	log.Println("Connected to database successeful")
 
 	router := mux.NewRouter()
 

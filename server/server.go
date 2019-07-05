@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 
+	"github.com/IvanSaratov/bluemine/config"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 )
@@ -16,8 +17,15 @@ var Core struct {
 	Templates map[string]*template.Template
 }
 
-//Init function initializes server
 func init() {
+	var err error
+
+	Core.DB, err = sql.Open("postgres", config.Conf.Postgresql)
+	if err != nil {
+		log.Fatal("Error connect to database: ", err)
+	}
+	log.Println("Connected to database successfull")
+
 	authKeyOne := securecookie.GenerateRandomKey(64)
 	encryptionKeyOne := securecookie.GenerateRandomKey(32)
 
@@ -42,5 +50,6 @@ func init() {
 	Core.Templates["taskPage"] = temp
 	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/group.html"))
 	Core.Templates["group"] = temp
+
 	log.Println("All templates parsed")
 }
