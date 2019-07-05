@@ -1,0 +1,30 @@
+{{define "styles"}}
+<link href="/public/css/main.css" rel="stylesheet">
+{{end}}
+{{define "scripts"}}        
+<script type="text/javascript" src="/public/js/plugins/jquery-3.4.1.min.js"></script>
+{{end}}    
+{{define "content"}}
+<div id="content">
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Логин пользователя</th>
+                    <th>Имя пользователя</th>
+                    <th>Рейтинг</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Users}}
+                <tr>
+                    <td><a href="/profile/{{ .UserName }}">{{ .UserName }}</a></td>
+                    <td><a href="/profile/{{ .UserName }}">{{ .UserFIO }}</a></td>
+                    <td>{{ .UserRate }}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{end}}
