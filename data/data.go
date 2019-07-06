@@ -11,15 +11,22 @@ type User struct {
 
 //Task struct describe tasks
 type Task struct {
-	TaskID           int
-	TaskName         string
-	TaskCreator      User
-	TaskExecutor     int
+	TaskID   int
+	TaskName string
+
+	TaskCreatorID    int
+	TaskCreactorName string
+	TaskCreatorFIO   string
+
+	TaskExecutorID   int
+	TaskExecutorName string
+	TaskExecutorFIO  string
 	TaskExecutorType string
-	TaskStat         string
-	TaskDateStart    string
-	TaskDateEnd      string
-	TaskRate         int
+
+	TaskStat      string
+	TaskDateStart string
+	TaskDateEnd   string
+	TaskRate      int
 }
 
 //Group struct describe group
