@@ -56,12 +56,12 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 		task.TaskCreator = currentUser
 
-		task.TaskExecutor, err = strconv.Atoi(r.FormValue("exec_name"))
-		if err != nil {
-			log.Printf("Error converting executor's ID from string to int: %s", err)
-		}
-
 		task.TaskExecutorType = r.FormValue("exec_type")
+
+		task.TaskExecutor, err = helpers.ConvertExecToID(r.FormValue("exec_name"), task.TaskExecutorType)
+		if err != nil {
+			log.Printf("Error converting executor's name to ID: %s", err)
+		}
 
 		task.TaskStat = "В процессе"
 
