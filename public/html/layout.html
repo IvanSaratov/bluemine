@@ -16,6 +16,12 @@
             <span id="icoprofile" class="topbar_icons" onclick="location='/profile/{{ .CurrentUser.UserName}}'"></span>
             <span id="icowiki" class="topbar_icons" onclick="location='/wiki'"></span>
             <span id="iconew" class="topbar_icons" onclick="location='/tasks/new'"></span>
+            <ul id="new_item">
+                <li><a href="/tasks/new">Добавить задачу</a></li>
+                <li><a href="/groups/new">Добавить группу</a></li>
+                <li><a href="/wiki/new">Добавить статью</a></li>
+            </ul>
+            </div>
             <div id="user">You're log in as 
                 <a href="/profile/{{ .CurrentUser.UserName}}">{{ .CurrentUser.UserName}}</a>
                 <a id="out" href="/logout">(logout)</a>

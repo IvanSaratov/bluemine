@@ -28,6 +28,17 @@ html, body{
     background-color: rgb(29, 29, 29);
     color: rgb(54, 161, 248);
 }
+#topbar #new_item{
+    position: absolute;
+    margin-top: 35px;
+    margin-left: calc(120px + calc(35px * 4));
+    background-color: white;
+    color: rgb(29, 29, 29);
+}
+#topbar #new_item li{
+    border-bottom: 1px solid rgb(29, 29, 29);
+    min-height: 30px;
+}
 #topbar #user{
     cursor: default;
     position: absolute;
