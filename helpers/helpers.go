@@ -24,7 +24,7 @@ func ConvertIDToExecName(ID int, executorType string) (string, error) {
 
 	switch executorType {
 	case "user":
-		err = server.Core.DB.QueryRow("SELECT user_name FROM profiles WHERE id = $1", ID).Scan(&executor)
+		err = server.Core.DB.QueryRow("SELECT username FROM profiles WHERE id = $1", ID).Scan(&executor)
 	case "group":
 		err = server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", ID).Scan(&executor)
 	default:
@@ -55,7 +55,7 @@ func ConvertExecNameToID(executor string, executorType string) (int, error) {
 
 	switch executorType {
 	case "user":
-		err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE user_name = $1", executor).Scan(&executorID)
+		err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE username = $1", executor).Scan(&executorID)
 	case "group":
 		err = server.Core.DB.QueryRow("SELECT id FROM groups WHERE group_name = $1", executor).Scan(&executorID)
 	default:
