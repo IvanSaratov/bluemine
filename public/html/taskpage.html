@@ -7,23 +7,35 @@
 {{end}}
 {{define "content"}}
 <div id="content">
-    <div id="pagetitle">Задача</div>
-    <div id="task">
+    <div id="pagetitle">{{ .TaskData.TaskName}}</div>
+    <div id="wrap">
         <div id="task_about">
             <div id="task_creator">Добавил(а) <a href="/profile/{{ .TaskData.TaskCreatorName }}">{{ .TaskData.TaskCreatorFIO }}</a></div>
-            <div id="task_info_left">
-                <div id="task_stat">Статус: {{ .TaskData.TaskStat}}</div>
-                <div id="task_exec">Назначена: 
-                    {{ if (eq .TaskData.TaskExecutorType "group") }}
-                    <a href="/group/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorName }}</a></div>
-                    {{ else }}
-                    <a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a>
-                    {{ end }}
+            <div id="task_info">
+                <div id="task_info_left">
+                    <div id="task_stat">
+                        <div class="label">Статус:</div>
+                        <div class="value">{{ .TaskData.TaskStat}}</div>
+                    </div>
+                    <div id="task_exec">
+                        <div class="label">Назначена:</div>
+                        {{ if (eq .TaskData.TaskExecutorType "group") }}
+                        <div class="value"><a href="/group/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorName }}</a></div>
+                        {{ else }}
+                        <div class="value"><a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a></div>
+                        {{ end }}
+                    </div>
                 </div>
-            </div>
-            <div id="task_info_right">
-                <div id="task_date_start">Дата начала: {{ .TaskData.TaskDateStart}}</div>
-                <div id="task_date_end">Срок: {{ .TaskData.TaskDateEnd}}</div>
+                <div id="task_info_right">
+                    <div id="task_date_start">
+                        <div class="label">Дата начала:</div>
+                        <div class="value">{{ .TaskData.TaskDateStart}}</div>
+                    </div>
+                    <div id="task_date_end">
+                        <div class="label">Срок:</div>
+                        <div class="value">{{ .TaskData.TaskDateEnd}}</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="task_desc">

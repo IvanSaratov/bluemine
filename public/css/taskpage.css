@@ -30,15 +30,17 @@
     border-bottom: 1px solid rgb(29, 29, 29);
 }
 
+#content #task #task_about #task_info{
+    border-bottom: 1px solid rgb(29, 29, 29);
+}
+
 #content #task #task_about #task_info_left{
     width: 45%;
     float: left;
-    border-bottom: 1px solid rgb(29, 29, 29);
 }
 #content #task #task_about #task_info_right{
     width: 45%;
     float: right;
-    border-bottom: 1px solid rgb(29, 29, 29);
 }
 
 #content #task #task_desc{
