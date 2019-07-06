@@ -58,7 +58,7 @@ html, body{
     cursor: default;
     position: absolute;
     right: 0;
-    margin-right: 10px;
+    margin-right: 45px;
 }
 #topbar #user a{
     cursor: pointer;
@@ -106,6 +106,10 @@ html, body{
 }
 #icowiki{
     font-size: 24px;
+}
+#icoout{
+    position: absolute;
+    right: 0;
 }
 
 #icotasks::before{
