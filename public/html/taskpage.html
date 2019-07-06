@@ -13,11 +13,11 @@
             <div id="task_creator">Добавил(а) <a href="/profile/{{ .TaskData.TaskCreatorName }}">{{ .TaskData.TaskCreatorFIO }}</a></div>
             <div id="task_info">
                 <div id="task_info_left">
-                    <div id="task_stat">
+                    <div class="task_rec" id="task_stat">
                         <div class="label">Статус:</div>
                         <div class="value">{{ .TaskData.TaskStat}}</div>
                     </div>
-                    <div id="task_exec">
+                    <div class="task_rec" id="task_exec">
                         <div class="label">Назначена:</div>
                         {{ if (eq .TaskData.TaskExecutorType "group") }}
                         <div class="value"><a href="/group/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorName }}</a></div>
@@ -26,12 +26,12 @@
                         {{ end }}
                     </div>
                 </div>
-                <div id="task_info_right">
-                    <div id="task_date_start">
+                <div id="task_info_left">
+                    <div class="task_rec" id="task_date_start">
                         <div class="label">Дата начала:</div>
                         <div class="value">{{ .TaskData.TaskDateStart}}</div>
                     </div>
-                    <div id="task_date_end">
+                    <div class="task_rec" id="task_date_end">
                         <div class="label">Срок:</div>
                         <div class="value">{{ .TaskData.TaskDateEnd}}</div>
                     </div>
