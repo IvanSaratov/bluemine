@@ -14,7 +14,7 @@
             <div id="task_info_left">
                 <div id="task_stat">Статус: {{ .TaskData.TaskStat}}</div>
                 <div id="task_exec">Назначена: 
-                    {{ if (eq .TaskExecutorType "group") }}
+                    {{ if (eq .TaskData.TaskExecutorType "group") }}
                     <a href="/group/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorName }}</a></div>
                     {{ else }}
                     <div id="task_exec">Назначена: <a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a>
