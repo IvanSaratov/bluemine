@@ -180,6 +180,6 @@ func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
-	_, _ = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutor)
+	_, _ = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutorFIO)
 	_, _ = server.Core.DB.Exec("UPDATE tasks SET stat = 'Закрыта' WHERE id = $1", task.TaskID)
 }

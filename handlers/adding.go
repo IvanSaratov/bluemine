@@ -54,7 +54,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 		task.TaskName = r.FormValue("task_name")
 
-		task.TaskCreator = currentUser
+		task.TaskCreatorID = currentUser.UserID
 
 		task.TaskExecutorType = r.FormValue("exec_type")
 
@@ -76,7 +76,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 		description = r.FormValue("task_desc")
 
-		err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, executor_id, executor_type, stat, date_start, date_end, rating) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id", task.TaskName, task.TaskCreator.UserID, task.TaskExecutor, task.TaskExecutorType, task.TaskStat, task.TaskDateStart, task.TaskDateEnd, task.TaskRate).Scan(&task.TaskID)
+		_, err = server.Core.DB.Exec("INSERT INTO tasks (task_name, task_creator, executor_id, executor_type, stat, date_start, date_end, rating) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskDateStart, task.TaskDateEnd, task.TaskRate)
 		if err != nil {
 			log.Print(err)
 		}
