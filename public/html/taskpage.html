@@ -17,7 +17,7 @@
                     {{ if (eq .TaskData.TaskExecutorType "group") }}
                     <a href="/group/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorName }}</a></div>
                     {{ else }}
-                    <div id="task_exec">Назначена: <a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a>
+                    <a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a>
                     {{ end }}
                 </div>
             </div>
