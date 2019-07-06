@@ -26,11 +26,11 @@
                     <tr>
                         <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
                         <td>{{ .TaskStat }}</td>
-                        <td><a href="/profile/{{ .TaskCreatorName }}">{{ .TaskCreator }}</a></td>
+                        <td><a href="/profile/{{ .TaskCreatorName }}">{{ .TaskCreatorName }}</a></td>
                         {{ if (eq .TaskExecutorType "group") }}
-                        <td><a href="/group/{{ .TaskExecutorName }}">{{ .TaskExecutor }}</a></td>
+                        <td><a href="/group/{{ .TaskExecutorName }}">{{ .TaskExecutorName }}</a></td>
                         {{ else }}
-                        <td><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutor }}</a></td>
+                        <td><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutorFIO }}</a></td>
                         {{ end }}
                         <td>{{ .TaskDateStart }}</td>
                         <td>{{ .TaskDateEnd }}</td>
