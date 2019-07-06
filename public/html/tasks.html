@@ -14,8 +14,8 @@
                     <tr>
                         <th>Имя задачи</th>
                         <th>Статус</th>
-                        <th>Открыта кем</th>
-                        <th>Кому назначена</th>
+                        <th>Открыта</th>
+                        <th>Назначена</th>
                         <th>Добавлена</th>
                         <th>Закончить до</th>
                         <th>Рейтинг</th>
@@ -26,7 +26,7 @@
                     <tr>
                         <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
                         <td>{{ .TaskStat }}</td>
-                        <td><a href="/profile/{{ .TaskCreatorName }}">{{ .TaskCreatorName }}</a></td>
+                        <td><a href="/profile/{{ .TaskCreatorName }}">{{ .TaskCreatorFIO }}</a></td>
                         {{ if (eq .TaskExecutorType "group") }}
                         <td><a href="/group/{{ .TaskExecutorName }}">{{ .TaskExecutorName }}</a></td>
                         {{ else }}
