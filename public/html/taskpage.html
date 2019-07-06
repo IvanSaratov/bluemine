@@ -10,10 +10,16 @@
     <div id="pagetitle">Задача</div>
     <div id="task">
         <div id="task_about">
-            <div id="task_creator">Добавил(а) <a href="/profile/{{ .TaskData.TaskCreatorName }}">{{ .TaskData.TaskCreator }}</a></div>
+            <div id="task_creator">Добавил(а) <a href="/profile/{{ .TaskData.TaskCreatorName }}">{{ .TaskData.TaskCreatorFIO }}</a></div>
             <div id="task_info_left">
                 <div id="task_stat">Статус: {{ .TaskData.TaskStat}}</div>
-                <div id="task_exec">Назначена: <a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutor }}</a></div>
+                <div id="task_exec">Назначена: 
+                    {{ if (eq .TaskExecutorType "group") }}
+                    <a href="/group/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorName }}</a></div>
+                    {{ else }}
+                    <div id="task_exec">Назначена: <a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a>
+                    {{ end }}
+                </div>
             </div>
             <div id="task_info_right">
                 <div id="task_date_start">Дата начала: {{ .TaskData.TaskDateStart}}</div>
