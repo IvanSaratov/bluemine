@@ -58,7 +58,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 		task.TaskExecutorType = r.FormValue("exec_type")
 
-		task.TaskExecutorID, err = helpers.ConvertExecToID(r.FormValue("exec_name"), task.TaskExecutorType)
+		task.TaskExecutorID, err = helpers.ConvertExecNameToID(r.FormValue("exec_name"), task.TaskExecutorType)
 		if err != nil {
 			log.Printf("Error converting executor's name to ID: %s", err)
 		}
