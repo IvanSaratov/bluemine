@@ -58,7 +58,7 @@ html, body{
     cursor: default;
     position: absolute;
     right: 0;
-    margin-right: 45px;
+    margin-right: 40px;
 }
 #topbar #user a{
     cursor: pointer;
