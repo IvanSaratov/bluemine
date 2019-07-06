@@ -14,9 +14,9 @@ type Task struct {
 	TaskID   int
 	TaskName string
 
-	TaskCreatorID    int
-	TaskCreactorName string
-	TaskCreatorFIO   string
+	TaskCreatorID   int
+	TaskCreatorName string
+	TaskCreatorFIO  string
 
 	TaskExecutorID   int
 	TaskExecutorName string
