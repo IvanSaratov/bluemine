@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"strings"
 
+	"github.com/IvanSaratov/bluemine/helpers"
+
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/data"
 
@@ -149,6 +151,28 @@ func GetTaskbyID(DB *sql.DB, ID int) (data.Task, error) {
 	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &task.TaskCreatorID, &task.TaskExecutorID, &task.TaskExecutorType, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 	if err != nil {
 		return task, err
+	}
+
+	task.TaskCreatorName, err = helpers.ConvertIDToExecName(task.TaskCreatorID, "user")
+	if err != nil {
+		return task, err
+	}
+
+	task.TaskCreatorFIO, err = helpers.ConvertIDToExecFIO(task.TaskCreatorID)
+	if err != nil {
+		return task, err
+	}
+
+	task.TaskExecutorName, err = helpers.ConvertIDToExecName(task.TaskExecutorID, task.TaskExecutorType)
+	if err != nil {
+		return task, err
+	}
+
+	if task.TaskExecutorType == "user" {
+		task.TaskExecutorFIO, err = helpers.ConvertIDToExecFIO(task.TaskExecutorID)
+		if err != nil {
+			return task, err
+		}
 	}
 
 	return task, nil
