@@ -6,7 +6,6 @@ import (
 	"log"
 
 	"github.com/IvanSaratov/bluemine/config"
-	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 )
 
@@ -19,21 +18,17 @@ var Core struct {
 
 //Init function initializes server
 func Init() {
-	var (
-		err           error
-		authKey       = securecookie.GenerateRandomKey(64)
-		encryptionKey = securecookie.GenerateRandomKey(32)
-	)
+	var err error
 
-	Core.DB, err = sql.Open("postgres", config.Conf.Postgresql)
+	Core.DB, err = sql.Open("postgres", config.Conf.DBHost)
 	if err != nil {
 		log.Fatal("Error connecting to database: ", err)
 	}
 	log.Println("Connected to database successfull")
 
 	Core.Store = sessions.NewCookieStore(
-		authKey,
-		encryptionKey,
+		[]byte(config.Conf.SessionKey),
+		[]byte(config.Conf.EncryptionKey),
 	)
 
 	Core.Store.Options = &sessions.Options{

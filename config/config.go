@@ -9,16 +9,16 @@ import (
 
 //Conf storing main datas
 var Conf struct {
-	Postgresql   string
-	Memcache     string
-	Bind         string
-	BindTLS      string
-	Host         string
-	LdapServer   string
-	LdapBaseDN   string
-	LdapUser     string
-	LdapPassword string
-	SessionKey   string
+	DBHost        string `toml:"dbHost"`
+	Memcache      string `toml:"Memcache"`
+	Port          string `toml:"Port"`
+	Host          string `toml:"Host"`
+	LdapServer    string `toml:"ldapServer"`
+	LdapBaseDN    string `toml:"ldapBaseDN"`
+	LdapUser      string `toml:"ldapUser"`
+	LdapPassword  string `toml:"ldapPassword"`
+	SessionKey    string `toml:"sessionKey"`
+	EncryptionKey string `toml:"encryptionKey"`
 }
 
 //ParseConfig to parse .toml config
