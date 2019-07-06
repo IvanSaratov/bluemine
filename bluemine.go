@@ -39,6 +39,7 @@ func main() {
 	router.HandleFunc("/group/{group}", handlers.GroupHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
+	router.HandleFunc("/gettaskdesc", handlers.GetTaskDesc)
 	router.HandleFunc("/tasks/new", handlers.AddTaskHandler)
 	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
 	//router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
