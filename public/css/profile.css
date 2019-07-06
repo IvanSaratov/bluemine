@@ -1,3 +1,8 @@
+#topbar #icoprofile{
+    background-color: white;
+    color: rgb(29, 29, 29);
+}
+
 #content #userinfo{
     width: 40%;
     height: calc(100% - 60px);
