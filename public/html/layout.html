@@ -24,8 +24,8 @@
             </ul>
             <div id="user">You're log in as 
                 <a href="/profile/{{ .CurrentUser.UserName}}">{{ .CurrentUser.UserName}}</a>
+                <span id="icoout" class="topbar_icons" onclick="location='/logout'"></span>
             </div>
-            <span id="icoout" class="topbar_icons" onclick="location='/logout'"></span>
     </div>
     {{end}}
     {{template "content" .}}
