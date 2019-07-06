@@ -41,7 +41,7 @@ html, body{
 }
 #topbar #new_item li{
     border-bottom: 1px solid rgb(29, 29, 29);
-    min-height: 30px;
+    min-height: 20px;
 }
 #topbar #new_item li:hover{
     text-decoration: none;
@@ -90,6 +90,8 @@ html, body{
     text-align: center;
     font-family: icomoon;
     font-size: 18px;
+}.topbar_icons:hover{
+    background-color: rgb(29, 29, 29);
 }
 #icoprofile{
     font-size: 20px;
