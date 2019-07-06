@@ -15,8 +15,8 @@ func AlreadyLogin(r *http.Request) bool {
 	return session.Values["userName"] != nil
 }
 
-//ConvertIDToExec convert executor ID to executor string
-func ConvertIDToExec(ID int, executorType string) (string, error) {
+//ConvertIDToExecName convert executor's ID to executor's name
+func ConvertIDToExecName(ID int, executorType string) (string, error) {
 	var (
 		executor string
 		err      error
@@ -24,7 +24,7 @@ func ConvertIDToExec(ID int, executorType string) (string, error) {
 
 	switch executorType {
 	case "user":
-		err = server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", ID).Scan(&executor)
+		err = server.Core.DB.QueryRow("SELECT user_name FROM profiles WHERE id = $1", ID).Scan(&executor)
 	case "group":
 		err = server.Core.DB.QueryRow("SELECT group_name FROM groups WHERE id = $1", ID).Scan(&executor)
 	default:
@@ -34,8 +34,20 @@ func ConvertIDToExec(ID int, executorType string) (string, error) {
 	return executor, err
 }
 
-//ConvertExecToID convert executor string to executor ID
-func ConvertExecToID(executor string, executorType string) (int, error) {
+//ConvertIDToExecFIO convert executor's ID to executor's fio
+func ConvertIDToExecFIO(ID int) (string, error) {
+	var (
+		executor string
+		err      error
+	)
+
+	err = server.Core.DB.QueryRow("SELECT user_fio FROM profiles WHERE id = $1", ID).Scan(&executor)
+
+	return executor, err
+}
+
+//ConvertExecNameToID convert executor's name to executor's ID
+func ConvertExecNameToID(executor string, executorType string) (int, error) {
 	var (
 		executorID int
 		err        error
@@ -43,12 +55,24 @@ func ConvertExecToID(executor string, executorType string) (int, error) {
 
 	switch executorType {
 	case "user":
-		err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE user_fio = $1", executor).Scan(&executorID)
+		err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE user_name = $1", executor).Scan(&executorID)
 	case "group":
 		err = server.Core.DB.QueryRow("SELECT id FROM groups WHERE group_name = $1", executor).Scan(&executorID)
 	default:
 		return -1, errors.New("Wrong executor_type")
 	}
+
+	return executorID, err
+}
+
+//ConvertExecFIOToID convert executor's fio to executor's ID
+func ConvertExecFIOToID(ID string) (int, error) {
+	var (
+		executorID int
+		err        error
+	)
+
+	err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE user_fio = $1", ID).Scan(&executorID)
 
 	return executorID, err
 }
