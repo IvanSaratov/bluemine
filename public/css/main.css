@@ -29,15 +29,28 @@ html, body{
     color: rgb(54, 161, 248);
 }
 #topbar #new_item{
+    width: 120px;
+    text-align: center;
     position: absolute;
     margin-top: 35px;
-    margin-left: calc(120px + calc(35px * 4));
+    margin-left: calc(120px + calc(35px * 3));
+    padding: 0px;
+    list-style-type: none;
     background-color: white;
     color: rgb(29, 29, 29);
 }
 #topbar #new_item li{
     border-bottom: 1px solid rgb(29, 29, 29);
     min-height: 30px;
+}
+#topbar #new_item li:hover{
+    text-decoration: none;
+    background-color: #1973BD;
+    color: white;
+}
+#topbar #new_item li a{
+    text-decoration: none;
+    color: rgb(29, 29, 29);
 }
 #topbar #user{
     cursor: default;
