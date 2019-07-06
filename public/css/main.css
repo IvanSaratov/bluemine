@@ -41,11 +41,11 @@ html, body{
 }
 #topbar #new_item li{
     border-bottom: 1px solid rgb(29, 29, 29);
-    min-height: 20px;
+    min-height: 25px;
 }
 #topbar #new_item li a{
-    min-height: 20px;
-    line-height: 20px;
+    min-height: 25px;
+    line-height: 25px;
     display: block;
     text-decoration: none;
     color: rgb(29, 29, 29);
@@ -53,6 +53,9 @@ html, body{
 #topbar #new_item li a:hover{
     background-color: #1973BD;
     color: white;
+}
+#topbar #new_item li a:hover ~ #iconew{
+    background-color: rgb(29, 29, 29);
 }
 #topbar #user{
     cursor: default;
@@ -92,8 +95,9 @@ html, body{
     text-align: center;
     font-family: icomoon;
     font-size: 18px;
-    transition: 0.3s;
-}.topbar_icons:hover{
+    transition: 0.2s;
+}
+.topbar_icons:hover{
     background-color: rgb(29, 29, 29);
 }
 #icoprofile{
