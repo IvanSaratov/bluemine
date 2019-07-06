@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
@@ -32,6 +33,26 @@ func PrivateHandler(w http.ResponseWriter, r *http.Request) {
 
 	realHandler := http.StripPrefix("/private/", http.FileServer(http.Dir("./private/"))).ServeHTTP
 	realHandler(w, r)
+}
+
+//GetTaskDesc sends task description to task page
+func GetTaskDesc(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+
+	if r.Method == "GET" {
+		id := r.FormValue("id")
+
+		bytes, err := ioutil.ReadFile("private/docs/" + id + ".txt")
+		if err != nil {
+			log.Printf("Error reading file with description for %s: %s", id, err)
+			w.Write([]byte("Ошибка при чтении файла с описанием: " + fmt.Sprintf("%s", err)))
+		}
+
+		w.Write(bytes)
+	}
 }
 
 //UserProfileHandler handle user's profile page
