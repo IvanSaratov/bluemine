@@ -58,12 +58,21 @@
     text-overflow: ellipsis;
 }
 
-#content #wrap #task_desc{
-    width: calc(100% - 20px);
+#content #wrap #task_about #task_desc .label{
+    font-weight: bold;
 }
-#content #wrap #task_desc object{
-    float: left;
-    width: 100%;
-    overflow: hidden;
-    border-bottom: 1px solid rgb(29, 29, 29);
+
+#content #wrap #close{
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 120px;
+    height: 25px;
+    border: none;
+    background-color: #1973BD;
+    color: white;
+    transition: 0.2s;
+}
+#content #wrap #close:hover{
+    background-color: rgb(54, 161, 248);
 }
