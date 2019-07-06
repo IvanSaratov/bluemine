@@ -120,6 +120,9 @@ html, body{
 #iconew::before{
     content: "\ea0a"
 }
+#icoout::before{
+    content: "\ea14"
+}
 
 @font-face{
     font-family: "icomoon";
