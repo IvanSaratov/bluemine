@@ -83,7 +83,7 @@
 }
 
 #content #wrap #container_labels{
-    width: 100%;
+    width: calc(100% - 20px);
     height: auto;
     margin-top: 10px;
     margin-left: 10px;
