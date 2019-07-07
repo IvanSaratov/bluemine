@@ -12,7 +12,7 @@
     overflow: auto;
     border-radius: 3px;
 }
-#content #wrap #task_about #task_info_left .task_rec{
+.task_rec{
     padding-left: 180px;
     clear: left;
 }
