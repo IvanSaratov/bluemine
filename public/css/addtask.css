@@ -12,18 +12,6 @@
     overflow: auto;
     border-radius: 3px;
 }
-.task_rec{
-    padding-left: 180px;
-    clear: left;
-}
-#content #wrap .task_rec .label{
-    font-weight: bold;
-    width: 170px;
-    margin-left: -180px;
-    float: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 #content #wrap #container_task_general{
     width: calc(100% - 20px);

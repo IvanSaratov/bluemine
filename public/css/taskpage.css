@@ -45,25 +45,10 @@
     float: left;
     width: 49%;
 }
-#content #wrap #task_about #task_info_left .task_rec{
-    padding-left: 180px;
-    clear: left;
-}
-#content #wrap #task_about #task_info_left .task_rec .label{
-    font-weight: bold;
-    width: 170px;
-    margin-left: -180px;
-    float: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 #content #wrap #task_about #task_desc{
     padding-bottom: 5px;
     border-bottom: 1px solid rgb(29, 29, 29);
-}
-#content #wrap #task_about #task_desc .label{
-    font-weight: bold;
 }
 
 #content #wrap #close{
