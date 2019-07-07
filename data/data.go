@@ -65,4 +65,5 @@ type ViewData struct {
 	Users       []User
 	Groups      []Group
 	Tasks       []Task
+	Templates   []TaskTmpl
 }

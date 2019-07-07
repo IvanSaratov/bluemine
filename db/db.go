@@ -188,6 +188,36 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 	return tasks, nil
 }
 
+//GetAllTaskTemplates gets all task templates from DB
+func GetAllTaskTemplates(DB *sql.DB) ([]data.TaskTmpl, error) {
+	var (
+		tmpls []data.TaskTmpl
+		stmt  = "SELECT * FROM task_template"
+	)
+
+	rows, err := DB.Query(stmt)
+	if err != nil {
+		return tmpls, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var tmpl data.TaskTmpl
+
+		err = rows.Scan(&tmpl.TmplID, &tmpl.TmplName, &tmpl.TmplStat, &tmpl.TmplPriority, &tmpl.TmplRate)
+		if err != nil {
+			return tmpls, err
+		}
+
+		tmpls = append(tmpls, tmpl)
+	}
+	if rows.Err() != nil {
+		return tmpls, err
+	}
+
+	return tmpls, nil
+}
+
 //GetGroupbyID gets group info from DB
 func GetGroupbyID(DB *sql.DB, ID int) (data.Group, error) {
 	var (
