@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/db"
@@ -77,7 +78,13 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		task.TaskStat = "В процессе"
+		task.TaskStat = r.FormValue("task_stat")
+
+		task.TaskPriority = r.FormValue("task_priority")
+
+		task.TaskDateAdded = time.Now().Format("2006-01-02 15:04:05")
+
+		task.TaskDateLastUpdate = time.Now().Format("2006-01-02 15:04:05")
 
 		task.TaskDateStart = r.FormValue("task_start")
 
@@ -90,7 +97,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 		description = r.FormValue("task_desc")
 
-		err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, executor_id, executor_type, stat, date_start, date_end, rating) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskDateStart, task.TaskDateEnd, task.TaskRate).Scan(&task.TaskID)
+		err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, executor_id, executor_type, stat, priority, date_added, date_last_update, date_start, date_end, rating) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateAdded, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate).Scan(&task.TaskID)
 		if err != nil {
 			log.Print(err)
 		}

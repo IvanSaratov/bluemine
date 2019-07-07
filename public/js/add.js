@@ -1,6 +1,8 @@
 function tAdd(){
     var name = document.getElementById("input_task_name").value;
     var desc = document.getElementById("input_desc").value;
+    var stat = document.getElementById("input_stat").value;
+    var priority = document.getElementById("input_priority").value;
     var exec = document.getElementById("input_exec").value;
     var exec_type = $('#input_exec :selected').attr('class');
     var rate = document.getElementById("input_rate").value;
@@ -15,6 +17,8 @@ function tAdd(){
             data: {
                 task_name: name,
                 task_desc: desc,
+                task_stat: stat,
+                task_priority: priority,
                 exec_name: exec,
                 exec_type: exec_type,
                 task_rate: rate,
