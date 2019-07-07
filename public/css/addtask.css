@@ -19,8 +19,6 @@
     margin-left: 10px;
 }
 #content #wrap #container_task_general #task_name, #task_tmpl{
-    padding-left: 180px;
-    clear: left;
     font-size: 18px;
     height: 25px;
     line-height: 25px;
@@ -87,53 +85,13 @@
 #content #wrap #container_labels{
     width: 100%;
     height: auto;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
     overflow: auto;
 }
 #content #wrap #container_labels #container_labels_left{
     float: left;
     width: 49%;
-}
-#content #wrap #container_labels_left #exec{
-    display: inline-block;
-    font-size: 18px;
-    height: 25px;
-    line-height: 25px;
-}
-#content #wrap #container_exec #input_exec{
-    width: 50%;
-    margin-left: 5px;
-}
-
-#content #wrap #container_exec #rate{
-    margin-left: 10px;
-    display: inline-block;
-    font-size: 18px;
-    height: 25px;
-    line-height: 25px;
-}
-
-#content #wrap #container_date{
-    width: 50%;
-    float: right;
-}
-#content #wrap #container_date #date_start{
-    display: inline-block;
-    font-size: 18px;
-}
-#content #wrap #container_date #input_date_start{
-    width: 30%;
-    margin-left: 5px;
-}
-#content #wrap #container_date #date_end{
-    margin-left: 10px;
-    display: inline-block;
-    font-size: 18px;
-}
-#content #wrap #container_date #input_date_end{
-    width: 30%;
-    margin-left: 5px;
 }
 
 #content #wrap #send{
