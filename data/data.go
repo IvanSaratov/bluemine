@@ -23,10 +23,22 @@ type Task struct {
 	TaskExecutorFIO  string
 	TaskExecutorType string
 
-	TaskStat      string
-	TaskDateStart string
-	TaskDateEnd   string
-	TaskRate      int
+	TaskStat           string
+	TaskPriority       string
+	TaskDateAdded      string
+	TaskDateLastUpdate string
+	TaskDateStart      string
+	TaskDateEnd        string
+	TaskRate           int
+}
+
+//TaskTmpl struct describe task template
+type TaskTmpl struct {
+	TmplID       int
+	TmplName     string
+	TmplStat     string
+	TmplPriority string
+	TmplRate     int
 }
 
 //Group struct describe group
