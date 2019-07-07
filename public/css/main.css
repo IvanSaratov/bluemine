@@ -104,6 +104,9 @@ html, body{
 #icoprofile{
     font-size: 20px;
 }
+#icogroups{
+    font-size: 20px;
+}
 #icowiki{
     font-size: 24px;
 }
@@ -117,6 +120,9 @@ html, body{
 }
 #icoprofile::before{
     content: "\e971";
+}
+#icogroups::before{
+    content: "\e972";
 }
 #icowiki::before{
     content: "\eac8";
