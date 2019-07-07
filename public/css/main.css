@@ -119,6 +119,7 @@ html, body{
 
 .task_rec{
     padding-left: 180px;
+    padding-bottom: 5px;
     clear: left;
 }
 .label{
