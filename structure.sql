@@ -15,9 +15,20 @@ CREATE TABLE tasks (
     task_creator INT NOT NULL,
     executor_id INT NOT NULL,
     executor_type STRING NOT NULL,
-    stat STRING DEFAULT 'В процессе',
+    stat STRING NOT NULL,
+    priority STRING NOT NULL,
+    date_added STRING NOT NULL,
+    date_last_update STRING NOT NULL,
     date_start STRING NOT NULL,
     date_end STRING NOT NULL,
+    rating INT DEFAULT 0
+);
+
+CREATE TABLE task_template (
+    id SERIAL PRIMARY KEY,
+    tmpl_name STRING NOT NULL,
+    stat STRING NOT NULL,
+    priority STRING NOT NULL,
     rating INT DEFAULT 0
 );
 
