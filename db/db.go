@@ -123,7 +123,7 @@ func GetTaskbyID(DB *sql.DB, ID int) (data.Task, error) {
 		stmt = "SELECT * FROM tasks WHERE id = $1"
 	)
 
-	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &task.TaskCreatorID, &task.TaskExecutorID, &task.TaskExecutorType, &task.TaskStat, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
+	err := DB.QueryRow(stmt, ID).Scan(&task.TaskID, &task.TaskName, &task.TaskCreatorID, &task.TaskExecutorID, &task.TaskExecutorType, &task.TaskStat, &task.TaskPriority, &task.TaskDateAdded, &task.TaskDateLastUpdate, &task.TaskDateStart, &task.TaskDateEnd, &task.TaskRate)
 	if err != nil {
 		return task, err
 	}
