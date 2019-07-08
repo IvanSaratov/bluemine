@@ -1,7 +1,9 @@
+$('#new_task').hide(0);
+
 $('#add_new_task').click(function() {
-    $('#new_task').css("display", "block");
+    $('#new_task').show(300);
 });
 
 $('#new_task_close').click(function() {
-    $('#new_task').css("display", "none");
+    $('#new_task').hide(300);
 });
