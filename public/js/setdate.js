@@ -12,7 +12,7 @@ function setDate() {
         mm = '0'+mm
     } 
 
-    today = yyyy + '/' + mm + '/' + dd;
+    today = yyyy + '-' + mm + '-' + dd;
 
     document.getElementById("input_date_start").value = today;
 }
