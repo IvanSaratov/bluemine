@@ -36,8 +36,7 @@ CREATE TABLE checkboxs (
     id INT,
     task_id INT,
     checked BOOLEAN DEFAULT false,
-    desk STRING NOT NULL,
-    UNIQUE (task_id)
+    desk STRING NOT NULL
 );
 
 CREATE TABLE groups_profiles (
