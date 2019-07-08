@@ -14,11 +14,12 @@
                     <tr>
                         <th>Имя задачи</th>
                         <th>Статус</th>
-                        <th>Открыта</th>
+                        <th>Приоритет</th>
                         <th>Назначена</th>
                         <th>Добавлена</th>
                         <th>Закончить до</th>
                         <th>Рейтинг</th>
+                        <th>Обновлена</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +27,7 @@
                     <tr>
                         <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
                         <td>{{ .TaskStat }}</td>
-                        <td><a href="/profile/{{ .TaskCreatorName }}">{{ .TaskCreatorFIO }}</a></td>
+                        <td>{{ .TaskPriority}}</td>
                         {{ if (eq .TaskExecutorType "group") }}
                         <td><a href="/group/{{ .TaskExecutorName }}">{{ .TaskExecutorName }}</a></td>
                         {{ else }}
@@ -35,6 +36,7 @@
                         <td>{{ .TaskDateStart }}</td>
                         <td>{{ .TaskDateEnd }}</td>
                         <td>{{ .TaskRate }}</td>
+                        <td>{{ .TaskDateLastUpdate }}</td>
                     </tr>
                     {{end}}
                 </tbody>
