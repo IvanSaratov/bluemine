@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#ico_new').hover(
+    $('#iconew').hover(
         function() {
             $('#new_item').css('display', 'block');
         },
@@ -7,10 +7,4 @@ $(document).ready(function() {
             $('#new_item').css('display', 'none');
         }
     )
-    
-    $('#new_item').hover(
-        function() {
-            $('#iconew').toggleClass("hovered", 200);
-        }
-    );
 });
