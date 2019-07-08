@@ -16,7 +16,7 @@ import (
 //AddTaskHandler handle task adding page
 func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 301)
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
 
@@ -112,6 +112,33 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 			log.Print(err)
 		}
 	}
+}
+
+//AddGroupHandler handle group create page
+func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
+	if r.Method == "GET" {
+		viewData := data.ViewData{
+			CurrentUser: currentUser,
+		}
+
+		err := server.Core.Templates["addGroup"].ExecuteTemplate(w, "base", viewData)
+		if err != nil {
+			log.Print(err)
+		}
+	} else if r.Method == "POST" {
+
+	}
+
 }
 
 //AddWikiHandler handle wiki adding page
