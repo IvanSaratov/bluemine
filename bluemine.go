@@ -52,6 +52,6 @@ func main() {
 		manners.Close()
 	}(ch)
 
-	log.Printf("Server listening on %s port", config.Conf.Port)
-	log.Fatal(manners.ListenAndServe(config.Conf.Port, router))
+	log.Printf("Server listening on %s port", config.Conf.ListenPort)
+	log.Fatal(manners.ListenAndServe(config.Conf.ListenPort, router))
 }

@@ -1,29 +1,24 @@
 package server
 
 import (
-	"database/sql"
 	"html/template"
 	"log"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/gorilla/sessions"
+	"github.com/jmoiron/sqlx"
 )
 
 //Core struct contains main vars of server
 var Core struct {
-	DB        *sql.DB
+	DB        *sqlx.DB
 	Store     *sessions.CookieStore
 	Templates map[string]*template.Template
 }
 
 //Init function initializes server
 func Init() {
-	var err error
-
-	Core.DB, err = sql.Open("postgres", config.Conf.DBHost)
-	if err != nil {
-		log.Fatal("Error connecting to database: ", err)
-	}
+	Core.DB = sqlx.MustConnect("postgres", "host="+config.Conf.Host+" port="+config.Conf.DBPort+" user="+config.Conf.DBUser+" dbname="+config.Conf.DBName+" sslmode=disable password="+config.Conf.DBPassword)
 	log.Println("Connected to database successfull")
 
 	Core.Store = sessions.NewCookieStore(

@@ -9,9 +9,11 @@ import (
 
 //Conf storing main datas
 var Conf struct {
-	DBHost        string `toml:"dbHost"`
-	Memcache      string `toml:"Memcache"`
-	Port          string `toml:"Port"`
+	DBName        string `toml:"dbName"`
+	DBPort        string `toml:"dbPort"`
+	DBUser        string `toml:"dbUser"`
+	DBPassword    string `toml:"dbPassword"`
+	ListenPort    string `toml:"ListenPort"`
 	Host          string `toml:"Host"`
 	LdapServer    string `toml:"ldapServer"`
 	LdapBaseDN    string `toml:"ldapBaseDN"`

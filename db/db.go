@@ -1,19 +1,18 @@
 package db
 
 import (
-	"database/sql"
 	"strings"
-
-	"github.com/IvanSaratov/bluemine/helpers"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/helpers"
 
 	"github.com/go-ldap/ldap"
+	"github.com/jmoiron/sqlx"
 )
 
 //RegisterUser adds user to DB
-func RegisterUser(DB *sql.DB, l *ldap.Conn, login, userFIO string) error {
+func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 	result, err := l.Search(ldap.NewSearchRequest(
 		config.Conf.LdapBaseDN,
 		ldap.ScopeWholeSubtree,
@@ -67,7 +66,7 @@ func RegisterUser(DB *sql.DB, l *ldap.Conn, login, userFIO string) error {
 }
 
 //GetUserbyID gets user info from DB
-func GetUserbyID(DB *sql.DB, id int) (data.User, error) {
+func GetUserbyID(DB *sqlx.DB, id int) (data.User, error) {
 	var (
 		user data.User
 		stmt = "SELECT * FROM profiles WHERE id = $1"
@@ -82,7 +81,7 @@ func GetUserbyID(DB *sql.DB, id int) (data.User, error) {
 }
 
 //GetAllUsers gets all users from DB
-func GetAllUsers(DB *sql.DB) ([]data.User, error) {
+func GetAllUsers(DB *sqlx.DB) ([]data.User, error) {
 	var (
 		users []data.User
 		stmt  = "SELECT id FROM profiles"
@@ -117,7 +116,7 @@ func GetAllUsers(DB *sql.DB) ([]data.User, error) {
 }
 
 //GetTaskbyID gets task info from DB
-func GetTaskbyID(DB *sql.DB, ID int) (data.Task, error) {
+func GetTaskbyID(DB *sqlx.DB, ID int) (data.Task, error) {
 	var (
 		task data.Task
 		stmt = "SELECT * FROM tasks WHERE id = $1"
@@ -154,7 +153,7 @@ func GetTaskbyID(DB *sql.DB, ID int) (data.Task, error) {
 }
 
 //GetAllTasks gets all tasks from DB
-func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
+func GetAllTasks(DB *sqlx.DB) ([]data.Task, error) {
 	var (
 		tasks []data.Task
 		stmt  = "SELECT id FROM tasks"
@@ -189,7 +188,7 @@ func GetAllTasks(DB *sql.DB) ([]data.Task, error) {
 }
 
 //GetAllTaskTemplates gets all task templates from DB
-func GetAllTaskTemplates(DB *sql.DB) ([]data.TaskTmpl, error) {
+func GetAllTaskTemplates(DB *sqlx.DB) ([]data.TaskTmpl, error) {
 	var (
 		tmpls []data.TaskTmpl
 		stmt  = "SELECT * FROM task_template"
@@ -219,7 +218,7 @@ func GetAllTaskTemplates(DB *sql.DB) ([]data.TaskTmpl, error) {
 }
 
 //GetGroupbyID gets group info from DB
-func GetGroupbyID(DB *sql.DB, ID int) (data.Group, error) {
+func GetGroupbyID(DB *sqlx.DB, ID int) (data.Group, error) {
 	var (
 		group data.Group
 		stmt  = "SELECT * FROM groups"
@@ -234,7 +233,7 @@ func GetGroupbyID(DB *sql.DB, ID int) (data.Group, error) {
 }
 
 //GetAllGroups gets all users from DB
-func GetAllGroups(DB *sql.DB) ([]data.Group, error) {
+func GetAllGroups(DB *sqlx.DB) ([]data.Group, error) {
 	var groups []data.Group
 
 	stmt := "SELECT * FROM groups"
@@ -261,7 +260,7 @@ func GetAllGroups(DB *sql.DB) ([]data.Group, error) {
 }
 
 //GetGroupUsers gets all users of group from DB
-func GetGroupUsers(DB *sql.DB, groupName string) ([]data.User, error) {
+func GetGroupUsers(DB *sqlx.DB, groupName string) ([]data.User, error) {
 	var users []data.User
 
 	stmt := "SELECT * FROM profiles WHERE id = (SELECT profile_id FROM groups_profiles WHERE group_id = (SELECT id FROM groups WHERE group_name = $1)"
