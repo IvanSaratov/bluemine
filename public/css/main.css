@@ -127,6 +127,7 @@ html, body{
     clear: left;
 }
 .label{
+    cursor: default;
     font-weight: bold;
     width: 170px;
     margin-left: -180px;
