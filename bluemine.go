@@ -15,7 +15,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func main() {
+func init() {
 	var configPath = "conf.toml"
 
 	log.Println("Starting...")
@@ -27,6 +27,9 @@ func main() {
 	log.Println("Config parsed!")
 
 	server.Init()
+}
+
+func main() {
 	defer server.Core.DB.Close()
 
 	router := mux.NewRouter()
