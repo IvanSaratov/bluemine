@@ -41,17 +41,19 @@ html, body{
     color: rgb(29, 29, 29);
 }
 #topbar #iconew #new_item li{
+    height: 25px;
+    line-height: 25px;
     min-height: 25px;
+    border-bottom: 1px solid rgb(29, 29, 29);
+    color: rgb(29, 29, 29);
 }
 #topbar #iconew #new_item li a{
     min-height: 24px;
     line-height: 25px;
     display: block;
     text-decoration: none;
-    border-bottom: 1px solid rgb(29, 29, 29);
-    color: rgb(29, 29, 29);
 }
-#topbar #iconew #new_item li a:hover{
+#topbar #iconew #new_item li:hover{
     background-color: rgb(29, 29, 29);
     border-bottom: 1px solid rgb(54, 161, 248);
     color: white;
