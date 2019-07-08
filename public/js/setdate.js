@@ -1,5 +1,22 @@
 function setDate() {
     var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
 
-    document.getElementById("input_date_start").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+    if (dd < 10) {
+        dd = '0'+dd
+    } 
+
+    if (mm < 10) {
+        mm = '0'+mm
+    } 
+
+    today = yyyy + '/' + mm + '/' + dd;
+
+    document.getElementById("input_date_start").value = today;
 }
+
+window.onload = function() {
+    setDate();
+};
