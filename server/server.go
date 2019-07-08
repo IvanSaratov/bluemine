@@ -18,7 +18,7 @@ var Core struct {
 
 //Init function initializes server
 func Init() {
-	Core.DB = sqlx.MustConnect("postgres", "host="+config.Conf.Host+" port="+config.Conf.DBPort+" user="+config.Conf.DBUser+" dbname="+config.Conf.DBName+" sslmode=disable password="+config.Conf.DBPassword)
+	Core.DB = sqlx.MustConnect("postgres", "user="+config.Conf.DBUser+" password="+config.Conf.DBPassword+" host="+config.Conf.Host+" port="+config.Conf.DBPort+" dbname="+config.Conf.DBName+" sslmode=disable")
 	log.Println("Connected to database successfull")
 
 	Core.Store = sessions.NewCookieStore(
