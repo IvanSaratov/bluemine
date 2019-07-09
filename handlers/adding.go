@@ -127,9 +127,15 @@ func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting current user: %s", err)
 	}
 
+	users, err := db.GetAllUsers(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting users list: %s", err)
+	}
+
 	if r.Method == "GET" {
 		viewData := data.ViewData{
 			CurrentUser: currentUser,
+			Users:       users,
 		}
 
 		err := server.Core.Templates["addGroup"].ExecuteTemplate(w, "base", viewData)
@@ -143,20 +149,20 @@ func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 		for _, user := range strings.Split(r.FormValue("user_list"), ";") {
 			userID, err := strconv.Atoi(user)
 			if err != nil {
-				log.Print("Can't convert string to userID: ", err)
+				log.Printf("Can't convert string to userID: %s", err)
 			}
 			group.GroupMembers = append(group.GroupMembers, data.User{UserID: userID})
 		}
 
 		err := server.Core.DB.QueryRow("INSERT INTO groups (group_name) VALUES ($1)", group.GroupName).Scan(&group.GroupID)
 		if err != nil {
-			log.Print("Can't create group: ", err)
+			log.Printf("Can't create group: %s", err)
 		}
 
 		for _, user := range group.GroupMembers {
 			_, err := server.Core.DB.Exec("INSERT INTO groups_profiles (group_id, profile_id) VALUES ($1, $2)", group.GroupID, user.UserID)
 			if err != nil {
-				log.Print("Can't create group-profile link: ", err)
+				log.Printf("Can't create group-profile link: %s", err)
 			}
 		}
 	}

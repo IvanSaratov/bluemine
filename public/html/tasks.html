@@ -28,7 +28,7 @@
                         <td>{{ .TaskStat }}</td>
                         <td><a href="/profile/{{ .TaskCreatorName }}">{{ .TaskCreatorFIO }}</a></td>
                         {{ if (eq .TaskExecutorType "group") }}
-                        <td><a href="/group/{{ .TaskExecutorName }}">{{ .TaskExecutorName }}</a></td>
+                        <td><a href="/group/show/{{ .TaskExecutorName }}">{{ .TaskExecutorName }}</a></td>
                         {{ else }}
                         <td><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutorFIO }}</a></td>
                         {{ end }}

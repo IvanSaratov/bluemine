@@ -5,4 +5,12 @@
 <script type="text/javascript" src="/public/js/plugins/jquery-3.4.1.min.js"></script>
 {{end}}        
 {{define "content"}}
+<div>
+    <input type="text" id="input_group">
+    {{ range .Users }}
+    <input type="checkbox" value="user{{ .UserID }}">
+    <label for="user{{ .UserID }}">{{ .UserFIO }}</label>
+    {{ end }}
+    <button id="send" onclick="gAdd()">Добавить</button>
+</div>
 {{end}}
