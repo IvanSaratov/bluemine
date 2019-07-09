@@ -82,9 +82,15 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting info about %s: %s", username, err)
 	}
 
+	groups, err := db.GetAllUserGroups(server.Core.DB, userID)
+	if err != nil {
+		log.Printf("Error getting groups of %s: %s", username, err)
+	}
+
 	viewData := data.ViewData{
 		CurrentUser: currentUser,
 		UserData:    user,
+		Groups:      groups,
 	}
 
 	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", viewData)
