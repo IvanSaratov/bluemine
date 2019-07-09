@@ -10,32 +10,3 @@
     margin: 0 0 0 30px;
     background-color: rgb(221, 221, 221);
 }
-#content #tasklist table{
-    overflow: hidden;
-    width: 100%;
-    margin-top:0;
-    border-collapse: collapse;
-}
-#content #tasklist table thead{
-    width: 100%;
-    background-color: rgb(29, 29, 29);
-    color: white;
-}
-#content #tasklist table thead th{
-    cursor: default;
-    border: 1px solid white;
-}
-#content #tasklist table tbody tr:hover{
-    background-color: rgb(54, 161, 248);
-}
-#content #tasklist table td{
-    cursor: default;
-    border: 1px solid white;
-}
-#content #tasklist table td a{
-    text-decoration: none;
-    color: black;
-}
-#content #tasklist table td a:hover{
-    color: white;
-}
