@@ -119,7 +119,7 @@ html, body{
     content: "\eab0";
 }
 
-.task_rec{
+.task_rec, .user_rec{
     padding-left: 180px;
     padding-bottom: 5px;
     clear: left;

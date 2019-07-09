@@ -7,9 +7,27 @@
 {{end}}    
 {{define "content"}}
 <div id="content">
-    <div id="pagetitle">Профиль</div>
-    <div id="userinfo">
-        <div id="userabout">{{ .UserData.UserFIO}}</div>
+    <div id="pagetitle">{{ .UserData.UserFIO}}</div>
+    <div id="wrap">
+        <div id="user_about">
+            <div id="user_about_left">
+                <div class="user_rec" id="username">
+                    <div class="label">Имя пользователя:</div>
+                    <div class="value">{{ .UserData.UserName}}</div>
+                </div>
+                <div class="user_rec" id="user_groups">
+                    <div class="label">Состоит в:</div>
+                </div>
+            </div>
+            <div id="user_about_left">
+                <div id="user_tasks_exec">
+                    <table></table>
+                </div>
+                <div id="user_tasks_creator">
+                    <table></table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {{end}}
