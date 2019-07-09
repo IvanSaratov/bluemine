@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
@@ -136,9 +137,29 @@ func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 			log.Print(err)
 		}
 	} else if r.Method == "POST" {
+		var group data.Group
 
+		group.GroupName = r.FormValue("input_group")
+		for _, user := range strings.Split(r.FormValue("user_list"), ";") {
+			userID, err := strconv.Atoi(user)
+			if err != nil {
+				log.Print("Can't convert string to userID: ", err)
+			}
+			group.GroupMembers = append(group.GroupMembers, data.User{UserID: userID})
+		}
+
+		err := server.Core.DB.QueryRow("INSERT INTO groups (group_name) VALUES ($1)", group.GroupName).Scan(&group.GroupID)
+		if err != nil {
+			log.Print("Can't create group: ", err)
+		}
+
+		for _, user := range group.GroupMembers {
+			_, err := server.Core.DB.Exec("INSERT INTO groups_profiles (group_id, profile_id) VALUES ($1, $2)", group.GroupID, user.UserID)
+			if err != nil {
+				log.Print("Can't create group-profile link: ", err)
+			}
+		}
 	}
-
 }
 
 //AddWikiHandler handle wiki adding page
