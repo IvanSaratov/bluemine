@@ -311,7 +311,7 @@ func GetAllTemplates(DB *sqlx.DB) ([]data.TaskTmpl, error) {
 func GetGroupbyID(DB *sqlx.DB, ID int) (data.Group, error) {
 	var (
 		group data.Group
-		stmt  = "SELECT * FROM groups"
+		stmt  = "SELECT * FROM groups WHERE id = $1"
 	)
 
 	err := DB.QueryRow(stmt, ID).Scan(&group.GroupID, &group.GroupName)
