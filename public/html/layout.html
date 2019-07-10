@@ -47,7 +47,7 @@
                     <select id="input_task_tmpl">
                         <option selected>Без шаблона</option>
                         {{range .Templates}}
-                        <option value="{{ .TmplName}}">{{ .TmplName}}</option>
+                        <option id="{{ .TmplID}}">{{ .TmplName}}</option>
                         {{end}}
                     </select>
                 </div>

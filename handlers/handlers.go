@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -52,6 +53,34 @@ func GetTaskDesc(w http.ResponseWriter, r *http.Request) {
 		}
 
 		w.Write(bytes)
+	}
+}
+
+//GetTmplData sends template data
+func GetTmplData(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+
+	if r.Method == "GET" {
+		id, err := strconv.Atoi(r.FormValue("tmpl_id"))
+		if err != nil {
+			log.Printf("Error converting %d id to int: %s", id, err)
+		}
+
+		tmpl, err := db.GetTemplatebyID(server.Core.DB, id)
+		if err != nil {
+			log.Printf("Error getting template(%d) info: %s", id, err)
+		}
+
+		tmplData, err := json.MarshalIndent(tmpl, "", " ")
+		if err != nil {
+			log.Printf("Error marshalling JSON for %s template: %s", tmpl.TmplName, err)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(tmplData)
 	}
 }
 

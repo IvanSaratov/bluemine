@@ -2,6 +2,30 @@ $('#new_task').hide(0);
 $('#new_tmpl').hide(0);
 $('#new_group').hide(0);
 
+$('#add_new_task').click(function() {
+    $('#new_task').show(300);
+});
+
+$('#add_new_tmpl').click(function() {
+    $('#new_tmpl').show(300);
+});
+
+$('#add_new_group').click(function() {
+    $('#new_group').show(300);
+});
+
+$('#new_task .new_item_close').click(function() {
+    $('#new_task').hide(300);
+});
+
+$('#new_tmpl .new_item_close').click(function() {
+    $('#new_tmpl').hide(300);
+});
+
+$('#new_group .new_item_close').click(function() {
+    $('#new_group').hide(300);
+});
+
 function setDate() {
     var today = new Date();
     var dd = today.getDate();
@@ -25,28 +49,20 @@ window.onload = function() {
     setDate();
 };
 
-$('#add_new_task').click(function() {
-    $('#new_task').show(300);
-});
+$('#input_task_tmpl').on('change', function() {
+    var ID = $(this).children(":selected").attr("id");
 
-$('#add_new_tmpl').click(function() {
-    $('#new_tmpl').show(300);
-});
-
-$('#add_new_group').click(function() {
-    $('#new_group').show(300);
-});
-
-$('#new_task .new_item_close').click(function() {
-    $('#new_task').hide(300);
-});
-
-$('#new_tmpl .new_item_close').click(function() {
-    $('#new_tmpl').hide(300);
-});
-
-$('#new_group .new_item_close').click(function() {
-    $('#new_group').hide(300);
+    if (ID != undefined) {
+        $.get("/gettmpldata", {tmpl_id: ID}).done(function(data) {
+            $('#input_task_stat').val(data.TmplStat)
+            $('#input_task_priority').val(data.TmplPriority)
+            $('#input_task_rate').val(data.TmplRate)
+        })
+    } else {
+        $('#input_task_stat').val("Новая")
+        $('#input_task_priority').val("Низкий")
+        $('#input_task_rate').val(0)
+    }
 });
 
 function taskAdd(){
