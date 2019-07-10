@@ -43,6 +43,8 @@ func Init() {
 	Core.Templates["taskPage"] = temp
 	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/group.html"))
 	Core.Templates["group"] = temp
+	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/groups.html"))
+	Core.Templates["groups"] = temp
 	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/addgroup.html"))
 	Core.Templates["addGroup"] = temp
 

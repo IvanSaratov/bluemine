@@ -1,0 +1,24 @@
+{{define "styles"}}
+    <link href="/public/css/main.css" rel="stylesheet">
+{{end}}
+{{define "scripts"}}
+    <script type="text/javascript" src="/public/js/plugins/jquery-3.4.1.min.js"></script>
+{{end}}
+{{define "content"}}
+    <div id="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Имя группы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Groups}}
+                    <tr>
+                        <td><a href="/group/show/{{ .GroupName }}">{{ .GroupName }}</a></td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+    </div>
+{{end}}
