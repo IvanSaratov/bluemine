@@ -37,8 +37,6 @@ func Init() {
 	Core.Templates["tasks"] = temp
 	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/profile.html"))
 	Core.Templates["profile"] = temp
-	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/addtask.html"))
-	Core.Templates["addTask"] = temp
 	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/taskpage.html"))
 	Core.Templates["taskPage"] = temp
 	temp = template.Must(template.ParseFiles("public/html/layout.html", "public/html/group.html"))
