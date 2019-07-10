@@ -26,34 +26,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting current user: %s", err)
 	}
 
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
-	groups, err := db.GetAllGroups(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting groups list: %s", err)
-	}
-
-	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting task templates list: %s", err)
-	}
-
-	if r.Method == "GET" {
-		viewData := data.ViewData{
-			CurrentUser: currentUser,
-			Users:       users,
-			Groups:      groups,
-			Templates:   tmpls,
-		}
-
-		err := server.Core.Templates["addTask"].ExecuteTemplate(w, "base", viewData)
-		if err != nil {
-			log.Print(err)
-		}
-	} else if r.Method == "POST" {
+	if r.Method == "POST" {
 		var (
 			task        data.Task
 			description string
