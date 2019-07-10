@@ -64,6 +64,7 @@ type ViewData struct {
 	TaskData         Task
 	Users            []User
 	Groups           []Group
+	GroupMembers     []User
 	UserGroups       []Group
 	Tasks            []Task
 	UserExecTasks    []Task
