@@ -97,7 +97,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting groups list: %s", err)
 	}
 
-	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
+	tmpls, err := db.GetAllTemplates(server.Core.DB)
 	if err != nil {
 		log.Printf("Error getting task templates list: %s", err)
 	}
@@ -170,7 +170,7 @@ func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting groups list: %s", err)
 	}
 
-	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
+	tmpls, err := db.GetAllTemplates(server.Core.DB)
 	if err != nil {
 		log.Printf("Error getting task templates list: %s", err)
 	}
@@ -215,7 +215,7 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting groups list: %s", err)
 	}
 
-	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
+	tmpls, err := db.GetAllTemplates(server.Core.DB)
 	if err != nil {
 		log.Printf("Error getting task templates list: %s", err)
 	}
@@ -269,7 +269,7 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting groups list: %s", err)
 	}
 
-	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
+	tmpls, err := db.GetAllTemplates(server.Core.DB)
 	if err != nil {
 		log.Printf("Error getting task templates list: %s", err)
 	}

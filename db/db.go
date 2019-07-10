@@ -187,11 +187,26 @@ func GetAllTasks(DB *sqlx.DB) ([]data.Task, error) {
 	return tasks, nil
 }
 
-//GetAllTaskTemplates gets all task templates from DB
-func GetAllTaskTemplates(DB *sqlx.DB) ([]data.TaskTmpl, error) {
+//GetTemplatebyID gets task template info from DB
+func GetTemplatebyID(DB *sqlx.DB, ID int) (data.TaskTmpl, error) {
+	var (
+		tmpl data.TaskTmpl
+		stmt = "SELECT * FROM task_template WHERE id = $1"
+	)
+
+	err := DB.QueryRow(stmt, ID).Scan(&tmpl.TmplID, &tmpl.TmplName, &tmpl.TmplStat, &tmpl.TmplPriority, &tmpl.TmplRate)
+	if err != nil {
+		return tmpl, err
+	}
+
+	return tmpl, nil
+}
+
+//GetAllTemplates gets all task templates from DB
+func GetAllTemplates(DB *sqlx.DB) ([]data.TaskTmpl, error) {
 	var (
 		tmpls []data.TaskTmpl
-		stmt  = "SELECT * FROM task_template"
+		stmt  = "SELECT id FROM task_template"
 	)
 
 	rows, err := DB.Query(stmt)
@@ -203,7 +218,12 @@ func GetAllTaskTemplates(DB *sqlx.DB) ([]data.TaskTmpl, error) {
 	for rows.Next() {
 		var tmpl data.TaskTmpl
 
-		err = rows.Scan(&tmpl.TmplID, &tmpl.TmplName, &tmpl.TmplStat, &tmpl.TmplPriority, &tmpl.TmplRate)
+		err = rows.Scan(&tmpl.TmplID)
+		if err != nil {
+			return tmpls, err
+		}
+
+		tmpl, err = GetTemplatebyID(DB, tmpl.TmplID)
 		if err != nil {
 			return tmpls, err
 		}
