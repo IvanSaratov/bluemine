@@ -125,26 +125,19 @@ function tmplAdd(){
     }
 };
 
-function gAdd() {
-    var groupName = document.getElementById('input_group').value;
-    var checkboxes = document.getElementsByName('users');
-    var users = [];
+function groupAdd() {
+    var name = document.getElementById('input_group_name').value;
+    var list = $('.user:checked').serialize();
 
-    for (var i=0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            users.push(checkboxes[i].value);
-        }
-    }
-
-    if (groupName.length == 0 || checkboxes.length == 0) {
+    if (name.length == 0 || list.length == 0) {
         alert("Пустое значение")
     } else {
         $.ajax({
             url: "/group/new",
             method: "POST",
             data: {
-                input_group: groupName,
-                user_list: users.toString()
+                group_name: name,
+                user_list: list
             },
             success: function(){
                 location.href = "/groups";

@@ -166,12 +166,12 @@
                     <div class="label">Пользователи</div>
                     {{ range .Users }}
                     <div class="group_user">
-                        <input name="user" type="checkbox" value="{{ .UserID }}">
+                        <input class="user" name="user" type="checkbox" value="{{ .UserID }}">
                         <label for="{{ .UserID }}">{{ .UserFIO }}</label>
                     </div>
                     {{ end }}
                 </div>
-            <button id="group_send" class="send_button" onclick="gAdd()">Добавить</button>
+            <button id="group_send" class="send_button" onclick="groupAdd()">Добавить</button>
         </div>
     </div>
     {{block "footer" .}}

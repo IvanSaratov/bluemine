@@ -5,11 +5,9 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
-	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
 )
@@ -118,50 +116,42 @@ func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	currentUser, err := helpers.GetCurrentUser(r)
-	if err != nil {
-		log.Printf("Error getting current user: %s", err)
-	}
+	if r.Method == "POST" {
+		var (
+			group data.Group
+			err   error
+		)
 
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
-	if r.Method == "GET" {
-		viewData := data.ViewData{
-			CurrentUser: currentUser,
-			Users:       users,
+		if err := r.ParseForm(); err != nil {
+			log.Printf("Error parsing form: %s", err)
 		}
 
-		err := server.Core.Templates["addGroup"].ExecuteTemplate(w, "base", viewData)
-		if err != nil {
-			log.Print(err)
-		}
-	} else if r.Method == "POST" {
-		var group data.Group
+		for key, values := range r.PostForm {
+			if key == "group_name" {
+				group.GroupName = values[0]
+			} else if key == "user_list" {
+				for _, value := range values {
+					var user data.User
 
-		group.GroupName = r.FormValue("input_group")
+					user.UserID, err = strconv.Atoi(value[5:])
+					if err != nil {
+						log.Printf("Can't get userID: %s", err)
+					}
 
-		for _, userString := range strings.Split(r.FormValue("user_list"), ",") {
-			var user data.User
-			user.UserID, err = strconv.Atoi(userString[strings.Index(userString, "user")+4:])
-			if err != nil {
-				log.Printf("Can't get userID: %s", err)
+					group.GroupMembers = append(group.GroupMembers, user)
+				}
 			}
-
-			group.GroupMembers = append(group.GroupMembers, user)
 		}
 
-		err := server.Core.DB.QueryRow("INSERT INTO groups (group_name) VALUES ($1) RETURNING id", group.GroupName).Scan(&group.GroupID)
+		err = server.Core.DB.QueryRow("INSERT INTO groups (group_name) VALUES ($1) RETURNING id", group.GroupName).Scan(&group.GroupID)
 		if err != nil {
-			log.Printf("Can't create group: %s", err)
+			log.Printf("Error writing group data to DB: %s", err)
 		}
 
 		for _, user := range group.GroupMembers {
 			_, err := server.Core.DB.Exec("INSERT INTO groups_profiles (group_id, profile_id) VALUES ($1, $2)", group.GroupID, user.UserID)
 			if err != nil {
-				log.Printf("Can't create group-profile link: %s", err)
+				log.Printf("Error writing groups and users to groups_profiles table: %s", err)
 			}
 		}
 	}
