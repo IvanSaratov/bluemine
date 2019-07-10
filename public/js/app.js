@@ -49,7 +49,7 @@ $('#new_group .new_item_close').click(function() {
     $('#new_group').hide(300);
 });
 
-function tAdd(){
+function taskAdd(){
     var name = document.getElementById("input_task_name").value;
     var desc = document.getElementById("input_desc").value;
     var stat = document.getElementById("input_stat").value;
@@ -59,6 +59,7 @@ function tAdd(){
     var rate = document.getElementById("input_rate").value;
     var date_start = document.getElementById("input_date_start").value;
     var date_end = document.getElementById("input_date_end").value;
+
     if (name.length == 0 || exec.length == 0) {
         alert("Пустое значение")
     } else {
@@ -87,6 +88,7 @@ function gAdd() {
     var groupName = document.getElementById('input_group').value;
     var checkboxes = document.getElementsByName('users');
     var users = [];
+
     for (var i=0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             users.push(checkboxes[i].value);
