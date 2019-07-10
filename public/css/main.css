@@ -21,8 +21,9 @@ html, body{
 }
 #topbar #service{
     cursor: default;
-    width: 120px;
+    width: auto;
     line-height: 35px;
+    padding: 0 15px;
     text-align: center;
     font-size: 24px;
     background-color: rgb(29, 29, 29);
