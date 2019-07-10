@@ -28,3 +28,6 @@
 #content #wrap #user_about #user_about_left .user_tasks{
     height: 50%;
 }
+#content #wrap #user_about #user_about_left .user_tasks .user_tasks_rec{
+    font-weight: bold;
+}
