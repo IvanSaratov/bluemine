@@ -187,6 +187,76 @@ func GetAllTasks(DB *sqlx.DB) ([]data.Task, error) {
 	return tasks, nil
 }
 
+//GetAllTasksbyExecutor gets all task with this executor
+func GetAllTasksbyExecutor(DB *sqlx.DB, ID int) ([]data.Task, error) {
+	var (
+		tasks []data.Task
+		stmt  = "SELECT id FROM tasks WHERE executor_type = $1 AND executor_id = $2"
+	)
+
+	rows, err := DB.Query(stmt, "user", ID)
+	if err != nil {
+		return tasks, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var task data.Task
+
+		err = rows.Scan(&task.TaskID)
+		if err != nil {
+			return tasks, err
+		}
+
+		task, err = GetTaskbyID(DB, task.TaskID)
+		if err != nil {
+			return tasks, err
+		}
+
+		tasks = append(tasks, task)
+	}
+	if rows.Err() != nil {
+		return tasks, err
+	}
+
+	return tasks, nil
+}
+
+//GetAllTasksbyCreator gets all task with this creator
+func GetAllTasksbyCreator(DB *sqlx.DB, ID int) ([]data.Task, error) {
+	var (
+		tasks []data.Task
+		stmt  = "SELECT id FROM tasks WHERE task_creator = $1"
+	)
+
+	rows, err := DB.Query(stmt, ID)
+	if err != nil {
+		return tasks, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var task data.Task
+
+		err = rows.Scan(&task.TaskID)
+		if err != nil {
+			return tasks, err
+		}
+
+		task, err = GetTaskbyID(DB, task.TaskID)
+		if err != nil {
+			return tasks, err
+		}
+
+		tasks = append(tasks, task)
+	}
+	if rows.Err() != nil {
+		return tasks, err
+	}
+
+	return tasks, nil
+}
+
 //GetTemplatebyID gets task template info from DB
 func GetTemplatebyID(DB *sqlx.DB, ID int) (data.TaskTmpl, error) {
 	var (
