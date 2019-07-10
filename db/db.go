@@ -263,8 +263,7 @@ func GetAllGroups(DB *sqlx.DB) ([]data.Group, error) {
 func GetGroupUsers(DB *sqlx.DB, groupName string) ([]data.User, error) {
 	var users []data.User
 
-	stmt := "SELECT * FROM profiles WHERE id = (SELECT profile_id FROM groups_profiles WHERE group_id = (SELECT id FROM groups WHERE group_name = $1)"
-	rows, err := DB.Query(stmt, groupName)
+	rows, err := DB.Query("SELECT profile_id FROM groups_profiles WHERE group_id = (SELECT id FROM groups WHERE group_name = $1)", groupName)
 	if err != nil {
 		return users, err
 	}
@@ -273,9 +272,14 @@ func GetGroupUsers(DB *sqlx.DB, groupName string) ([]data.User, error) {
 	for rows.Next() {
 		var user data.User
 
-		err = rows.Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
+		err = rows.Scan(&user.UserID)
 		if err != nil {
-			return users, nil
+			return users, err
+		}
+
+		err = DB.QueryRow("SELECT * FROM profiles WHERE id = $1", user.UserID).Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
+		if err != nil {
+			return users, err
 		}
 
 		users = append(users, user)
