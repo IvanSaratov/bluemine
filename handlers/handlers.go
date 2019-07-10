@@ -82,15 +82,27 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting info about %s: %s", username, err)
 	}
 
-	groups, err := db.GetAllUserGroups(server.Core.DB, userID)
+	users, err := db.GetAllUsers(server.Core.DB)
 	if err != nil {
-		log.Printf("Error getting groups of %s: %s", username, err)
+		log.Printf("Error getting users list: %s", err)
+	}
+
+	groups, err := db.GetAllGroups(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting groups list: %s", err)
+	}
+
+	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting task templates list: %s", err)
 	}
 
 	viewData := data.ViewData{
 		CurrentUser: currentUser,
 		UserData:    user,
+		Users:       users,
 		Groups:      groups,
+		Templates:   tmpls,
 	}
 
 	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", viewData)
@@ -142,14 +154,26 @@ func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting current user: %s", err)
 	}
 
-	allGroups, err := db.GetAllGroups(server.Core.DB)
+	users, err := db.GetAllUsers(server.Core.DB)
 	if err != nil {
-		log.Printf("Error getting groups: %s", err)
+		log.Printf("Error getting users list: %s", err)
+	}
+
+	groups, err := db.GetAllGroups(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting groups list: %s", err)
+	}
+
+	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting task templates list: %s", err)
 	}
 
 	viewData := data.ViewData{
 		CurrentUser: currentUser,
-		Groups:      allGroups,
+		Users:       users,
+		Groups:      groups,
+		Templates:   tmpls,
 	}
 
 	err = server.Core.Templates["groups"].ExecuteTemplate(w, "base", viewData)
@@ -175,9 +199,27 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting tasks list: %s", err)
 	}
 
+	users, err := db.GetAllUsers(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting users list: %s", err)
+	}
+
+	groups, err := db.GetAllGroups(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting groups list: %s", err)
+	}
+
+	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting task templates list: %s", err)
+	}
+
 	viewData := data.ViewData{
 		CurrentUser: currentUser,
 		Tasks:       tasks,
+		Users:       users,
+		Groups:      groups,
+		Templates:   tmpls,
 	}
 
 	err = server.Core.Templates["tasks"].ExecuteTemplate(w, "base", viewData)
@@ -211,9 +253,27 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting task info from DB on %s task page: %s", taskIDstr, err)
 	}
 
+	users, err := db.GetAllUsers(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting users list: %s", err)
+	}
+
+	groups, err := db.GetAllGroups(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting groups list: %s", err)
+	}
+
+	tmpls, err := db.GetAllTaskTemplates(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting task templates list: %s", err)
+	}
+
 	viewData := data.ViewData{
 		CurrentUser: currentUser,
 		TaskData:    task,
+		Users:       users,
+		Groups:      groups,
+		Templates:   tmpls,
 	}
 
 	err = server.Core.Templates["taskPage"].ExecuteTemplate(w, "base", viewData)
