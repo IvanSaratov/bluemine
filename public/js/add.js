@@ -53,7 +53,7 @@ function gAdd() {
                 user_list: users.toString()
             },
             success: function(){
-                location.href = "/group/new";
+                location.href = "/groups";
             }
         });
     }
