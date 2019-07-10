@@ -15,6 +15,10 @@
                     <div class="label">Имя пользователя:</div>
                     <div class="value">{{ .UserData.UserName}}</div>
                 </div>
+                <div class="record" id="rating">
+                    <div class="label">Рейтинг:</div>
+                    <div class="value">{{ .UserData.UserRate}}</div>
+                </div>
                 <div class="record" id="user_groups">
                     <div class="label">Состоит в:</div>
                     {{ range .UserGroups}}
