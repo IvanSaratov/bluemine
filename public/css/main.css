@@ -195,7 +195,7 @@ table td a:hover{
     content: "\eab0";
 }
 
-.task_rec, .user_rec{
+.record{
     padding-left: 180px;
     padding-bottom: 5px;
     clear: left;

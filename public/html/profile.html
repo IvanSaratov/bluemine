@@ -11,11 +11,11 @@
     <div id="wrap">
         <div id="user_about">
             <div id="user_about_left">
-                <div class="user_rec" id="username">
+                <div class="record" id="username">
                     <div class="label">Имя пользователя:</div>
                     <div class="value">{{ .UserData.UserName}}</div>
                 </div>
-                <div class="user_rec" id="user_groups">
+                <div class="record" id="user_groups">
                     <div class="label">Состоит в:</div>
                     {{ range .UserGroups}}
                     <div class="value">{{ .GroupName}}</div>
