@@ -350,10 +350,10 @@ func GetAllGroups(DB *sqlx.DB) ([]data.Group, error) {
 }
 
 //GetGroupUsers gets all users of group from DB
-func GetGroupUsers(DB *sqlx.DB, groupName string) ([]data.User, error) {
+func GetGroupUsers(DB *sqlx.DB, groupID int) ([]data.User, error) {
 	var users []data.User
 
-	rows, err := DB.Query("SELECT profile_id FROM groups_profiles WHERE group_id = (SELECT id FROM groups WHERE group_name = $1)", groupName)
+	rows, err := DB.Query("SELECT profile_id FROM groups_profiles WHERE group_id = (SELECT id FROM groups WHERE id = $1)", groupID)
 	if err != nil {
 		return users, err
 	}
