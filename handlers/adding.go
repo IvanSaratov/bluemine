@@ -14,7 +14,7 @@ import (
 	"github.com/IvanSaratov/bluemine/server"
 )
 
-//AddTaskHandler handle task adding page
+//AddTaskHandler handle task adding
 func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
@@ -82,6 +82,37 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		_, err = f.WriteString(description)
+		if err != nil {
+			log.Print(err)
+		}
+	}
+}
+
+//AddTmplHandler handle template adding
+func AddTmplHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	if r.Method == "POST" {
+		var (
+			tmpl data.TaskTmpl
+			err  error
+		)
+
+		tmpl.TmplName = r.FormValue("tmpl_name")
+
+		tmpl.TmplStat = r.FormValue("tmpl_stat")
+
+		tmpl.TmplPriority = r.FormValue("tmpl_priority")
+
+		tmpl.TmplRate, err = strconv.Atoi(r.FormValue("tmpl_rate"))
+		if err != nil {
+			log.Printf("Error converting rating from string to int: %s", err)
+		}
+
+		_, err = server.Core.DB.Exec("INSERT INTO task_template (tmpl_name, stat, priority, rating) VALUES ($1, $2, $3, $4) RETURNING id", tmpl.TmplName, tmpl.TmplStat, tmpl.TmplPriority, tmpl.TmplRate)
 		if err != nil {
 			log.Print(err)
 		}

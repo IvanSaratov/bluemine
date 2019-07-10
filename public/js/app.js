@@ -94,7 +94,7 @@ function tmplAdd(){
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/tmpls/new",
+            url: "/tmpl/new",
             method: "POST",
             data: {
                 tmpl_name: name,
