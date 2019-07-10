@@ -39,7 +39,7 @@ func main() {
 	router.HandleFunc("/login", handlers.LoginHandler)
 	router.HandleFunc("/logout", handlers.LogoutHandler)
 	router.HandleFunc("/profile/{user}", handlers.UserProfileHandler)
-	router.HandleFunc("/group/show/{group}", handlers.GroupHandler)
+	router.HandleFunc("/group/show/{id}", handlers.GroupHandler)
 	router.HandleFunc("/group/new", handlers.AddGroupHandler)
 	router.HandleFunc("/groups", handlers.GroupsHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)

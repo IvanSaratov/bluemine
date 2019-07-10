@@ -158,37 +158,6 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//GroupHandler handle group's profile page
-func GroupHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
-		return
-	}
-
-	currentUser, err := helpers.GetCurrentUser(r)
-	if err != nil {
-		log.Printf("Error getting current user: %s", err)
-	}
-
-	vars := mux.Vars(r)
-	groupName := vars["group"]
-
-	users, err := db.GetGroupUsers(server.Core.DB, groupName)
-	if err != nil {
-		log.Printf("Error getting info about %s: %s", groupName, err)
-	}
-
-	viewData := data.ViewData{
-		CurrentUser: currentUser,
-		Users:       users,
-	}
-
-	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", viewData)
-	if err != nil {
-		log.Print(err)
-	}
-}
-
 //GroupsHandler handle page with all groups
 func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
@@ -224,6 +193,60 @@ func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = server.Core.Templates["groups"].ExecuteTemplate(w, "base", viewData)
+	if err != nil {
+		log.Print(err)
+	}
+}
+
+//GroupHandler handle group's profile page
+func GroupHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
+	vars := mux.Vars(r)
+	groupIDstr := vars["id"]
+
+	groupIDint, err := strconv.Atoi(groupIDstr)
+	if err != nil {
+		log.Printf("Error converting string to int on %s group page: %s", groupIDstr, err)
+	}
+
+	groupmembers, err := db.GetGroupUsers(server.Core.DB, groupIDint)
+	if err != nil {
+		log.Printf("Error getting info about %d group: %s", groupIDint, err)
+	}
+
+	users, err := db.GetAllUsers(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting users list: %s", err)
+	}
+
+	groups, err := db.GetAllGroups(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting groups list: %s", err)
+	}
+
+	tmpls, err := db.GetAllTemplates(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting task templates list: %s", err)
+	}
+
+	viewData := data.ViewData{
+		CurrentUser:  currentUser,
+		GroupMembers: groupmembers,
+		Users:        users,
+		Groups:       groups,
+		Templates:    tmpls,
+	}
+
+	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", viewData)
 	if err != nil {
 		log.Print(err)
 	}
