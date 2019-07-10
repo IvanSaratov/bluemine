@@ -37,20 +37,12 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 		task.TaskCreatorID = currentUser.UserID
 
-		task.TaskExecutorType = r.FormValue("exec_type")
-
-		switch task.TaskExecutorType {
-		case "user":
-			task.TaskExecutorID, err = helpers.ConvertExecFIOToID(r.FormValue("exec_name"))
-			if err != nil {
-				log.Printf("Error converting executor's fio to ID: %s", err)
-			}
-		case "group":
-			task.TaskExecutorID, err = helpers.ConvertExecNameToID(r.FormValue("exec_name"), task.TaskExecutorType)
-			if err != nil {
-				log.Printf("Error converting executor's name to ID: %s", err)
-			}
+		task.TaskExecutorID, err = strconv.Atoi(r.FormValue("task_exec"))
+		if err != nil {
+			log.Printf("Error converting executor's ID to int: %s", err)
 		}
+
+		task.TaskExecutorType = r.FormValue("task_exec_type")
 
 		task.TaskStat = r.FormValue("task_stat")
 

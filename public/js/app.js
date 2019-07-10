@@ -70,7 +70,7 @@ function taskAdd(){
     var desc = document.getElementById("input_desc").value;
     var stat = document.getElementById("input_task_stat").value;
     var priority = document.getElementById("input_task_priority").value;
-    var exec = document.getElementById("input_task_exec").value;
+    var exec = $('#input_task_exec :selected').attr('id');
     var exec_type = $('#input_task_exec :selected').attr('class');
     var rate = document.getElementById("input_task_rate").value;
     var date_start = document.getElementById("input_task_date_start").value;
@@ -87,8 +87,8 @@ function taskAdd(){
                 task_desc: desc,
                 task_stat: stat,
                 task_priority: priority,
-                exec_name: exec,
-                exec_type: exec_type,
+                task_exec: exec,
+                task_exec_type: exec_type,
                 task_rate: rate,
                 task_start: date_start,
                 task_end: date_end

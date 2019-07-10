@@ -86,11 +86,11 @@
                         <select id="input_task_exec">
                             <option disabled selected>Работники</option>
                             {{range .Users}}
-                            <option class="user" value="{{ .UserFIO}}">{{ .UserFIO}}</option>
+                            <option class="user" id="{{ .UserID}}">{{ .UserFIO}}</option>
                             {{end}}
                             <option disabled>Группы</option>
                             {{range .Groups}}
-                            <option class="group" value="{{ .GroupName}}">{{ .GroupName}}</option>
+                            <option class="group" id="{{ .GroupID}}">{{ .GroupName}}</option>
                             {{end}}
                         </select>
                     </div>
