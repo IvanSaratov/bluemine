@@ -130,6 +130,34 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//GroupsHandler handle page with all groups
+func GroupsHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Printf("Error getting current user: %s", err)
+	}
+
+	allGroups, err := db.GetAllGroups(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting groups: %s", err)
+	}
+
+	viewData := data.ViewData{
+		CurrentUser: currentUser,
+		Groups:      allGroups,
+	}
+
+	err = server.Core.Templates["groups"].ExecuteTemplate(w, "base", viewData)
+	if err != nil {
+		log.Print(err)
+	}
+}
+
 //TasksHandler handle page with tasks
 func TasksHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
