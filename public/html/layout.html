@@ -154,7 +154,22 @@
     <div class="new_item" id="new_group">
         <div class="new_item_title">Новая группа</div>
         <span class="new_item_close"></span>
-        <div class="new_item_wrap"></div>
+        <div class="new_item_wrap">
+            <div id="container_task_general">
+                <div class="record">
+                    <div id="group_name" class="label">Имя группы</div>
+                    <input id="input_group_name" type="text" required>
+                </div>
+            </div>
+            <div class="record">
+                <div class="label">Пользователи</div>
+                {{ range .Users }}
+                <input name="users" type="checkbox" value="{{ .UserID }}">
+                <label for="{{ .UserID }}">{{ .UserFIO }}</label>
+                {{ end }}
+            </div>
+            <button id="group_send" class="send_button" onclick="gAdd()">Добавить</button>
+        </div>
     </div>
     {{block "footer" .}}
     <div id="footer">
