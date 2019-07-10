@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
@@ -126,14 +127,15 @@ func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error parsing form: %s", err)
 		}
 
-		for key, values := range r.PostForm {
+		for key, value := range r.PostForm {
 			if key == "group_name" {
-				group.GroupName = values[0]
+				group.GroupName = value[0]
 			} else if key == "user_list" {
-				for _, value := range values {
+				users := strings.Split(value[0], "&")
+				for _, userID := range users {
 					var user data.User
 
-					user.UserID, err = strconv.Atoi(value[5:])
+					user.UserID, err = strconv.Atoi(userID[5:])
 					if err != nil {
 						log.Printf("Can't get userID: %s", err)
 					}
