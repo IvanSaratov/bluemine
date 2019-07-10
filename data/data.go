@@ -58,13 +58,15 @@ type Wiki struct {
 
 //ViewData struct to show data on page
 type ViewData struct {
-	CurrentUser User
-	UserData    User
-	GroupData   Group
-	TaskData    Task
-	Users       []User
-	Groups      []Group
-	UserGroups  []Group
-	Tasks       []Task
-	Templates   []TaskTmpl
+	CurrentUser      User
+	UserData         User
+	GroupData        Group
+	TaskData         Task
+	Users            []User
+	Groups           []Group
+	UserGroups       []Group
+	Tasks            []Task
+	UserExecTasks    []Task
+	UserCreatorTasks []Task
+	Templates        []TaskTmpl
 }
