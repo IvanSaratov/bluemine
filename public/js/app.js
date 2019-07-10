@@ -67,7 +67,7 @@ $('#input_task_tmpl').on('change', function() {
 
 function taskAdd(){
     var name = document.getElementById("input_task_name").value;
-    var desc = document.getElementById("input_task_desc").value;
+    var desc = document.getElementById("input_desc").value;
     var stat = document.getElementById("input_task_stat").value;
     var priority = document.getElementById("input_task_priority").value;
     var exec = document.getElementById("input_task_exec").value;
