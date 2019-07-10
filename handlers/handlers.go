@@ -87,6 +87,11 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting users list: %s", err)
 	}
 
+	usergroups, err := db.GetAllUserGroups(server.Core.DB, userID)
+	if err != nil {
+		log.Printf("Error getting user's groups: %s", err)
+	}
+
 	groups, err := db.GetAllGroups(server.Core.DB)
 	if err != nil {
 		log.Printf("Error getting groups list: %s", err)
@@ -102,6 +107,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		UserData:    user,
 		Users:       users,
 		Groups:      groups,
+		UserGroups:  usergroups,
 		Templates:   tmpls,
 	}
 
