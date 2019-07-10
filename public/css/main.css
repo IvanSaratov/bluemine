@@ -164,6 +164,11 @@ table td a:hover{
     content: "\ea0f";
 }
 
+.group_user{
+    display: inline-block;
+    width: 45%;
+}
+
 #footer{
     cursor: default;
     position: absolute;
