@@ -31,3 +31,11 @@
 #content #wrap #user_about #user_about_left .user_tasks .user_tasks_rec{
     font-weight: bold;
 }
+
+.value a{
+    text-decoration: none;
+    color: #1973BD;
+}
+.value a:hover{
+    color: rgb(54, 161, 248);
+}
