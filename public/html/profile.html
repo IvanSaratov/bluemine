@@ -22,7 +22,7 @@
                 <div class="record" id="user_groups">
                     <div class="label">Состоит в:</div>
                     {{ range .UserGroups}}
-                    <div class="value">{{ .GroupName}}</div>
+                    <div class="value"><a href="/group/show/{{ .GroupID }}">{{ .GroupName}}</a></div>
                     {{end}}
                 </div>
             </div>
