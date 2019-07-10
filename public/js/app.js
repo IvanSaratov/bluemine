@@ -51,14 +51,14 @@ $('#new_group .new_item_close').click(function() {
 
 function taskAdd(){
     var name = document.getElementById("input_task_name").value;
-    var desc = document.getElementById("input_desc").value;
-    var stat = document.getElementById("input_stat").value;
-    var priority = document.getElementById("input_priority").value;
-    var exec = document.getElementById("input_exec").value;
-    var exec_type = $('#input_exec :selected').attr('class');
-    var rate = document.getElementById("input_rate").value;
-    var date_start = document.getElementById("input_date_start").value;
-    var date_end = document.getElementById("input_date_end").value;
+    var desc = document.getElementById("input_task_desc").value;
+    var stat = document.getElementById("input_task_stat").value;
+    var priority = document.getElementById("input_task_priority").value;
+    var exec = document.getElementById("input_task_exec").value;
+    var exec_type = $('#input_task_exec :selected').attr('class');
+    var rate = document.getElementById("input_task_rate").value;
+    var date_start = document.getElementById("input_task_date_start").value;
+    var date_end = document.getElementById("input_task_date_end").value;
 
     if (name.length == 0 || exec.length == 0) {
         alert("Пустое значение")
@@ -76,6 +76,31 @@ function taskAdd(){
                 task_rate: rate,
                 task_start: date_start,
                 task_end: date_end
+            },
+            success: function(){
+                location.href = "/tasks";
+            }
+        });
+    }
+};
+
+function tmplAdd(){
+    var name = document.getElementById("input_tmpl_name").value;
+    var stat = document.getElementById("input_tmpl_stat").value;
+    var priority = document.getElementById("input_tmpl_priority").value;
+    var rate = document.getElementById("input_tmpl_rate").value;
+
+    if (name.length == 0) {
+        alert("Пустое значение")
+    } else {
+        $.ajax({
+            url: "/tmpls/new",
+            method: "POST",
+            data: {
+                tmpl_name: name,
+                tmpl_stat: stat,
+                tmpl_priority: priority,
+                tmpl_rate: rate,
             },
             success: function(){
                 location.href = "/tasks";
