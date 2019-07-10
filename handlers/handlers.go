@@ -111,14 +111,24 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting info about %s: %s", username, err)
 	}
 
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
 	usergroups, err := db.GetAllUserGroups(server.Core.DB, userID)
 	if err != nil {
 		log.Printf("Error getting user's groups: %s", err)
+	}
+
+	userTasksExecutor, err := db.GetAllTasksbyExecutor(server.Core.DB, userID)
+	if err != nil {
+		log.Printf("Error getting assigned to user tasks: %s", err)
+	}
+
+	UserTasksCreator, err := db.GetAllTasksbyCreator(server.Core.DB, userID)
+	if err != nil {
+		log.Printf("Error getting created by user tasks: %s", err)
+	}
+
+	users, err := db.GetAllUsers(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting users list: %s", err)
 	}
 
 	groups, err := db.GetAllGroups(server.Core.DB)
@@ -132,12 +142,14 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	viewData := data.ViewData{
-		CurrentUser: currentUser,
-		UserData:    user,
-		Users:       users,
-		Groups:      groups,
-		UserGroups:  usergroups,
-		Templates:   tmpls,
+		CurrentUser:      currentUser,
+		UserData:         user,
+		Users:            users,
+		UserGroups:       usergroups,
+		Groups:           groups,
+		UserExecTasks:    userTasksExecutor,
+		UserCreatorTasks: UserTasksCreator,
+		Templates:        tmpls,
 	}
 
 	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", viewData)
