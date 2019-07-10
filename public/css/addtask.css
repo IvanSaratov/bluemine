@@ -79,21 +79,6 @@
     width: 49%;
 }
 
-#task_send{
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 10px;
-    width: 120px;
-    height: 25px;
-    border: none;
-    background-color: #1973BD;
-    color: white;
-    transition: 0.2s;
-}
-#task_send:hover{
-    background-color: rgb(54, 161, 248);
-}
-
 #container_desc #elements #bold::before{
     content: "\ea62";
 }
