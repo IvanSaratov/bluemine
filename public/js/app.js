@@ -18,7 +18,7 @@ function setDate() {
 
     today = yyyy + '-' + mm + '-' + dd;
 
-    document.getElementById("input_date_start").value = today;
+    document.getElementById("input_task_date_start").value = today;
 }
 
 window.onload = function() {
