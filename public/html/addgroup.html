@@ -8,9 +8,10 @@
 <div>
     <input type="text" id="input_group">
     {{ range .Users }}
-    <input type="checkbox" value="user{{ .UserID }}">
+    <input name="users" type="checkbox" value="user{{ .UserID }}">
     <label for="user{{ .UserID }}">{{ .UserFIO }}</label>
     {{ end }}
     <button id="send" onclick="gAdd()">Добавить</button>
 </div>
+<script type="text/javascript" src="/public/js/add.js"></script>
 {{end}}

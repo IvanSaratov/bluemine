@@ -31,3 +31,30 @@ function tAdd(){
         });
     }
 };
+
+function gAdd() {
+    var groupName = document.getElementById('input_group').value;
+    var checkboxes = document.getElementsByName('users');
+    var users = [];
+    for (var i=0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            users.push(checkboxes[i].value);
+        }
+    }
+
+    if (groupName.length == 0 || checkboxes.length == 0) {
+        alert("Пустое значение")
+    } else {
+        $.ajax({
+            url: "/group/new",
+            method: "POST",
+            data: {
+                input_group: groupName,
+                user_list: users.toString()
+            },
+            success: function(){
+                location.href = "/group/new";
+            }
+        });
+    }
+};

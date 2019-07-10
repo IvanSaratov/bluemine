@@ -146,15 +146,18 @@ func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 		var group data.Group
 
 		group.GroupName = r.FormValue("input_group")
-		for _, user := range strings.Split(r.FormValue("user_list"), ";") {
-			userID, err := strconv.Atoi(user)
+
+		for _, userString := range strings.Split(r.FormValue("user_list"), ",") {
+			var user data.User
+			user.UserID, err = strconv.Atoi(userString[strings.Index(userString, "user")+4:])
 			if err != nil {
-				log.Printf("Can't convert string to userID: %s", err)
+				log.Printf("Can't get userID: %s", err)
 			}
-			group.GroupMembers = append(group.GroupMembers, data.User{UserID: userID})
+
+			group.GroupMembers = append(group.GroupMembers, user)
 		}
 
-		err := server.Core.DB.QueryRow("INSERT INTO groups (group_name) VALUES ($1)", group.GroupName).Scan(&group.GroupID)
+		err := server.Core.DB.QueryRow("INSERT INTO groups (group_name) VALUES ($1) RETURNING id", group.GroupName).Scan(&group.GroupID)
 		if err != nil {
 			log.Printf("Can't create group: %s", err)
 		}
