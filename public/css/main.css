@@ -84,7 +84,7 @@ html, body{
 }
 #content #pagetitle{
     cursor: default;
-    width: 100%;
+    display: inline-block;
     height: 30px;
     line-height: 30px;
     margin-left: 15px;
