@@ -337,7 +337,7 @@ func GetGroupbyID(DB *sqlx.DB, ID int) (data.Group, error) {
 func GetAllGroups(DB *sqlx.DB) ([]data.Group, error) {
 	var groups []data.Group
 
-	stmt := "SELECT * FROM groups"
+	stmt := "SELECT id FROM groups"
 	rows, err := DB.Query(stmt)
 	if err != nil {
 		return groups, err
@@ -347,20 +347,14 @@ func GetAllGroups(DB *sqlx.DB) ([]data.Group, error) {
 	for rows.Next() {
 		var group data.Group
 
-		err = rows.Scan(&group.GroupID, &group.GroupName)
+		err = rows.Scan(&group.GroupID)
 		if err != nil {
 			return groups, err
 		}
 
-		group.GroupMembers, err = GetGroupUsers(DB, group.GroupID)
+		group, err = GetGroupbyID(DB, group.GroupID)
 		if err != nil {
 			return groups, err
-		}
-
-		group.GroupMembersCount = len(group.GroupMembers)
-
-		for _, member := range group.GroupMembers {
-			group.GroupRate += member.UserRate
 		}
 
 		groups = append(groups, group)
