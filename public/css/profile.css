@@ -40,3 +40,10 @@
 .value a:hover{
     color: rgb(54, 161, 248);
 }
+
+#icoadmin{
+    font-family: icomoon;
+}
+#icoadmin::before{
+    content: "\e976";
+}

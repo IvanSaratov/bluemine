@@ -4,6 +4,9 @@
 {{define "content"}}
 <div id="content">
     <div id="pagetitle">{{ .UserData.UserFIO}}</div>
+    {{ if .UserData.UserisAdmin}}
+    <span id="icoadmin" title="Этот пользователь является администратором"></span>
+    {{end}}
     <div id="wrap">
         <div id="user_about">
             <div id="user_about_left">
