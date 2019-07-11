@@ -47,6 +47,7 @@ type Group struct {
 	GroupName         string
 	GroupMembers      []User
 	GroupMembersCount int
+	GroupRate         int
 }
 
 //Wiki struct describe wiki article
