@@ -79,6 +79,20 @@ function makeAdmin(){
         }
     });
 }
+function removeAdmin(){
+    var ID = $('.pagetitle').attr("id");
+
+    $.ajax({
+        url: "/removeadmin",
+        method: "POST",
+        data: {
+            user_id: ID
+        },
+        success: function(){
+            location.reload();
+        }
+    });
+}
 
 function taskAdd(){
     var name = document.getElementById("input_task_name").value;

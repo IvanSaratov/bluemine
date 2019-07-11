@@ -51,7 +51,27 @@ func MakeAdminHandler(w http.ResponseWriter, r *http.Request) {
 
 		_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", true, id)
 		if err != nil {
-			log.Printf("Error givind %d's user admin rigths: %s", id, err)
+			log.Printf("Error giving %d's user admin rigths: %s", id, err)
+		}
+	}
+}
+
+//RemoveAdminHandler removes user administrator status
+func RemoveAdminHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+
+	if r.Method == "POST" {
+		id, err := strconv.Atoi(r.FormValue("user_id"))
+		if err != nil {
+			log.Printf("Error converting string to int: %s", err)
+		}
+
+		_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", false, id)
+		if err != nil {
+			log.Printf("Error removing %d's user admin rigths: %s", id, err)
 		}
 	}
 }

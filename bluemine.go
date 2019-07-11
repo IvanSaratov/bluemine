@@ -37,6 +37,7 @@ func main() {
 	router.HandleFunc("/logout", handlers.LogoutHandler)
 	router.HandleFunc("/profile/{user}", handlers.UserProfileHandler)
 	router.HandleFunc("/makeadmin", handlers.MakeAdminHandler)
+	router.HandleFunc("/removeadmin", handlers.RemoveAdminHandler)
 	router.HandleFunc("/group/show/{id}", handlers.GroupHandler)
 	router.HandleFunc("/group/new", handlers.AddGroupHandler)
 	router.HandleFunc("/groups", handlers.GroupsHandler)

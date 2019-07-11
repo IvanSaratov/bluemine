@@ -8,7 +8,11 @@
     <span id="icoadmin" title="Этот пользователь является администратором"></span>
     {{end}}
     {{ if .CurrentUser.UserisAdmin}}
-    <button id="make_admin" onclick="makeAdmin()">Сделать администратором</button>
+        {{ if .UserData.UserisAdmin}}
+        <button id="admin" onclick="removeAdmin()">Убрать права администратора</button>
+        {{else}}
+        <button id="admin" onclick="makeAdmin()">Сделать администратором</button>
+        {{end}}
     {{end}}
     <div id="wrap">
         <div id="user_about">
