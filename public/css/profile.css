@@ -3,6 +3,21 @@
     color: rgb(29, 29, 29);
 }
 
+#content button{
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    border: none;
+    background-color: #1973BD;
+    color: white;
+    transition: 0.2s;
+}
+#content button:hover{
+    background-color: rgb(54, 161, 248);
+}
+
 #content #wrap{
     width: calc(100% - 60px);
     height: calc(100% - 60px);
