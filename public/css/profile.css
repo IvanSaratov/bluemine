@@ -29,6 +29,7 @@
     height: 50%;
 }
 #content #wrap #user_about #user_about_left .user_tasks .user_tasks_rec{
+    cursor: default;
     font-weight: bold;
 }
 
