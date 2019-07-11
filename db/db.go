@@ -335,9 +335,11 @@ func GetGroupbyID(DB *sqlx.DB, ID int) (data.Group, error) {
 
 //GetAllGroups gets all users from DB
 func GetAllGroups(DB *sqlx.DB) ([]data.Group, error) {
-	var groups []data.Group
+	var (
+		groups []data.Group
+		stmt   = "SELECT id FROM groups"
+	)
 
-	stmt := "SELECT id FROM groups"
 	rows, err := DB.Query(stmt)
 	if err != nil {
 		return groups, err
@@ -368,9 +370,12 @@ func GetAllGroups(DB *sqlx.DB) ([]data.Group, error) {
 
 //GetGroupUsers gets all users of group from DB
 func GetGroupUsers(DB *sqlx.DB, groupID int) ([]data.User, error) {
-	var users []data.User
+	var (
+		users []data.User
+		stmt  = "SELECT profile_id FROM groups_profiles WHERE group_id = $1"
+	)
 
-	rows, err := DB.Query("SELECT profile_id FROM groups_profiles WHERE group_id = (SELECT id FROM groups WHERE id = $1)", groupID)
+	rows, err := DB.Query(stmt, groupID)
 	if err != nil {
 		return users, err
 	}
@@ -384,7 +389,7 @@ func GetGroupUsers(DB *sqlx.DB, groupID int) ([]data.User, error) {
 			return users, err
 		}
 
-		err = DB.QueryRow("SELECT * FROM profiles WHERE id = $1", user.UserID).Scan(&user.UserID, &user.UserName, &user.UserFIO, &user.UserisAdmin, &user.UserRate)
+		user, err = GetUserbyID(DB, user.UserID)
 		if err != nil {
 			return users, err
 		}
