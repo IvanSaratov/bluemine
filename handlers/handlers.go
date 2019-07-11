@@ -365,6 +365,32 @@ func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
-	_, _ = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutorFIO)
-	_, _ = server.Core.DB.Exec("UPDATE tasks SET stat = 'Закрыта' WHERE id = $1", task.TaskID)
+	_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutorFIO)
+	if err != nil {
+		log.Print(err)
+	}
+	_, err = server.Core.DB.Exec("UPDATE tasks SET stat = 'Закрыта' WHERE id = $1", task.TaskID)
+	if err != nil {
+		log.Print(err)
+	}
+}
+
+
+//TaskOpenHandler handle page to reopen task
+func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	taskID, _ := strconv.Atoi(r.FormValue("id"))
+	task, err := db.GetTaskbyID(server.Core.DB, taskID)
+	if err != nil {
+		log.Print(err)
+	}
+	
+	_, err = server.Core.DB.Exec("UPDATE tasks SET (stat, rating) = ('Открыта', 0) WHERE id = $1", task.TaskID)
+	if err != nil {
+		log.Print("Can't update task: ", err)
+	}
 }
