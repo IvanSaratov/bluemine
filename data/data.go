@@ -43,9 +43,10 @@ type TaskTmpl struct {
 
 //Group struct describe group
 type Group struct {
-	GroupID      int
-	GroupName    string
-	GroupMembers []User
+	GroupID           int
+	GroupName         string
+	GroupMembers      []User
+	GroupMembersCount int
 }
 
 //Wiki struct describe wiki article
