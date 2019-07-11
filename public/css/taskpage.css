@@ -51,7 +51,7 @@
     border-bottom: 1px solid rgb(29, 29, 29);
 }
 
-#content #wrap #close{
+#content #wrap button{
     cursor: pointer;
     margin-top: 10px;
     width: 120px;
@@ -61,6 +61,6 @@
     color: white;
     transition: 0.2s;
 }
-#content #wrap #close:hover{
+#content #wrap button:hover{
     background-color: rgb(54, 161, 248);
 }
