@@ -5,6 +5,7 @@
 
 #content button{
     position: absolute;
+    top: 40px;
     right: 15px;
     cursor: pointer;
     display: inline-block;
