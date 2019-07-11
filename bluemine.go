@@ -8,7 +8,6 @@ import (
 	"github.com/IvanSaratov/bluemine/handlers"
 	"github.com/IvanSaratov/bluemine/server"
 
-	//"golang.org/x/net/http2"
 	_ "github.com/cockroachdb/cockroach-go/crdb"
 	"github.com/gorilla/mux"
 )
@@ -47,6 +46,7 @@ func main() {
 	router.HandleFunc("/tmpl/new", handlers.AddTmplHandler).Methods("POST")
 	router.HandleFunc("/gettmpldata", handlers.GetTmplData).Methods("GET")
 	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
+	router.HandleFunc("/tasks/open", handlers.TaskOpenHandler)
 	//router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
 	router.HandleFunc("/", handlers.RootHandler)
 
