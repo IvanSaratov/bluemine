@@ -1,26 +1,30 @@
 {{define "styles"}}
+    <link href="/public/css/groups.css" rel="stylesheet">
 {{end}}   
 {{define "content"}}
 <div id="content">
-    <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Логин пользователя</th>
-                    <th>Имя пользователя</th>
-                    <th>Рейтинг</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{range .GroupMembers}}
-                <tr>
-                    <td><a href="/profile/{{ .UserName }}">{{ .UserName }}</a></td>
-                    <td><a href="/profile/{{ .UserName }}">{{ .UserFIO }}</a></td>
-                    <td>{{ .UserRate }}</td>
-                </tr>
-                {{end}}
-            </tbody>
-        </table>
+    <div id="pagetitle">{{ .GroupData.GroupName}}</div>
+    <div id="grouplist">
+        <div class="container_table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Логин пользователя</th>
+                        <th>Имя пользователя</th>
+                        <th>Рейтинг</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .GroupData.GroupMembers}}
+                    <tr>
+                        <td><a href="/profile/{{ .UserName }}">{{ .UserName }}</a></td>
+                        <td><a href="/profile/{{ .UserName }}">{{ .UserFIO }}</a></td>
+                        <td>{{ .UserRate }}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {{end}}

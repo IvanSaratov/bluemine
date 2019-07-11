@@ -218,7 +218,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error converting string to int on %s group page: %s", groupIDstr, err)
 	}
 
-	groupmembers, err := db.GetGroupUsers(server.Core.DB, groupIDint)
+	group, err := db.GetGroupbyID(server.Core.DB, groupIDint)
 	if err != nil {
 		log.Printf("Error getting info about %d group: %s", groupIDint, err)
 	}
@@ -239,11 +239,11 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	viewData := data.ViewData{
-		CurrentUser:  currentUser,
-		GroupMembers: groupmembers,
-		Users:        users,
-		Groups:       groups,
-		Templates:    tmpls,
+		CurrentUser: currentUser,
+		GroupData:   group,
+		Users:       users,
+		Groups:      groups,
+		Templates:   tmpls,
 	}
 
 	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", viewData)
