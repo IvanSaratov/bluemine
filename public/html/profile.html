@@ -3,7 +3,7 @@
 {{end}}
 {{define "content"}}
 <div id="content">
-    <div id="pagetitle">{{ .UserData.UserFIO}}</div>
+    <div class="pagetitle" id="{{ .UserData.UserID}}">{{ .UserData.UserFIO}}</div>
     {{ if .UserData.UserisAdmin}}
     <span id="icoadmin" title="Этот пользователь является администратором"></span>
     {{end}}

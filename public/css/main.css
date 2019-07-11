@@ -82,7 +82,7 @@ html, body{
     height: calc(100% - 35px);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-#content #pagetitle{
+#content .pagetitle{
     cursor: default;
     display: inline-block;
     height: 30px;
