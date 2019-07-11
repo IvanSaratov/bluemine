@@ -3,14 +3,12 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
-	"os/signal"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/handlers"
 	"github.com/IvanSaratov/bluemine/server"
 
-	"github.com/braintree/manners"
+	//"golang.org/x/net/http2"
 	_ "github.com/cockroachdb/cockroach-go/crdb"
 	"github.com/gorilla/mux"
 )
@@ -52,13 +50,6 @@ func main() {
 	//router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
 	router.HandleFunc("/", handlers.RootHandler)
 
-	ch := make(chan os.Signal)
-	signal.Notify(ch, os.Interrupt, os.Kill)
-	go func(ch <-chan os.Signal) {
-		<-ch
-		manners.Close()
-	}(ch)
-
 	log.Printf("Server listening on %s port", config.Conf.ListenPort)
-	log.Fatal(manners.ListenAndServe(config.Conf.ListenPort, router))
+	log.Fatal(http.ListenAndServe(config.Conf.ListenPort, router))
 }
