@@ -91,6 +91,10 @@ html, body{
     font-size: 24px;
 }
 
+.container_table{
+    height: calc(100% - 25px);
+    overflow: auto;
+}
 table{
     overflow: hidden;
     width: 100%;
@@ -102,16 +106,14 @@ table thead{
     background-color: rgb(29, 29, 29);
     color: white;
 }
-table thead th{
+table thead th, table td{
     cursor: default;
+    height: 25px;
+    line-height: 25px;
     border: 1px solid white;
 }
 table tbody tr:hover{
     background-color: rgb(54, 161, 248);
-}
-table td{
-    cursor: default;
-    border: 1px solid white;
 }
 table td a{
     text-decoration: none;

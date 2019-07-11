@@ -25,53 +25,57 @@
             <div id="user_about_left">
                 <div class="user_tasks" id="user_tasks_exec">
                     <div class="user_tasks_rec">Назначенные задачи</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Имя задачи</th>
-                                <th>Статус</th>
-                                <th>Добавлена</th>
-                                <th>Закончить до</th>
-                                <th>Рейтинг</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{range .UserExecTasks}}
-                            <tr>
-                                <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
-                                <td>{{ .TaskStat }}</td>
-                                <td>{{ .TaskDateStart }}</td>
-                                <td>{{ .TaskDateEnd }}</td>
-                                <td>{{ .TaskRate }}</td>
-                            </tr>
-                            {{end}}
-                        </tbody>
-                    </table>
+                    <div class="container_table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Имя задачи</th>
+                                    <th>Статус</th>
+                                    <th>Добавлена</th>
+                                    <th>Закончить до</th>
+                                    <th>Рейтинг</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{range .UserExecTasks}}
+                                <tr>
+                                    <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
+                                    <td>{{ .TaskStat }}</td>
+                                    <td>{{ .TaskDateStart }}</td>
+                                    <td>{{ .TaskDateEnd }}</td>
+                                    <td>{{ .TaskRate }}</td>
+                                </tr>
+                                {{end}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="user_tasks" id="user_tasks_creator">
                     <div class="user_tasks_rec">Созданные задачи</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Имя задачи</th>
-                                <th>Статус</th>
-                                <th>Добавлена</th>
-                                <th>Закончить до</th>
-                                <th>Рейтинг</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{range .UserCreatorTasks}}
-                            <tr>
-                                <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
-                                <td>{{ .TaskStat }}</td>
-                                <td>{{ .TaskDateStart }}</td>
-                                <td>{{ .TaskDateEnd }}</td>
-                                <td>{{ .TaskRate }}</td>
-                            </tr>
-                            {{end}}
-                        </tbody>
-                    </table>
+                    <div class="container_table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Имя задачи</th>
+                                    <th>Статус</th>
+                                    <th>Добавлена</th>
+                                    <th>Закончить до</th>
+                                    <th>Рейтинг</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{range .UserCreatorTasks}}
+                                <tr>
+                                    <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
+                                    <td>{{ .TaskStat }}</td>
+                                    <td>{{ .TaskDateStart }}</td>
+                                    <td>{{ .TaskDateEnd }}</td>
+                                    <td>{{ .TaskRate }}</td>
+                                </tr>
+                                {{end}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
