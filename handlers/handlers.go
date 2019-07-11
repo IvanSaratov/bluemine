@@ -36,6 +36,26 @@ func PrivateHandler(w http.ResponseWriter, r *http.Request) {
 	realHandler(w, r)
 }
 
+//MakeAdminHandler gives user administrator status
+func MakeAdminHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+
+	if r.Method == "POST" {
+		id, err := strconv.Atoi(r.FormValue("user_id"))
+		if err != nil {
+			log.Printf("Error converting string to int: %s", err)
+		}
+
+		_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", true, id)
+		if err != nil {
+			log.Printf("Error givind %d's user admin rigths: %s", id, err)
+		}
+	}
+}
+
 //GetTaskDesc sends task description to task page
 func GetTaskDesc(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
@@ -375,7 +395,6 @@ func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 //TaskOpenHandler handle page to reopen task
 func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
@@ -388,7 +407,7 @@ func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Print(err)
 	}
-	
+
 	_, err = server.Core.DB.Exec("UPDATE tasks SET (stat, rating) = ('Открыта', 0) WHERE id = $1", task.TaskID)
 	if err != nil {
 		log.Print("Can't update task: ", err)

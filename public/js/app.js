@@ -65,6 +65,21 @@ $('#input_task_tmpl').on('change', function() {
     }
 });
 
+function makeAdmin(){
+    var ID = $('.pagetitle').attr("id");
+
+    $.ajax({
+        url: "/makeadmin",
+        method: "POST",
+        data: {
+            user_id: ID
+        },
+        success: function(){
+            location.reload();
+        }
+    });
+}
+
 function taskAdd(){
     var name = document.getElementById("input_task_name").value;
     var desc = document.getElementById("input_desc").value;
