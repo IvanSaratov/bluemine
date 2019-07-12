@@ -461,3 +461,9 @@ func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Can't update task: ", err)
 	}
 }
+
+//WikiHandler handle page to wiki
+func WikiHandler(w http.ResponseWriter, r *http.Request) {
+	//to do//
+	http.ServeFile(w, r, "public/html/wiki.html")
+}
