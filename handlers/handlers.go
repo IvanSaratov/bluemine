@@ -428,7 +428,7 @@ func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
-	_, err = server.Core.DB.Exec("UPDATE tasks SET (stat, rating) = ('Открыта', 0) WHERE id = $1", task.TaskID)
+	_, err = server.Core.DB.Exec("UPDATE tasks SET (stat, rating) = ($1, $2) WHERE id = $3","В процессе", 0, task.TaskID)
 	if err != nil {
 		log.Print("Can't update task: ", err)
 	}
