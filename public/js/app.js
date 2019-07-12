@@ -158,7 +158,7 @@ function taskChange(){
                 task_end: date_end
             },
             success: function(){
-                location.href = "/tasks";
+                location.reload();
             }
         });
     }

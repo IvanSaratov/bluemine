@@ -19,7 +19,6 @@ function tChange() {
         });
         $.get("/gettaskdesc", { id: id }).done(function(data){
             $('#input_desc').val(data)
-            location.reload();
         })
     }
 }
