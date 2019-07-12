@@ -43,6 +43,7 @@ func main() {
 	router.HandleFunc("/groups", handlers.GroupsHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
+	router.HandleFunc("/gettaskdata", handlers.GetTaskData)
 	router.HandleFunc("/gettaskdesc", handlers.GetTaskDesc)
 	router.HandleFunc("/tasks/new", handlers.AddTaskHandler).Methods("POST")
 	router.HandleFunc("/tmpl/new", handlers.AddTmplHandler).Methods("POST")

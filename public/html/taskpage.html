@@ -37,6 +37,9 @@
                 <div class="label">Описание</div>
                 <div class="value"></div>
             </div>
+            {{ if CurrentUser.UserisAdmin}}
+            <button id="change" onclick="tChange()">Изменить</button>
+            {{end}}
             {{ if ( eq .TaskData.TaskStat "Закрыта") }}
             <button id="open" onclick="tOpen()">Восстановить</button>
             {{ else }}
@@ -45,6 +48,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/public/js/changing.js"></script>
 <script type="text/javascript" src="/public/js/gettaskdesc.js"></script>
 <script type="text/javascript" src="/public/js/closetask.js"></script>
 <script type="text/javascript" src="/public/js/opentask.js"></script>
