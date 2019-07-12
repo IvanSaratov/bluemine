@@ -37,7 +37,7 @@
                 <div class="label">Описание</div>
                 <div class="value"></div>
             </div>
-            {{ if CurrentUser.UserisAdmin}}
+            {{ if .CurrentUser.UserisAdmin}}
             <button id="change" onclick="tChange()">Изменить</button>
             {{end}}
             {{ if ( eq .TaskData.TaskStat "Закрыта") }}
