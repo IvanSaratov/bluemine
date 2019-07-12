@@ -76,6 +76,34 @@ func RemoveAdminHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//GetTaskData sends task data to change task
+func GetTaskData(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+
+	if r.Method == "GET" {
+		id, err := strconv.Atoi(r.FormValue("task_id"))
+		if err != nil {
+			log.Printf("Error converting %d id to int: %s", id, err)
+		}
+
+		task, err := db.GetTaskbyID(server.Core.DB, id)
+		if err != nil {
+			log.Printf("Error getting task(%d) info: %s", id, err)
+		}
+
+		taskData, err := json.MarshalIndent(task, "", " ")
+		if err != nil {
+			log.Printf("Error marshalling JSON for %s task: %s", task.TaskName, err)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(taskData)
+	}
+}
+
 //GetTaskDesc sends task description to task page
 func GetTaskDesc(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
