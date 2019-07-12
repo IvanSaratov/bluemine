@@ -25,6 +25,9 @@
                 </tbody>
             </table>
         </div>
+        {{ if .CurrentUser.UserisAdmin}}
+            <button id="change" onclick="gChange()">Изменить</button>
+        {{end}}
     </div>
 </div>
 <script type="text/javascript" src="/public/js/changegroup.js"></script>
