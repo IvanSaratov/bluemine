@@ -10,3 +10,19 @@
     margin: 0 0 0 30px;
     background-color: rgb(221, 221, 221);
 }
+
+#content button{
+    display: inline-block;
+    position: absolute;
+    right: 15px;
+    top: 40px;
+    cursor: pointer;
+    height: 20px;
+    border: none;
+    background-color: #1973BD;
+    color: white;
+    transition: 0.2s;
+}
+#content button:hover{
+    background-color: rgb(54, 161, 248);
+}

@@ -320,37 +320,6 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//GroupChangeHandler handler page to change group settings
-func GroupChangeHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
-		return
-	}
-
-	id, err := strconv.Atoi(r.FormValue("id"))
-	if err != nil {
-		log.Print("Error convert string to id: ", err)
-	}
-
-	group, err := db.GetGroupbyID(server.Core.DB, id)
-	if err != nil {
-		log.Print("Error getting group by id: ", err)
-	}
-
-	for x, user := range group.GroupMembers {
-		userIDstring := strconv.Itoa(user.UserID)
-		group.GroupMembers[x].UserName = userIDstring
-	}
-
-	groupData, err := json.MarshalIndent(group, "", " ")
-	if err != nil {
-		log.Printf("Error marshalling JSON for %s group: %s", group.GroupName, err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(groupData)
-}
-
 //TasksHandler handle page with tasks
 func TasksHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {

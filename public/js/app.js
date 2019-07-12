@@ -209,3 +209,27 @@ function groupAdd() {
         });
     }
 };
+
+function groupChange() {
+    var href = location.href.split('/');
+    var groupID = href[5];
+    var name = document.getElementById('input_group_name').value;
+    var list = $('.user:checked').serialize();
+
+    if (name.length == 0 || list.length == 0) {
+        alert("Пустое значение")
+    } else {
+        $.ajax({
+            url: "/group/change",
+            method: "POST",
+            data: {
+                group_id: groupID,
+                group_name: name,
+                user_list: list
+            },
+            success: function(){
+                location.reload();
+            }
+        });
+    }
+};

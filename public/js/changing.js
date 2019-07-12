@@ -26,9 +26,9 @@ function tChange() {
 function gChange() {
     var href = location.href.split('/');
     var id = href[5];
-    $.get("/groupchange", { id: id }).done(function(data){
-        $('#task_change').show(0);
-        $('#task_send').hide(0);
+    $.get("/group/change", { id: id }).done(function(data){
+        $('#group_change').show(0);
+        $('#group_send').hide(0);
         $('#new_group').show(300);
         $('#input_group_name').val(data.GroupName)
 
