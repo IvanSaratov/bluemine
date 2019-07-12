@@ -129,6 +129,41 @@ function taskAdd(){
     }
 };
 
+function taskChange(){
+    var name = document.getElementById("input_task_name").value;
+    var desc = document.getElementById("input_desc").value;
+    var stat = document.getElementById("input_task_stat").value;
+    var priority = document.getElementById("input_task_priority").value;
+    var exec = $('#input_task_exec :selected').attr('id');
+    var exec_type = $('#input_task_exec :selected').attr('class');
+    var rate = document.getElementById("input_task_rate").value;
+    var date_start = document.getElementById("input_task_date_start").value;
+    var date_end = document.getElementById("input_task_date_end").value;
+
+    if (name.length == 0 || exec.length == 0) {
+        alert("Пустое значение")
+    } else {
+        $.ajax({
+            url: "/tasks/change",
+            method: "POST",
+            data: {
+                task_name: name,
+                task_desc: desc,
+                task_stat: stat,
+                task_priority: priority,
+                task_exec: exec,
+                task_exec_type: exec_type,
+                task_rate: rate,
+                task_start: date_start,
+                task_end: date_end
+            },
+            success: function(){
+                location.href = "/tasks";
+            }
+        });
+    }
+};
+
 function tmplAdd(){
     var name = document.getElementById("input_tmpl_name").value;
     var stat = document.getElementById("input_tmpl_stat").value;

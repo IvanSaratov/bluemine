@@ -5,6 +5,10 @@ function tChange() {
         alert("Пустое значение")
     } else {
         $.get("/gettaskdata", {task_id: id}).done(function(data) {
+            $('#task_change').show(0);
+            $('#task_send').hide(0);
+            $('#new_task').show(300);
+
             $('#input_task_name').val(data.TaskName)
             $('#input_task_stat').val(data.TaskStat)
             $('#input_task_priority').val(data.TaskPriority)
@@ -15,6 +19,7 @@ function tChange() {
         });
         $.get("/gettaskdesc", { id: id }).done(function(data){
             $('#input_desc').val(data)
+            location.reload();
         })
     }
 }
