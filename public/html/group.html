@@ -4,6 +4,7 @@
 {{define "content"}}
 <div id="content">
     <div id="pagetitle">{{ .GroupData.GroupName}}</div>
+    <button id="changeTask" onclick="gChange()">Кнопка</button>
     <div id="grouplist">
         <div class="container_table">
             <table>
@@ -27,4 +28,5 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/public/js/changegroup.js"></script>
 {{end}}

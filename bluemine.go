@@ -41,6 +41,7 @@ func main() {
 	router.HandleFunc("/group/show/{id}", handlers.GroupHandler)
 	router.HandleFunc("/group/new", handlers.AddGroupHandler)
 	router.HandleFunc("/groups", handlers.GroupsHandler)
+	router.HandleFunc("/groupchange", handlers.GroupChangeHandler).Methods("GET")
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
 	router.HandleFunc("/gettaskdesc", handlers.GetTaskDesc)
