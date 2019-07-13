@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -433,10 +434,34 @@ func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
-	_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutorFIO)
-	if err != nil {
-		log.Print(err)
+	switch task.TaskExecutorType {
+	case "user":
+		{
+			_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutorFIO)
+			if err != nil {
+				log.Print(err)
+			}
+		}
+	case "group":
+		{
+			group, err := db.GetGroupbyID(server.Core.DB, task.TaskExecutorID)
+			if err != nil {
+				log.Print(err)
+			}
+
+			rate := task.TaskRate / group.GroupMembersCount
+
+			for _, user := range group.GroupMembers {
+				_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", rate, user.UserFIO)
+				if err != nil {
+					log.Print(err)
+				}
+			}
+		}
+	default:
+		log.Printf("Error updating rate for group members: %s", errors.New("Wrong ExecutorType"))
 	}
+
 	_, err = server.Core.DB.Exec("UPDATE tasks SET stat = 'Закрыта' WHERE id = $1", task.TaskID)
 	if err != nil {
 		log.Print(err)
