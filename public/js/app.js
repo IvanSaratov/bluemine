@@ -5,7 +5,7 @@ $('#new_group').hide(0);
 $('#add_new_task').click(function() {
     $('#new_task').show(300);
     $('#task_send').show(300);
-    $('#new_task').hide(0);
+    $('#task_change').hide(0);
 });
 
 $('#add_new_tmpl').click(function() {
@@ -15,7 +15,7 @@ $('#add_new_tmpl').click(function() {
 $('#add_new_group').click(function() {
     $('#new_group').show(300);
     $('#group_send').show(300);
-    $('#new_group').hide(0);
+    $('#group_change').hide(0);
 });
 
 $('#new_task .new_item_close').click(function() {
