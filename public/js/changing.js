@@ -14,8 +14,8 @@ function tChange() {
             $('#input_task_priority').val(data.TaskPriority)
             $('#' + data.TaskExecutorName).prop('selected', true);
             $('#input_task_rate').val(data.TaskRate)
-            $('#task_date_start').val(data.TaskDateStart)
-            $('#task_date_end').val(data.TaskDateEnd)
+            $('#input_task_date_start').val(data.TaskDateStart)
+            $('#input_task_date_end').val(data.TaskDateEnd)
         });
         $.get("/gettaskdesc", { id: id }).done(function(data){
             $('#input_desc').val(data)
