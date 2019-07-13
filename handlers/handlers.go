@@ -95,6 +95,8 @@ func GetTaskData(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error getting task(%d) info: %s", id, err)
 		}
 
+		task.TaskExecutorName = strconv.Itoa(task.TaskExecutorID)
+
 		taskData, err := json.MarshalIndent(task, "", " ")
 		if err != nil {
 			log.Printf("Error marshalling JSON for %s task: %s", task.TaskName, err)
