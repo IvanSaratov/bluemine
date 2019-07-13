@@ -22,7 +22,12 @@
                     <tbody>
                         {{range .Tasks}}
                         <tr>
-                            <td><a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a></td>
+                            <td>
+                                <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
+                                {{ if le .TaskDateDiff 36.0 }}
+                                <span id="icofire"></span>
+                                {{end}}
+                            </td>
                             <td>{{ .TaskStat }}</td>
                             <td>{{ .TaskPriority}}</td>
                             {{ if (eq .TaskExecutorType "group") }}
