@@ -47,13 +47,27 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 		task.TaskPriority = r.FormValue("task_priority")
 
-		task.TaskDateAdded = time.Now().Format("2006-01-02 15:04:05")
+		task.TaskDateAdded = time.Now().Format("02-01-2006 15:04:05")
 
-		task.TaskDateLastUpdate = time.Now().Format("2006-01-02 15:04:05")
+		task.TaskDateLastUpdate = time.Now().Format("02-01-2006 15:04:05")
 
-		task.TaskDateStart = r.FormValue("task_start")
+		timeStart, err := time.Parse("2006-01-02", r.FormValue("task_start"))
+		if err != nil {
+			log.Printf("Error parsing date start for %s task: %s", task.TaskName, err)
+		}
 
-		task.TaskDateEnd = r.FormValue("task_end")
+		task.TaskDateStart = timeStart.Format("02-01-2006")
+
+		if r.FormValue("task_end") == "" {
+			task.TaskDateEnd = ""
+		} else {
+			timeEnd, err := time.Parse("2006-01-02", r.FormValue("task_end"))
+			if err != nil {
+				log.Printf("Error parsing date end for %s task: %s", task.TaskName, err)
+			}
+
+			task.TaskDateEnd = timeEnd.Format("02-01-2006")
+		}
 
 		task.TaskRate, err = strconv.Atoi(r.FormValue("task_rate"))
 		if err != nil {
