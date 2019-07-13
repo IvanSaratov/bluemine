@@ -10,13 +10,3 @@
     margin: 0 0 0 30px;
     background-color: rgb(221, 221, 221);
 }
-
-#icofire{
-    font-family: icomoon;
-    float: right;
-    margin-right: 5px;
-    color: orangered;
-}
-#icofire::before{
-    content: "\e9a9";
-}

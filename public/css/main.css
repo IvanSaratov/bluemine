@@ -247,6 +247,13 @@ table td a:hover{
     right: 0;
 }
 
+#icofire{
+    font-family: icomoon;
+    float: right;
+    margin-right: 5px;
+    color: orangered;
+}
+
 .send_button{
     cursor: pointer;
     margin-top: 10px;
@@ -279,6 +286,9 @@ table td a:hover{
 }
 #icoout::before{
     content: "\ea14"
+}
+#icofire::before{
+    content: "\e9a9";
 }
 
 @font-face{
