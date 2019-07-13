@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/db"
@@ -96,6 +97,22 @@ func GetTaskData(w http.ResponseWriter, r *http.Request) {
 		}
 
 		task.TaskExecutorName = strconv.Itoa(task.TaskExecutorID)
+
+		formatTimeStart, err := time.Parse("02-01-2006", task.TaskDateStart)
+		if err != nil {
+			log.Printf("Error parsing date start for %s task for send to change page: %s", task.TaskName, err)
+		}
+
+		task.TaskDateStart = formatTimeStart.Format("2006-01-02")
+
+		if task.TaskDateEnd != "" {
+			formatTimeEnd, err := time.Parse("02-01-2006", task.TaskDateEnd)
+			if err != nil {
+				log.Printf("Error parsing date end for %s task for send to change page: %s", task.TaskName, err)
+			}
+
+			task.TaskDateEnd = formatTimeEnd.Format("2006-01-02")
+		}
 
 		taskData, err := json.MarshalIndent(task, "", " ")
 		if err != nil {
