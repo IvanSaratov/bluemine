@@ -23,13 +23,16 @@ type Task struct {
 	TaskExecutorFIO  string
 	TaskExecutorType string
 
-	TaskStat           string
-	TaskPriority       string
+	TaskStat     string
+	TaskPriority string
+
 	TaskDateAdded      string
 	TaskDateLastUpdate string
 	TaskDateStart      string
 	TaskDateEnd        string
-	TaskRate           int
+	TaskDateDiff       float64
+
+	TaskRate int
 }
 
 //TaskTmpl struct describe task template

@@ -1,7 +1,9 @@
 package db
 
 import (
+	"log"
 	"strings"
+	"time"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/data"
@@ -140,6 +142,21 @@ func GetTaskbyID(DB *sqlx.DB, ID int) (data.Task, error) {
 	task.TaskExecutorName, err = helpers.ConvertIDToExecName(task.TaskExecutorID, task.TaskExecutorType)
 	if err != nil {
 		return task, err
+	}
+
+	timeStart, err := time.Parse("02-01-2006", task.TaskDateStart)
+	if err != nil {
+		log.Printf("Error parsing date start for %s task for calculate difference: %s", task.TaskName, err)
+	}
+
+	if task.TaskDateEnd != "" {
+		timeEnd, err := time.Parse("02-01-2006", task.TaskDateEnd)
+		if err != nil {
+			log.Printf("Error parsing date end for %s task for calculate difference: %s", task.TaskName, err)
+		}
+
+		duration := timeEnd.Sub(timeStart)
+		task.TaskDateDiff = duration.Hours()
 	}
 
 	if task.TaskExecutorType == "user" {
