@@ -1,16 +1,16 @@
 package handlers
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
-	"encoding/json"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
 )
@@ -33,6 +33,11 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 			description string
 			err         error
 		)
+
+		task.TaskID, err = strconv.Atoi(r.FormValue("task_id"))
+		if err != nil {
+			log.Printf("Error converting task ID to int: %s", err)
+		}
 
 		task.TaskName = r.FormValue("task_name")
 
@@ -62,7 +67,7 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 		description = r.FormValue("task_desc")
 
-		err = server.Core.DB.QueryRow("UPDATE tasks SET (task_name, task_creator, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate).Scan(&task.TaskID)
+		_, err = server.Core.DB.Exec("UPDATE tasks SET (task_name, task_creator, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) WHERE id = $11", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, &task.TaskID)
 		if err != nil {
 			log.Print(err)
 		}
@@ -96,29 +101,29 @@ func GroupChangeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method == "GET"{
-	id, err := strconv.Atoi(r.FormValue("id"))
-	if err != nil {
-		log.Print("Error convert string to id: ", err)
-	}
+	if r.Method == "GET" {
+		id, err := strconv.Atoi(r.FormValue("id"))
+		if err != nil {
+			log.Print("Error convert string to id: ", err)
+		}
 
-	group, err := db.GetGroupbyID(server.Core.DB, id)
-	if err != nil {
-		log.Print("Error getting group by id: ", err)
-	}
+		group, err := db.GetGroupbyID(server.Core.DB, id)
+		if err != nil {
+			log.Print("Error getting group by id: ", err)
+		}
 
-	for x, user := range group.GroupMembers {
-		userIDstring := strconv.Itoa(user.UserID)
-		group.GroupMembers[x].UserName = userIDstring
-	}
+		for x, user := range group.GroupMembers {
+			userIDstring := strconv.Itoa(user.UserID)
+			group.GroupMembers[x].UserName = userIDstring
+		}
 
-	groupData, err := json.MarshalIndent(group, "", " ")
-	if err != nil {
-		log.Printf("Error marshalling JSON for %s group: %s", group.GroupName, err)
-	}
+		groupData, err := json.MarshalIndent(group, "", " ")
+		if err != nil {
+			log.Printf("Error marshalling JSON for %s group: %s", group.GroupName, err)
+		}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(groupData)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(groupData)
 	} else if r.Method == "POST" {
 		var (
 			group data.Group

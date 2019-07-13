@@ -134,6 +134,7 @@ function taskAdd(){
 };
 
 function taskChange(){
+    var id = $('.pagetitle').attr("id");
     var name = document.getElementById("input_task_name").value;
     var desc = document.getElementById("input_desc").value;
     var stat = document.getElementById("input_task_stat").value;
@@ -151,6 +152,7 @@ function taskChange(){
             url: "/tasks/change",
             method: "POST",
             data: {
+                task_id: id,
                 task_name: name,
                 task_desc: desc,
                 task_stat: stat,
@@ -215,8 +217,7 @@ function groupAdd() {
 };
 
 function groupChange() {
-    var href = location.href.split('/');
-    var groupID = href[5];
+    var groupID = $('.pagetitle').attr("id");
     var name = document.getElementById('input_group_name').value;
     var list = $('.user:checked').serialize();
 

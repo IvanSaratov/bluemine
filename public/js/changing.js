@@ -1,6 +1,6 @@
 function tChange() {
-    var href = location.href.split('/');
-    var id = href[5];
+    var id = $('.pagetitle').attr("id");
+
     if (id.length == 0) {
         alert("Пустое значение")
     } else {
@@ -24,8 +24,8 @@ function tChange() {
 }
 
 function gChange() {
-    var href = location.href.split('/');
-    var id = href[5];
+    var id = $('.pagetitle').attr("id");
+
     $.get("/group/change", { id: id }).done(function(data){
         $('#group_change').show(0);
         $('#group_send').hide(0);
