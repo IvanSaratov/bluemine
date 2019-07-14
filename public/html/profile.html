@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>
                                         <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
-                                        {{ if le .TaskDateDiff 36.0 }}
+                                        {{ if and (le .TaskDateDiff 36.0) (ne .TaskDateDiff 0.0) }}
                                         <span id="icofire"></span>
                                         {{end}}
                                     </td>
@@ -83,7 +83,7 @@
                                 <tr>
                                     <td>
                                         <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
-                                        {{ if le .TaskDateDiff 36.0 }}
+                                        {{ if and (le .TaskDateDiff 36.0) (ne .TaskDateDiff 0.0) }}
                                         <span id="icofire"></span>
                                         {{end}}
                                     </td>
