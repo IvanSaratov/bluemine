@@ -144,18 +144,13 @@ func GetTaskbyID(DB *sqlx.DB, ID int) (data.Task, error) {
 		return task, err
 	}
 
-	timeStart, err := time.Parse("02-01-2006", task.TaskDateStart)
-	if err != nil {
-		log.Printf("Error parsing date start for %s task for calculate difference: %s", task.TaskName, err)
-	}
-
 	if task.TaskDateEnd != "" {
 		timeEnd, err := time.Parse("02-01-2006", task.TaskDateEnd)
 		if err != nil {
 			log.Printf("Error parsing date end for %s task for calculate difference: %s", task.TaskName, err)
 		}
 
-		duration := timeEnd.Sub(timeStart)
+		duration := timeEnd.Sub(time.Now())
 		task.TaskDateDiff = duration.Hours()
 	}
 
