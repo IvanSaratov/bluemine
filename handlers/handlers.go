@@ -44,17 +44,16 @@ func MakeAdminHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method == "POST" {
-		id, err := strconv.Atoi(r.FormValue("user_id"))
-		if err != nil {
-			log.Printf("Error converting string to int: %s", err)
-		}
-
-		_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", true, id)
-		if err != nil {
-			log.Printf("Error giving %d's user admin rigths: %s", id, err)
-		}
+	id, err := strconv.Atoi(r.FormValue("user_id"))
+	if err != nil {
+		log.Printf("Error converting string to int: %s", err)
 	}
+
+	_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", true, id)
+	if err != nil {
+		log.Printf("Error giving %d's user admin rigths: %s", id, err)
+	}
+
 }
 
 //RemoveAdminHandler removes user administrator status
@@ -64,17 +63,16 @@ func RemoveAdminHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method == "POST" {
-		id, err := strconv.Atoi(r.FormValue("user_id"))
-		if err != nil {
-			log.Printf("Error converting string to int: %s", err)
-		}
-
-		_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", false, id)
-		if err != nil {
-			log.Printf("Error removing %d's user admin rigths: %s", id, err)
-		}
+	id, err := strconv.Atoi(r.FormValue("user_id"))
+	if err != nil {
+		log.Printf("Error converting string to int: %s", err)
 	}
+
+	_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", false, id)
+	if err != nil {
+		log.Printf("Error removing %d's user admin rigths: %s", id, err)
+	}
+
 }
 
 //GetTaskData sends task data to change task
@@ -84,43 +82,42 @@ func GetTaskData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method == "GET" {
-		id, err := strconv.Atoi(r.FormValue("task_id"))
-		if err != nil {
-			log.Printf("Error converting %d id to int: %s", id, err)
-		}
-
-		task, err := db.GetTaskbyID(server.Core.DB, id)
-		if err != nil {
-			log.Printf("Error getting task(%d) info: %s", id, err)
-		}
-
-		task.TaskExecutorName = strconv.Itoa(task.TaskExecutorID)
-
-		formatTimeStart, err := time.Parse("02-01-2006", task.TaskDateStart)
-		if err != nil {
-			log.Printf("Error parsing date start for %s task for send to change page: %s", task.TaskName, err)
-		}
-
-		task.TaskDateStart = formatTimeStart.Format("2006-01-02")
-
-		if task.TaskDateEnd != "" {
-			formatTimeEnd, err := time.Parse("02-01-2006", task.TaskDateEnd)
-			if err != nil {
-				log.Printf("Error parsing date end for %s task for send to change page: %s", task.TaskName, err)
-			}
-
-			task.TaskDateEnd = formatTimeEnd.Format("2006-01-02")
-		}
-
-		taskData, err := json.MarshalIndent(task, "", " ")
-		if err != nil {
-			log.Printf("Error marshalling JSON for %s task: %s", task.TaskName, err)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(taskData)
+	id, err := strconv.Atoi(r.FormValue("task_id"))
+	if err != nil {
+		log.Printf("Error converting %d id to int: %s", id, err)
 	}
+
+	task, err := db.GetTaskbyID(server.Core.DB, id)
+	if err != nil {
+		log.Printf("Error getting task(%d) info: %s", id, err)
+	}
+
+	task.TaskExecutorName = strconv.Itoa(task.TaskExecutorID)
+
+	formatTimeStart, err := time.Parse("02-01-2006", task.TaskDateStart)
+	if err != nil {
+		log.Printf("Error parsing date start for %s task for send to change page: %s", task.TaskName, err)
+	}
+
+	task.TaskDateStart = formatTimeStart.Format("2006-01-02")
+
+	if task.TaskDateEnd != "" {
+		formatTimeEnd, err := time.Parse("02-01-2006", task.TaskDateEnd)
+		if err != nil {
+			log.Printf("Error parsing date end for %s task for send to change page: %s", task.TaskName, err)
+		}
+
+		task.TaskDateEnd = formatTimeEnd.Format("2006-01-02")
+	}
+
+	taskData, err := json.MarshalIndent(task, "", " ")
+	if err != nil {
+		log.Printf("Error marshalling JSON for %s task: %s", task.TaskName, err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(taskData)
+
 }
 
 //GetTaskDesc sends task description to task page
@@ -130,17 +127,16 @@ func GetTaskDesc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method == "GET" {
-		id := r.FormValue("id")
+	id := r.FormValue("id")
 
-		bytes, err := ioutil.ReadFile("private/docs/" + id + ".txt")
-		if err != nil {
-			log.Printf("Error reading file with description for %s: %s", id, err)
-			w.Write([]byte("Ошибка при чтении файла с описанием: " + fmt.Sprintf("%s", err)))
-		}
-
-		w.Write(bytes)
+	bytes, err := ioutil.ReadFile("private/docs/" + id + ".txt")
+	if err != nil {
+		log.Printf("Error reading file with description for %s: %s", id, err)
+		w.Write([]byte("Ошибка при чтении файла с описанием: " + fmt.Sprintf("%s", err)))
 	}
+
+	w.Write(bytes)
+
 }
 
 //GetTmplData sends template data
@@ -150,25 +146,24 @@ func GetTmplData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method == "GET" {
-		id, err := strconv.Atoi(r.FormValue("tmpl_id"))
-		if err != nil {
-			log.Printf("Error converting %d id to int: %s", id, err)
-		}
-
-		tmpl, err := db.GetTemplatebyID(server.Core.DB, id)
-		if err != nil {
-			log.Printf("Error getting template(%d) info: %s", id, err)
-		}
-
-		tmplData, err := json.MarshalIndent(tmpl, "", " ")
-		if err != nil {
-			log.Printf("Error marshalling JSON for %s template: %s", tmpl.TmplName, err)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(tmplData)
+	id, err := strconv.Atoi(r.FormValue("tmpl_id"))
+	if err != nil {
+		log.Printf("Error converting %d id to int: %s", id, err)
 	}
+
+	tmpl, err := db.GetTemplatebyID(server.Core.DB, id)
+	if err != nil {
+		log.Printf("Error getting template(%d) info: %s", id, err)
+	}
+
+	tmplData, err := json.MarshalIndent(tmpl, "", " ")
+	if err != nil {
+		log.Printf("Error marshalling JSON for %s template: %s", tmpl.TmplName, err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(tmplData)
+
 }
 
 //UserProfileHandler handle user's profile page
