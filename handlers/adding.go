@@ -174,43 +174,42 @@ func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 //AddWikiHandler handle wiki adding page
-/*func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
+func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 301)
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
 
-	currentUser, err := helpers.GetCurrentUser(r)
+	var (
+		wiki    data.Wiki
+		err     error
+		article string
+	)
+
+	wiki.WikiName = r.FormValue("wiki_name")
+	article = r.FormValue("article")
+	wiki.WikiAuthor, err = helpers.GetCurrentUser(r)
 	if err != nil {
-		log.Printf("Error getting current user: %s", err)
+		log.Print("Error getting current user: ", err)
 	}
 
-	if r.Method == "GET" {
-		viewData := data.ViewData{
-			CurrentUser: currentUser,
-		}
-
-		tmpl, _ := template.ParseFiles("public/html/addtask.html")
-		tmpl.Execute(w, viewData)
-	} else if r.Method == "POST" {
-		var (
-			wiki       data.Wiki
-			authorName string
-			err        error
-		)
-
-		wiki.WikiName = r.FormValue("wiki_name")
-
-		session, _ := server.Core.Store.Get(r, "bluemine_session")
-		authorName = fmt.Sprint(session.Values["userName"])
-		wiki.WikiAuthorID, err = helpers.ConvertExecToID(authorName, "user")
-		if err != nil {
-			log.Print(err)
-		}
-
-		_, err = server.Core.DB.Exec("INSERT INTO wiki (wiki_name, author_id) VALUES ($1, $2)", wiki.WikiName, wiki.WikiAuthorID)
-		if err != nil {
-			log.Print(err)
-		}
+	wiki.WikiFatherID, err = strconv.Atoi(r.FormValue("father_id"))
+	if err != nil {
+		log.Print("Error getting father_id: ", err)
 	}
-}*/
+
+	err = server.Core.DB.QueryRow("INSERT INTO wiki (title, author_id, father_id) VALUES ($1, $2, $3)", wiki.WikiName, wiki.WikiAuthor.UserID, wiki.WikiFatherID).Scan(&wiki.WikiID)
+	if err != nil {
+		log.Print("Error create wiki article: ", err)
+	}
+
+	f, err := os.OpenFile("private/wiki/"+strconv.Itoa(wiki.WikiID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Print("Error create wiki.txt: ", err)
+	}
+
+	_, err = f.WriteString(article)
+	if err != nil {
+		log.Print("Error to write in txt: ", err)
+	}
+}

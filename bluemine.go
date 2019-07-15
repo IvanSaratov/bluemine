@@ -53,6 +53,8 @@ func main() {
 	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
 	router.HandleFunc("/tasks/open", handlers.TaskOpenHandler).Methods("POST")
 	router.HandleFunc("/wiki", handlers.WikiHandler)
+	router.HandleFunc("/wiki/show", handlers.AddWikiHandler)
+	router.HandleFunc("/wiki/new", handlers.AddWikiHandler).Methods("POST")
 	router.HandleFunc("/", handlers.RootHandler)
 
 	log.Printf("Server listening on %s port", config.Conf.ListenPort)
