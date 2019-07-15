@@ -67,11 +67,13 @@ type ViewData struct {
 	UserData         User
 	GroupData        Group
 	TaskData         Task
+	WikiData         Wiki
 	Users            []User
 	Groups           []Group
 	UserGroups       []Group
 	Tasks            []Task
 	UserExecTasks    []Task
 	UserCreatorTasks []Task
+	Wikies           []Wiki
 	Templates        []TaskTmpl
 }
