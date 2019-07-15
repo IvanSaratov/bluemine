@@ -17,6 +17,7 @@ var Core struct {
 }
 
 var (
+	loginHTML    = "public/html/login.html"
 	layoutHTML   = "public/html/layout.html"
 	newItemHTML  = "public/html/newItem.html"
 	tasksHTML    = "public/html/tasks.html"
@@ -45,7 +46,9 @@ func Init() {
 	log.Println("Created cookie store")
 
 	Core.Templates = make(map[string]*template.Template)
-	temp := template.Must(template.ParseFiles(layoutHTML, newItemHTML, tasksHTML))
+	temp := template.Must(template.ParseFiles(loginHTML))
+	Core.Templates["login"] = temp
+	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, tasksHTML))
 	Core.Templates["tasks"] = temp
 	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, profileHTML))
 	Core.Templates["profile"] = temp

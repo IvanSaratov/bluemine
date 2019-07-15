@@ -71,7 +71,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
 
 	if r.Method == "GET" {
-		http.ServeFile(w, r, "public/html/login.html")
+		err := server.Core.Templates["profile"].ExecuteTemplate(w, "base", nil)
+		if err != nil {
+			log.Print("Error parse template: ", err)
+		}
 	} else if r.Method == "POST" {
 		r.ParseForm()
 		login := r.FormValue("username")
