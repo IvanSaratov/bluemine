@@ -24,6 +24,8 @@ var (
 	taskPageHTML = "public/html/taskpage.html"
 	groupHTML    = "public/html/group.html"
 	groupsHTML   = "public/html/groups.html"
+	wikiHTML     = "public/html/wiki.html"
+	wikiPageHTML = "public/html/wikipage.html"
 )
 
 //Init function initializes server
@@ -53,6 +55,10 @@ func Init() {
 	Core.Templates["group"] = temp
 	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, groupsHTML))
 	Core.Templates["groups"] = temp
+	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, wikiHTML))
+	Core.Templates["wiki"] = temp
+	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, wikiPageHTML))
+	Core.Templates["wikiPage"] = temp
 
 	log.Println("All templates parsed")
 }
