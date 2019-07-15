@@ -508,6 +508,52 @@ func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
 
 //WikiHandler handle page to wiki
 func WikiHandler(w http.ResponseWriter, r *http.Request) {
-	//to do//
-	http.ServeFile(w, r, "public/html/wiki.html")
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		log.Print("Error getting current user: ", err)
+	}
+
+	wikies, err := db.GetAllWiki(server.Core.DB)
+	if err != nil {
+		log.Print("Error getting all wiki: ", err)
+	}
+
+	tasks, err := db.GetAllTasks(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting tasks list: %s", err)
+	}
+
+	users, err := db.GetAllUsers(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting users list: %s", err)
+	}
+
+	groups, err := db.GetAllGroups(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting groups list: %s", err)
+	}
+
+	tmpls, err := db.GetAllTemplates(server.Core.DB)
+	if err != nil {
+		log.Printf("Error getting task templates list: %s", err)
+	}
+
+	viewData := data.ViewData{
+		CurrentUser: currentUser,
+		Wikies:      wikies,
+		Tasks:       tasks,
+		Users:       users,
+		Groups:      groups,
+		Templates:   tmpls,
+	}
+
+	err = server.Core.Templates["wiki"].ExecuteTemplate(w, "base", viewData)
+	if err != nil {
+		log.Print("Error parse template: ", err)
+	}
 }
