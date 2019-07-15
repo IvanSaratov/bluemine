@@ -19,17 +19,17 @@ import (
 //RootHandler handle root path
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 301)
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 	} else {
 		session, _ := server.Core.Store.Get(r, "bluemine_session")
-		http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), 301)
+		http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), http.StatusMovedPermanently)
 	}
 }
 
 //PrivateHandler handle private file server
 func PrivateHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 302)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -40,7 +40,7 @@ func PrivateHandler(w http.ResponseWriter, r *http.Request) {
 //MakeAdminHandler gives user administrator status
 func MakeAdminHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 302)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -59,7 +59,7 @@ func MakeAdminHandler(w http.ResponseWriter, r *http.Request) {
 //RemoveAdminHandler removes user administrator status
 func RemoveAdminHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 302)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -78,7 +78,7 @@ func RemoveAdminHandler(w http.ResponseWriter, r *http.Request) {
 //GetTaskData sends task data to change task
 func GetTaskData(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 302)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -123,7 +123,7 @@ func GetTaskData(w http.ResponseWriter, r *http.Request) {
 //GetTaskDesc sends task description to task page
 func GetTaskDesc(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 302)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -142,7 +142,7 @@ func GetTaskDesc(w http.ResponseWriter, r *http.Request) {
 //GetTmplData sends template data
 func GetTmplData(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", 302)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 

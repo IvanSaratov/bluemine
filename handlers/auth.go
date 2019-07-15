@@ -83,7 +83,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Printf("Failed to log in from %s using \"%s\" username: %s", r.RemoteAddr, login, err)
 
-			http.Redirect(w, r, "/login", 301)
+			http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 			return
 		}
 
@@ -91,7 +91,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		session.Values["userName"] = userName
 		session.Values["user"] = login
 		session.Save(r, w)
-		http.Redirect(w, r, "/profile/"+login, 301)
+		http.Redirect(w, r, "/profile/"+login, http.StatusMovedPermanently)
 	}
 }
 
