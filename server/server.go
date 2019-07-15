@@ -17,13 +17,13 @@ var Core struct {
 }
 
 var (
-	layoutHTML = "public/html/layout.html"
-	newItemHTML = "public/html/newItem.html"
-	tasksHTML = "public/html/tasks.html"
-	profileHTML = "public/html/profile.html"
+	layoutHTML   = "public/html/layout.html"
+	newItemHTML  = "public/html/newItem.html"
+	tasksHTML    = "public/html/tasks.html"
+	profileHTML  = "public/html/profile.html"
 	taskPageHTML = "public/html/taskpage.html"
-	groupHTML = "public/html/group.html"
-	groupsHTML = "public/html/groups.html"
+	groupHTML    = "public/html/group.html"
+	groupsHTML   = "public/html/groups.html"
 )
 
 //Init function initializes server
