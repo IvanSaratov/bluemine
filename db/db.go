@@ -440,3 +440,49 @@ func GetAllUserGroups(DB *sqlx.DB, ID int) ([]data.Group, error) {
 
 	return groups, nil
 }
+
+//GetWikibyID gets wiki by ID
+func GetWikibyID(DB *sqlx.DB, ID int) (data.Wiki, error) {
+	var wiki data.Wiki
+
+	err := DB.QueryRow("SELECT * FROM wiki WHERE id = $1", ID).Scan(&wiki.WikiID, &wiki.WikiAuthor.UserID, &wiki.WikiFatherID, &wiki.WikiName)
+	if err != nil {
+		return wiki, err
+	}
+
+	wiki.WikiAuthor, err = GetUserbyID(DB, wiki.WikiAuthor.UserID)
+	if err != nil {
+		return wiki, err
+	}
+
+	return wiki, nil
+}
+
+//GetAllWiki gets all wiki page
+func GetAllWiki(DB *sqlx.DB) ([]data.Wiki, error) {
+	var wikies []data.Wiki
+
+	rows, err := DB.Query("SELECT id FROM wiki")
+	if err != nil {
+		return wikies, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var wiki data.Wiki
+
+		err = rows.Scan(&wiki.WikiID)
+		if err != nil {
+			return wikies, err
+		}
+
+		wiki, err = GetWikibyID(DB, wiki.WikiID)
+		if err != nil {
+			return wikies, err
+		}
+
+		wikies = append(wikies, wiki)
+	}
+
+	return wikies, nil
+}
