@@ -39,7 +39,7 @@ func main() {
 	router.HandleFunc("/makeadmin", handlers.MakeAdminHandler).Methods("POST")
 	router.HandleFunc("/removeadmin", handlers.RemoveAdminHandler).Methods("POST")
 	router.HandleFunc("/group/show/{id}", handlers.GroupHandler)
-	router.HandleFunc("/group/new", handlers.AddGroupHandler)
+	router.HandleFunc("/group/new", handlers.AddGroupHandler).Methods("POST")
 	router.HandleFunc("/groups", handlers.GroupsHandler)
 	router.HandleFunc("/group/change", handlers.GroupChangeHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)

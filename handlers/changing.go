@@ -22,89 +22,87 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var (
+		task        data.Task
+		description string
+		err         error
+	)
+
 	currentUser, err := helpers.GetCurrentUser(r)
 	if err != nil {
 		log.Printf("Error getting current user: %s", err)
 	}
 
-	if r.Method == "POST" {
-		var (
-			task        data.Task
-			description string
-			err         error
-		)
+	task.TaskID, err = strconv.Atoi(r.FormValue("task_id"))
+	if err != nil {
+		log.Printf("Error converting task ID to int: %s", err)
+	}
 
-		task.TaskID, err = strconv.Atoi(r.FormValue("task_id"))
+	task.TaskName = r.FormValue("task_name")
+
+	task.TaskCreatorID = currentUser.UserID
+
+	task.TaskExecutorID, err = strconv.Atoi(r.FormValue("task_exec"))
+	if err != nil {
+		log.Printf("Error converting executor's ID to int: %s", err)
+	}
+
+	task.TaskExecutorType = r.FormValue("task_exec_type")
+
+	task.TaskStat = r.FormValue("task_stat")
+
+	task.TaskPriority = r.FormValue("task_priority")
+
+	task.TaskDateLastUpdate = time.Now().Format("02-01-2006 15:04:05")
+
+	timeStart, err := time.Parse("2006-01-02", r.FormValue("task_start"))
+	if err != nil {
+		log.Printf("Error parsing date start for %s task: %s", task.TaskName, err)
+	}
+
+	task.TaskDateStart = timeStart.Format("02-01-2006")
+
+	if r.FormValue("task_end") == "" {
+		task.TaskDateEnd = ""
+	} else {
+		timeEnd, err := time.Parse("2006-01-02", r.FormValue("task_end"))
 		if err != nil {
-			log.Printf("Error converting task ID to int: %s", err)
+			log.Printf("Error parsing date end for %s task: %s", task.TaskName, err)
 		}
 
-		task.TaskName = r.FormValue("task_name")
+		task.TaskDateEnd = timeEnd.Format("02-01-2006")
+	}
 
-		task.TaskCreatorID = currentUser.UserID
+	task.TaskRate, err = strconv.Atoi(r.FormValue("task_rate"))
+	if err != nil {
+		log.Printf("Error converting rating from string to int: %s", err)
+	}
 
-		task.TaskExecutorID, err = strconv.Atoi(r.FormValue("task_exec"))
-		if err != nil {
-			log.Printf("Error converting executor's ID to int: %s", err)
-		}
+	description = r.FormValue("task_desc")
 
-		task.TaskExecutorType = r.FormValue("task_exec_type")
+	_, err = server.Core.DB.Exec("UPDATE tasks SET (task_name, task_creator, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) WHERE id = $11", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, &task.TaskID)
+	if err != nil {
+		log.Print(err)
+	}
 
-		task.TaskStat = r.FormValue("task_stat")
+	f, err := os.OpenFile("private/docs/"+strconv.Itoa(task.TaskID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Print(err)
+	}
 
-		task.TaskPriority = r.FormValue("task_priority")
+	err = f.Truncate(0)
+	if err != nil {
+		log.Println(err)
+	}
 
-		task.TaskDateLastUpdate = time.Now().Format("02-01-2006 15:04:05")
+	_, err = f.Seek(0, 0)
+	if err != nil {
+		log.Println(err)
+	}
 
-		timeStart, err := time.Parse("2006-01-02", r.FormValue("task_start"))
-		if err != nil {
-			log.Printf("Error parsing date start for %s task: %s", task.TaskName, err)
-		}
-
-		task.TaskDateStart = timeStart.Format("02-01-2006")
-
-		if r.FormValue("task_end") == "" {
-			task.TaskDateEnd = ""
-		} else {
-			timeEnd, err := time.Parse("2006-01-02", r.FormValue("task_end"))
-			if err != nil {
-				log.Printf("Error parsing date end for %s task: %s", task.TaskName, err)
-			}
-
-			task.TaskDateEnd = timeEnd.Format("02-01-2006")
-		}
-
-		task.TaskRate, err = strconv.Atoi(r.FormValue("task_rate"))
-		if err != nil {
-			log.Printf("Error converting rating from string to int: %s", err)
-		}
-
-		description = r.FormValue("task_desc")
-
-		_, err = server.Core.DB.Exec("UPDATE tasks SET (task_name, task_creator, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) WHERE id = $11", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, &task.TaskID)
-		if err != nil {
-			log.Print(err)
-		}
-
-		f, err := os.OpenFile("private/docs/"+strconv.Itoa(task.TaskID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err != nil {
-			log.Print(err)
-		}
-
-		err = f.Truncate(0)
-		if err != nil {
-			log.Println(err)
-		}
-
-		_, err = f.Seek(0, 0)
-		if err != nil {
-			log.Println(err)
-		}
-
-		_, err = f.WriteString(description)
-		if err != nil {
-			log.Print(err)
-		}
+	_, err = f.WriteString(description)
+	if err != nil {
+		log.Print(err)
 	}
 }
 
