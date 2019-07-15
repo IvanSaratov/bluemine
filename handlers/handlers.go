@@ -10,7 +10,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
@@ -179,65 +178,37 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	currentUser, err := helpers.GetCurrentUser(r)
+	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
-		log.Printf("Error getting current user: %s", err)
+		log.Print("Error getting default viewData: ", err)
 	}
 
 	vars := mux.Vars(r)
 	username := vars["user"]
 
-	var userID int
-
-	err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE username = $1", username).Scan(&userID)
+	viewData.UserData.UserID, err = helpers.ConvertExecNameToID(username, "user")
 	if err != nil {
-		log.Printf("Error getting %s's id: %s", username, err)
+		log.Print("Error getting user id: ", err)
 	}
 
-	user, err := db.GetUserbyID(server.Core.DB, userID)
+	viewData.UserData, err = db.GetUserbyID(server.Core.DB, viewData.UserData.UserID)
 	if err != nil {
 		log.Printf("Error getting info about %s: %s", username, err)
 	}
 
-	usergroups, err := db.GetAllUserGroups(server.Core.DB, userID)
+	viewData.UserGroups, err = db.GetAllUserGroups(server.Core.DB, viewData.UserData.UserID)
 	if err != nil {
 		log.Printf("Error getting user's groups: %s", err)
 	}
 
-	userTasksExecutor, err := db.GetAllTasksbyExecutor(server.Core.DB, userID)
+	viewData.UserExecTasks, err = db.GetAllTasksbyExecutor(server.Core.DB, viewData.UserData.UserID)
 	if err != nil {
 		log.Printf("Error getting assigned to user tasks: %s", err)
 	}
 
-	UserTasksCreator, err := db.GetAllTasksbyCreator(server.Core.DB, userID)
+	viewData.UserCreatorTasks, err = db.GetAllTasksbyCreator(server.Core.DB, viewData.UserData.UserID)
 	if err != nil {
 		log.Printf("Error getting created by user tasks: %s", err)
-	}
-
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
-	groups, err := db.GetAllGroups(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting groups list: %s", err)
-	}
-
-	tmpls, err := db.GetAllTemplates(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting task templates list: %s", err)
-	}
-
-	viewData := data.ViewData{
-		CurrentUser:      currentUser,
-		UserData:         user,
-		Users:            users,
-		UserGroups:       usergroups,
-		Groups:           groups,
-		UserExecTasks:    userTasksExecutor,
-		UserCreatorTasks: UserTasksCreator,
-		Templates:        tmpls,
 	}
 
 	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", viewData)
@@ -253,31 +224,9 @@ func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	currentUser, err := helpers.GetCurrentUser(r)
+	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
-		log.Printf("Error getting current user: %s", err)
-	}
-
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
-	groups, err := db.GetAllGroups(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting groups list: %s", err)
-	}
-
-	tmpls, err := db.GetAllTemplates(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting task templates list: %s", err)
-	}
-
-	viewData := data.ViewData{
-		CurrentUser: currentUser,
-		Users:       users,
-		Groups:      groups,
-		Templates:   tmpls,
+		log.Print("Error getting default viewData: ", err)
 	}
 
 	err = server.Core.Templates["groups"].ExecuteTemplate(w, "base", viewData)
@@ -293,9 +242,9 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	currentUser, err := helpers.GetCurrentUser(r)
+	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
-		log.Printf("Error getting current user: %s", err)
+		log.Print("Error getting default viewData: ", err)
 	}
 
 	vars := mux.Vars(r)
@@ -306,32 +255,9 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error converting string to int on %s group page: %s", groupIDstr, err)
 	}
 
-	group, err := db.GetGroupbyID(server.Core.DB, groupIDint)
+	viewData.GroupData, err = db.GetGroupbyID(server.Core.DB, groupIDint)
 	if err != nil {
 		log.Printf("Error getting info about %d group: %s", groupIDint, err)
-	}
-
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
-	groups, err := db.GetAllGroups(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting groups list: %s", err)
-	}
-
-	tmpls, err := db.GetAllTemplates(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting task templates list: %s", err)
-	}
-
-	viewData := data.ViewData{
-		CurrentUser: currentUser,
-		GroupData:   group,
-		Users:       users,
-		Groups:      groups,
-		Templates:   tmpls,
 	}
 
 	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", viewData)
@@ -347,37 +273,9 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	currentUser, err := helpers.GetCurrentUser(r)
+	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
-		log.Printf("Error getting current user: %s", err)
-	}
-
-	tasks, err := db.GetAllTasks(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting tasks list: %s", err)
-	}
-
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
-	groups, err := db.GetAllGroups(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting groups list: %s", err)
-	}
-
-	tmpls, err := db.GetAllTemplates(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting task templates list: %s", err)
-	}
-
-	viewData := data.ViewData{
-		CurrentUser: currentUser,
-		Tasks:       tasks,
-		Users:       users,
-		Groups:      groups,
-		Templates:   tmpls,
+		log.Print("Error getting default viewData: ", err)
 	}
 
 	err = server.Core.Templates["tasks"].ExecuteTemplate(w, "base", viewData)
@@ -393,9 +291,9 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	currentUser, err := helpers.GetCurrentUser(r)
+	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
-		log.Printf("Error getting current user: %s", err)
+		log.Print("Error getting default viewData: ", err)
 	}
 
 	vars := mux.Vars(r)
@@ -406,32 +304,9 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error converting string to int on %s task page: %s", taskIDstr, err)
 	}
 
-	task, err := db.GetTaskbyID(server.Core.DB, taskIDint)
+	viewData.TaskData, err = db.GetTaskbyID(server.Core.DB, taskIDint)
 	if err != nil {
 		log.Printf("Error getting task info from DB on %s task page: %s", taskIDstr, err)
-	}
-
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
-	groups, err := db.GetAllGroups(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting groups list: %s", err)
-	}
-
-	tmpls, err := db.GetAllTemplates(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting task templates list: %s", err)
-	}
-
-	viewData := data.ViewData{
-		CurrentUser: currentUser,
-		TaskData:    task,
-		Users:       users,
-		Groups:      groups,
-		Templates:   tmpls,
 	}
 
 	err = server.Core.Templates["taskPage"].ExecuteTemplate(w, "base", viewData)
@@ -513,7 +388,7 @@ func WikiHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	viewData, err := db.GetNewItem(server.Core.DB, r)
+	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
 		log.Print("Error getting viewData: ", err)
 	}
