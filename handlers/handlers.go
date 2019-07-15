@@ -513,43 +513,9 @@ func WikiHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	currentUser, err := helpers.GetCurrentUser(r)
+	viewData, err := db.GetNewItem(server.Core.DB, r)
 	if err != nil {
-		log.Print("Error getting current user: ", err)
-	}
-
-	wikies, err := db.GetAllWiki(server.Core.DB)
-	if err != nil {
-		log.Print("Error getting all wiki: ", err)
-	}
-
-	tasks, err := db.GetAllTasks(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting tasks list: %s", err)
-	}
-
-	users, err := db.GetAllUsers(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting users list: %s", err)
-	}
-
-	groups, err := db.GetAllGroups(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting groups list: %s", err)
-	}
-
-	tmpls, err := db.GetAllTemplates(server.Core.DB)
-	if err != nil {
-		log.Printf("Error getting task templates list: %s", err)
-	}
-
-	viewData := data.ViewData{
-		CurrentUser: currentUser,
-		Wikies:      wikies,
-		Tasks:       tasks,
-		Users:       users,
-		Groups:      groups,
-		Templates:   tmpls,
+		log.Print("Error getting viewData: ", err)
 	}
 
 	err = server.Core.Templates["wiki"].ExecuteTemplate(w, "base", viewData)

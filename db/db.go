@@ -2,6 +2,7 @@ package db
 
 import (
 	"log"
+	"net/http"
 	"strings"
 	"time"
 
@@ -485,4 +486,50 @@ func GetAllWiki(DB *sqlx.DB) ([]data.Wiki, error) {
 	}
 
 	return wikies, nil
+}
+
+//GetNewItem d
+func GetNewItem(DB *sqlx.DB, r *http.Request) (data.ViewData, error) {
+	var viewData data.ViewData
+
+	currentUser, err := helpers.GetCurrentUser(r)
+	if err != nil {
+		return viewData, err
+	}
+
+	wikies, err := GetAllWiki(DB)
+	if err != nil {
+		return viewData, err
+	}
+
+	tasks, err := GetAllTasks(DB)
+	if err != nil {
+		return viewData, err
+	}
+
+	users, err := GetAllUsers(DB)
+	if err != nil {
+		return viewData, err
+	}
+
+	groups, err := GetAllGroups(DB)
+	if err != nil {
+		return viewData, err
+	}
+
+	tmpls, err := GetAllTemplates(DB)
+	if err != nil {
+		return viewData, err
+	}
+
+	viewData = data.ViewData{
+		CurrentUser: currentUser,
+		Wikies:      wikies,
+		Tasks:       tasks,
+		Users:       users,
+		Groups:      groups,
+		Templates:   tmpls,
+	}
+
+	return viewData, nil
 }
