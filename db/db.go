@@ -488,8 +488,8 @@ func GetAllWiki(DB *sqlx.DB) ([]data.Wiki, error) {
 	return wikies, nil
 }
 
-//GetNewItem d
-func GetNewItem(DB *sqlx.DB, r *http.Request) (data.ViewData, error) {
+//GetDefaultViewData getting default view data
+func GetDefaultViewData(DB *sqlx.DB, r *http.Request) (data.ViewData, error) {
 	var viewData data.ViewData
 
 	currentUser, err := helpers.GetCurrentUser(r)
