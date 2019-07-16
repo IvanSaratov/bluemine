@@ -393,3 +393,34 @@ func WikiHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error parse template: ", err)
 	}
 }
+
+//WikiPageHandler handle wiki page
+func WikiPageHandler(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
+	if err != nil {
+		log.Print("Error getting default viewData: ", err)
+	}
+
+	vars := mux.Vars(r)
+	wikiIDstr := vars["id"]
+
+	wikiIDint, err := strconv.Atoi(wikiIDstr)
+	if err != nil {
+		log.Printf("Error converting string to int on %s task page: %s", wikiIDstr, err)
+	}
+
+	viewData.WikiData, err = db.GetWikibyID(server.Core.DB, wikiIDint)
+	if err != nil {
+		log.Print("Error getting wiki data: ", err)
+	}
+
+	err = server.Core.Templates["wikiPage"].ExecuteTemplate(w, "base", viewData)
+	if err != nil {
+		log.Print(err)
+	}
+}
