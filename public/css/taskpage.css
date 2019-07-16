@@ -3,15 +3,6 @@
     color: rgb(29, 29, 29);
 }
 
-#content #wrap{
-    width: calc(100% - 60px);
-    height: calc(100% - 60px);
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin: 0 0 0 30px;
-    background-color: rgb(221, 221, 221);
-    border-radius: 3px;
-}
-
 #content #wrap #task_about{
     display: inline-block;
     width: calc(100% - 20px);
