@@ -131,7 +131,7 @@ func GetPrivateDesc(w http.ResponseWriter, r *http.Request) {
 	var path string
 	switch r.FormValue("type") {
 	case "tasks":
-		path = "private/docs/" + id + ".txt"
+		path = "private/docs/" + id + ".md"
 	case "wiki":
 		path = "private/wiki/" + id + ".txt"
 	default:
