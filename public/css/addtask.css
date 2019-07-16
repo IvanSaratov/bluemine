@@ -36,6 +36,7 @@
 }
 #container_desc #elements{
     display: inline-block;
+    width: calc(100% - 180px);
 }
 #container_desc #elements .elem{
     cursor: pointer;
@@ -58,8 +59,8 @@
     margin-top: 5px;
     padding: 0;
     resize: none;
-    width: calc(100% - 2px);
-    height: 200px;
+    width: calc(49% - 2px);
+    height: 400px;
     border: 1px solid black;
     transition: 0.2s;
 }
