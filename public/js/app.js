@@ -238,3 +238,26 @@ function groupChange() {
         });
     }
 };
+
+function wikiAdd() {
+    var name = document.getElementById('input_wiki_name').value;
+    var article = document.getElementById('input_article').value;
+    var father_id = 0;//document.getElementById('wiki_father').value;
+
+    if (name.length == 0 || article.length == 0) {
+        alert("Пустое значение")
+    } else {
+        $.ajax({
+            url: "/wiki/new",
+            method: "POST",
+            data: {
+                wiki_name: name,
+                article: article,
+                father_id: father_id
+            },
+            success: function(){
+                location.href = "/wiki";
+            }
+        });
+    }
+};
