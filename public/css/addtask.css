@@ -36,6 +36,7 @@
 }
 #container_desc #elements{
     display: inline-block;
+    width: calc(100% - 180px);
 }
 #container_desc #elements .elem{
     cursor: pointer;
@@ -55,23 +56,36 @@
     color: black;
 }
 #container_desc #input_desc{
+    float: left;
     margin-top: 5px;
-    padding: 0;
+    padding: 5px 5px 0 5px;
     resize: none;
-    width: calc(100% - 2px);
-    height: 200px;
+    width: calc(49% - 2px);
+    height: 400px;
     border: 1px solid black;
     transition: 0.2s;
 }
 #container_desc #input_desc:focus{
     border: 1px solid #1973BD;
 }
+#container_desc #markdown_output{
+    float: right;
+    overflow: auto;
+    margin-top: 5px;
+    padding: 5px 5px 0 5px;
+    width: calc(49% - 2px);
+    height: 400px;
+    border: 1px solid black;
+    transition: 0.2s;
+    background-color: whitesmoke;
+    color: black;
+}
 
 #container_labels{
     width: calc(100% - 20px);
     height: auto;
-    margin-top: 10px;
     margin-left: 10px;
+    padding-top: 10px;
     overflow: auto;
 }
 #container_labels #container_labels_left{

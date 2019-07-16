@@ -80,7 +80,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
-	f, err := os.OpenFile("private/docs/"+strconv.Itoa(task.TaskID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	f, err := os.OpenFile("private/docs/"+strconv.Itoa(task.TaskID)+".md", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Print(err)
 	}
