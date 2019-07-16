@@ -1,19 +1,22 @@
 {{define "styles"}}
+<link href="/public/css/wikipage.css" rel="stylesheet">
 {{end}}
 {{define "content"}}
 <div id="content">
     <div class="pagetitle">Wiki</div>
-    <div>
-        <a href="/wiki/new">Созадть новую статью</a>
-    </div>
-    <div id="wikilist">
-        <hr>
-        <ul>
-            {{range .Wikies}}
-            <li><a href="/wiki/show/{{.WikiID}}">{{.WikiName}}</a></li>
-            {{end}}
-        </ul>
-        <hr>
+    <div id="wrap">
+        <div>
+            <a href="/wiki/new">Создать новую статью</a>
+        </div>
+        <div id="wikilist">
+            <hr>
+            <ul>
+                {{range .Wikies}}
+                <li><a href="/wiki/show/{{.WikiID}}">{{.WikiName}}</a></li>
+                {{end}}
+            </ul>
+            <hr>
+        </div>
     </div>
 </div>
 {{end}}
