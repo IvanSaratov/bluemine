@@ -3,7 +3,7 @@ $(document).ready(function() {
     var href = location.href.split('/');
     var id = href[5];
     var type = href[3];
-    console.log(type)
+
     $.get("/getdesc", { id: id, type:type }).done(function(data){
         data = data.replace(/(?:\r\n|\r|\n)/g, '<br>');
         descWrap.html(data);
