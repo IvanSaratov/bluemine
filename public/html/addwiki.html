@@ -1,10 +1,31 @@
 {{define "styles"}}
 {{end}}
 {{define "content"}}
-<div>
-    <span>Имя статьи</span>
-    <input type="text" id="input_wiki_name" name="wiki_name">
-    <textarea rows="25" cols="65" name="wiki_text" id="input_article"></textarea>
-    <button onclick="wikiAdd()">Создать</button>
+<div id="content">
+    <div class="pagetitle">Новая статья</div>
+    <div id="wrap">
+        <div id="container_task_general">
+            <div class="record">
+                <div id="wiki_name" class="label">Название статьи</div>
+                <input id="input_wiki_name" type="text" required>
+            </div>
+            <div class="record">
+                <div id="wiki_father" class="label">Родительская статья</div>
+                <select id="input_wiki_father"></select>
+            </div>
+        </div>
+        <div id="container_desc">
+            <div id="desc" class="label">Описание</div>
+            <div id="elements">
+                <span class="elem" id="bold"></span>
+                <span class="elem" id="italic"></span>
+                <span class="elem" id="underline"></span>
+                <span class="elem" id="strike"></span>
+            </div>
+            <textarea id="input_desc"></textarea>
+            <div id="markdown_output"></div>
+        </div>
+        <button class="send_button" onclick="wikiAdd()">Создать</button>
+    </div>
 </div>
 {{end}}
