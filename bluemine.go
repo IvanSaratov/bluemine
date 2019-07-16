@@ -45,7 +45,7 @@ func main() {
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
 	router.HandleFunc("/gettaskdata", handlers.GetTaskData).Methods("GET")
-	router.HandleFunc("/gettaskdesc", handlers.GetTaskDesc).Methods("GET")
+	router.HandleFunc("/getdesc", handlers.GetPrivateDesc).Methods("GET")
 	router.HandleFunc("/tasks/new", handlers.AddTaskHandler).Methods("POST")
 	router.HandleFunc("/tasks/change", handlers.ChangeTaskHandler).Methods("POST")
 	router.HandleFunc("/tmpl/new", handlers.AddTmplHandler).Methods("POST")

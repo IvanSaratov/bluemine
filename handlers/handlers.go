@@ -120,23 +120,31 @@ func GetTaskData(w http.ResponseWriter, r *http.Request) {
 
 }
 
-//GetTaskDesc sends task description to task page
-func GetTaskDesc(w http.ResponseWriter, r *http.Request) {
+//GetPrivateDesc sends task or wiki description to task page
+func GetPrivateDesc(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
 	id := r.FormValue("id")
+	var path string
+	switch r.FormValue("type") {
+	case "tasks":
+		path = "private/docs/" + id + ".txt"
+	case "wiki":
+		path = "private/wiki/" + id + ".txt"
+	default:
+		path = ""
+	}
 
-	bytes, err := ioutil.ReadFile("private/docs/" + id + ".txt")
+	bytes, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Printf("Error reading file with description for %s: %s", id, err)
 		w.Write([]byte("Ошибка при чтении файла с описанием: " + fmt.Sprintf("%s", err)))
 	}
 
 	w.Write(bytes)
-
 }
 
 //GetTmplData sends template data
