@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
 )
@@ -175,36 +176,49 @@ func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var (
-		wiki    data.Wiki
-		err     error
-		article string
-	)
+	if r.Method == "GET" {
+		viewData, err := db.GetDefaultViewData(server.Core.DB, r)
+		if err != nil {
+			log.Print("Error getting default viewData: ", err)
+		}
 
-	wiki.WikiName = r.FormValue("wiki_name")
-	article = r.FormValue("article")
-	wiki.WikiAuthor, err = helpers.GetCurrentUser(r)
-	if err != nil {
-		log.Print("Error getting current user: ", err)
-	}
+		err = server.Core.Templates["addWiki"].ExecuteTemplate(w, "base", viewData)
+		if err != nil {
+			log.Print(err)
+		}
 
-	wiki.WikiFatherID, err = strconv.Atoi(r.FormValue("father_id"))
-	if err != nil {
-		log.Print("Error getting father_id: ", err)
-	}
+	} else if r.Method == "POST" {
+		var (
+			wiki    data.Wiki
+			err     error
+			article string
+		)
 
-	err = server.Core.DB.QueryRow("INSERT INTO wiki (title, author_id, father_id) VALUES ($1, $2, $3)", wiki.WikiName, wiki.WikiAuthor.UserID, wiki.WikiFatherID).Scan(&wiki.WikiID)
-	if err != nil {
-		log.Print("Error create wiki article: ", err)
-	}
+		wiki.WikiName = r.FormValue("wiki_name")
+		article = r.FormValue("article")
+		wiki.WikiAuthor, err = helpers.GetCurrentUser(r)
+		if err != nil {
+			log.Print("Error getting current user: ", err)
+		}
 
-	f, err := os.OpenFile("private/wiki/"+strconv.Itoa(wiki.WikiID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Print("Error create wiki.txt: ", err)
-	}
+		wiki.WikiFatherID, err = strconv.Atoi(r.FormValue("father_id"))
+		if err != nil {
+			log.Print("Error getting father_id: ", err)
+		}
 
-	_, err = f.WriteString(article)
-	if err != nil {
-		log.Print("Error to write in txt: ", err)
+		err = server.Core.DB.QueryRow("INSERT INTO wiki (title, author_id, father_id) VALUES ($1, $2, $3) RETURNING id", wiki.WikiName, wiki.WikiAuthor.UserID, wiki.WikiFatherID).Scan(&wiki.WikiID)
+		if err != nil {
+			log.Print("Error create wiki article: ", err)
+		}
+
+		f, err := os.OpenFile("private/wiki/"+strconv.Itoa(wiki.WikiID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Print("Error create wiki.txt: ", err)
+		}
+
+		_, err = f.WriteString(article)
+		if err != nil {
+			log.Print("Error to write in txt: ", err)
+		}
 	}
 }
