@@ -4,11 +4,13 @@
 <div id="content">
     <div class="pagetitle">Wiki</div>
     <div id="wikilist">
-        <div class="container_table">
-                    {{range .Wikies}}
-                    <div>{{.WikiName}}</div>
-                    {{end}}
-        </div>
+        <hr>
+        <ul>
+            {{range .Wikies}}
+            <li><a href="/wiki/show/{{.WikiID}}">{{.WikiName}}</a></li>
+            {{end}}
+        </ul>
+        <hr>
     </div>
 </div>
 {{end}}
