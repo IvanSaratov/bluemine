@@ -58,7 +58,7 @@
 #container_desc #input_desc{
     float: left;
     margin-top: 5px;
-    padding: 0;
+    padding: 5px;
     resize: none;
     width: calc(49% - 2px);
     height: 400px;
