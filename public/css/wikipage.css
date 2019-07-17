@@ -2,3 +2,33 @@
     background-color: white;
     color: rgb(29, 29, 29);
 }
+
+#content #wrap{
+    width: 100%;
+    margin: 0;
+    background-color: white;
+}
+
+.nested{
+    padding-left: 10px;
+}
+
+.item, .nested_item{
+    font-size: 20px;
+    min-height: 35px;
+    line-height: 35px;
+    padding-left: 15px;
+    background-color: white;
+    border-top: 2px solid rgb(221, 221, 221);
+}
+.item:hover, .nested_item:hover{
+    background-color: rgb(54, 161, 248);
+    color: white;
+}
+.item a, .nested_item a{
+    text-decoration: none;
+    color: black;
+}
+.item a:hover, .nested_item a:hover{
+    color: white;
+}

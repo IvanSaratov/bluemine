@@ -7,13 +7,7 @@
     <button class="content_button" onclick="location.href='/wiki/new'">Создать новую статью</button>
     <div id="wrap">
         <div id="wikilist">
-            <hr>
-            <ul>
-                {{range .Wikies}}
-                <li><a href="/wiki/show/{{.WikiID}}">{{.WikiName}}</a></li>
-                {{end}}
-            </ul>
-            <hr>
+            <div id="main"></div>
         </div>
     </div>
 </div>
