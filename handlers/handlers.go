@@ -133,7 +133,7 @@ func GetPrivateDesc(w http.ResponseWriter, r *http.Request) {
 	case "tasks":
 		path = "private/docs/" + id + ".md"
 	case "wiki":
-		path = "private/wiki/" + id + ".txt"
+		path = "private/wiki/" + id + ".md"
 	default:
 		path = ""
 	}

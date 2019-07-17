@@ -211,14 +211,14 @@ func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 			log.Print("Error create wiki article: ", err)
 		}
 
-		f, err := os.OpenFile("private/wiki/"+strconv.Itoa(wiki.WikiID)+".txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		f, err := os.OpenFile("private/wiki/"+strconv.Itoa(wiki.WikiID)+".md", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
-			log.Print("Error create wiki.txt: ", err)
+			log.Print("Error create wiki.md: ", err)
 		}
 
 		_, err = f.WriteString(article)
 		if err != nil {
-			log.Print("Error to write in txt: ", err)
+			log.Print("Error to write in md: ", err)
 		}
 	}
 }
