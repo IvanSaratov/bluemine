@@ -4,10 +4,8 @@
 {{define "content"}}
 <div id="content">
     <div class="pagetitle">Wiki</div>
+    <button class="content_button" onclick="location.href='/wiki/new'">Создать новую статью</button>
     <div id="wrap">
-        <div>
-            <a href="/wiki/new">Создать новую статью</a>
-        </div>
         <div id="wikilist">
             <hr>
             <ul>
@@ -19,4 +17,5 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/public/js/getwikilist.js"></script>
 {{end}}
