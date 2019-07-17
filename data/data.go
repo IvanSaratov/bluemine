@@ -55,12 +55,13 @@ type Group struct {
 
 //Wiki struct describe wiki article
 type Wiki struct {
-	WikiID       int
-	WikiIDStr    string
-	WikiAuthor   User
-	WikiFatherID int
-	WikiName     string
-	WikiChilds   []Wiki
+	WikiID          int
+	WikiIDStr       string
+	WikiAuthor      User
+	WikiFatherID    int
+	WikiFatherIDStr string
+	WikiName        string
+	WikiChilds      []Wiki
 }
 
 //ViewData struct to show data on page

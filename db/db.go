@@ -458,6 +458,7 @@ func GetWikibyID(DB *sqlx.DB, ID int) (data.Wiki, error) {
 	}
 
 	wiki.WikiIDStr = strconv.Itoa(wiki.WikiID)
+	wiki.WikiFatherIDStr = strconv.Itoa(wiki.WikiFatherID)
 
 	wiki.WikiAuthor, err = GetUserbyID(DB, wiki.WikiAuthor.UserID)
 	if err != nil {
