@@ -56,6 +56,7 @@ type Group struct {
 //Wiki struct describe wiki article
 type Wiki struct {
 	WikiID       int
+	WikiIDStr    string
 	WikiAuthor   User
 	WikiFatherID int
 	WikiName     string
