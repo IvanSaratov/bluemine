@@ -3,12 +3,14 @@ package db
 import (
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/helpers"
+	"github.com/IvanSaratov/bluemine/server"
 
 	"github.com/go-ldap/ldap"
 	"github.com/jmoiron/sqlx"
@@ -444,16 +446,44 @@ func GetAllUserGroups(DB *sqlx.DB, ID int) ([]data.Group, error) {
 
 //GetWikibyID gets wiki by ID
 func GetWikibyID(DB *sqlx.DB, ID int) (data.Wiki, error) {
-	var wiki data.Wiki
+	var (
+		wiki      data.Wiki
+		stmt      = "SELECT * FROM wiki WHERE id = $1"
+		stmtChild = "SELECT id FROM wiki WHERE father_id = $1"
+	)
 
-	err := DB.QueryRow("SELECT * FROM wiki WHERE id = $1", ID).Scan(&wiki.WikiID, &wiki.WikiAuthor.UserID, &wiki.WikiFatherID, &wiki.WikiName)
+	err := DB.QueryRow(stmt, ID).Scan(&wiki.WikiID, &wiki.WikiAuthor.UserID, &wiki.WikiFatherID, &wiki.WikiName)
 	if err != nil {
 		return wiki, err
 	}
 
+	wiki.WikiIDStr = strconv.Itoa(wiki.WikiID)
+
 	wiki.WikiAuthor, err = GetUserbyID(DB, wiki.WikiAuthor.UserID)
 	if err != nil {
 		return wiki, err
+	}
+
+	rows, err := server.Core.DB.Query(stmtChild, wiki.WikiID)
+	if err != nil {
+		log.Printf("Error making query for get wiki's child articles: %s", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var wikiChild data.Wiki
+
+		err = rows.Scan(&wikiChild.WikiID)
+		if err != nil {
+			log.Printf("Error scaning for wiki's child ID: %s", err)
+		}
+
+		wikiChild, err = GetWikibyID(server.Core.DB, wikiChild.WikiID)
+		if err != nil {
+			log.Printf("Error getting wiki's child by ID: %s", err)
+		}
+
+		wiki.WikiChilds = append(wiki.WikiChilds, wikiChild)
 	}
 
 	return wiki, nil
