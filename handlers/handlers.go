@@ -10,6 +10,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/IvanSaratov/bluemine/data"
+
 	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
@@ -172,6 +174,51 @@ func GetTmplData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(tmplData)
 
+}
+
+//GetWikiTree gets wiki list
+func GetWikiTree(w http.ResponseWriter, r *http.Request) {
+	if !helpers.AlreadyLogin(r) {
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		return
+	}
+
+	var (
+		wikies []data.Wiki
+		stmt   = "SELECT id FROM wiki"
+	)
+
+	rows, err := server.Core.DB.Query(stmt)
+	if err != nil {
+		log.Printf("Error making query for get wiki list: %s", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var wiki data.Wiki
+
+		err = rows.Scan(&wiki.WikiID)
+		if err != nil {
+			log.Printf("Error scaning for wiki ID: %s", err)
+		}
+
+		wiki, err = db.GetWikibyID(server.Core.DB, wiki.WikiID)
+		if err != nil {
+			log.Printf("Error getting wiki by ID: %s", err)
+		}
+
+		wikies = append(wikies, wiki)
+	}
+
+	if r.Method == "GET" {
+		ans, err := json.MarshalIndent(wikies, "", "  ")
+		if err != nil {
+			log.Println("Error marshalling data to send: ", err)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(ans)
+	}
 }
 
 //UserProfileHandler handle user's profile page
