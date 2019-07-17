@@ -36,7 +36,7 @@
                 <div class="user_tasks" id="user_tasks_exec">
                     <div class="user_tasks_rec">Назначенные задачи</div>
                     <div class="container_table">
-                        <table>
+                        <table id="tasks_exec">
                             <thead>
                                 <tr>
                                     <th>
@@ -69,16 +69,16 @@
                             <tbody>
                                 {{range .UserExecTasks}}
                                 <tr>
-                                    <td>
+                                    <td id="name">
                                         <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
                                         {{ if and (le .TaskDateDiff 36.0) (ne .TaskDateDiff 0.0) }}
                                         <span id="icofire"></span>
                                         {{end}}
                                     </td>
-                                    <td>{{ .TaskStat }}</td>
-                                    <td>{{ .TaskDateStart }}</td>
-                                    <td>{{ .TaskDateEnd }}</td>
-                                    <td>{{ .TaskRate }}</td>
+                                    <td id="stat">{{ .TaskStat }}</td>
+                                    <td id="date_start">{{ .TaskDateStart }}</td>
+                                    <td id="date_end">{{ .TaskDateEnd }}</td>
+                                    <td id="rate">{{ .TaskRate }}</td>
                                 </tr>
                                 {{end}}
                             </tbody>
@@ -88,7 +88,7 @@
                 <div class="user_tasks" id="user_tasks_creator">
                     <div class="user_tasks_rec">Созданные задачи</div>
                     <div class="container_table">
-                        <table>
+                        <table id="tasks_creator">
                             <thead>
                                 <tr>
                                     <th>
@@ -121,16 +121,16 @@
                             <tbody>
                                 {{range .UserCreatorTasks}}
                                 <tr>
-                                    <td>
+                                    <td id="name">
                                         <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
                                         {{ if and (le .TaskDateDiff 36.0) (ne .TaskDateDiff 0.0) }}
                                         <span id="icofire"></span>
                                         {{end}}
                                     </td>
-                                    <td>{{ .TaskStat }}</td>
-                                    <td>{{ .TaskDateStart }}</td>
-                                    <td>{{ .TaskDateEnd }}</td>
-                                    <td>{{ .TaskRate }}</td>
+                                    <td id="stat">{{ .TaskStat }}</td>
+                                    <td id="date_start">{{ .TaskDateStart }}</td>
+                                    <td id="date_end">{{ .TaskDateEnd }}</td>
+                                    <td id="rate">{{ .TaskRate }}</td>
                                 </tr>
                                 {{end}}
                             </tbody>
