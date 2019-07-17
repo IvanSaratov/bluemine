@@ -91,6 +91,22 @@ html, body{
     font-size: 24px;
 }
 
+#content .content_button{
+    position: absolute;
+    top: 40px;
+    right: 15px;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    border: none;
+    background-color: #1973BD;
+    color: white;
+    transition: 0.2s;
+}
+#content .content_button:hover{
+    background-color: rgb(54, 161, 248);
+}
+
 #content #wrap{
     width: calc(100% - 60px);
     height: calc(100% - 60px);

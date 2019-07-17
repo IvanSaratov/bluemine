@@ -9,9 +9,9 @@
     {{end}}
     {{ if .CurrentUser.UserisAdmin}}
         {{ if .UserData.UserisAdmin}}
-        <button id="admin" onclick="removeAdmin()">Убрать права администратора</button>
+        <button class="content_button" id="admin" onclick="removeAdmin()">Убрать права администратора</button>
         {{else}}
-        <button id="admin" onclick="makeAdmin()">Сделать администратором</button>
+        <button class="content_button" id="admin" onclick="makeAdmin()">Сделать администратором</button>
         {{end}}
     {{end}}
     <div id="wrap">
