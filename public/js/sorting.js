@@ -48,7 +48,10 @@ $('.sort_name_down').click(function() {
     $(this).css('color', 'rgb(54, 161, 248)')
 
     $('#' + tableID + ' tbody tr').sort(function (a, b) {
-        return ($(a).find('#name a').text() > $(b).find('#name a').text()) ? -1 : ($(a).find('#name a').text() < $(b).find('#name a').text()) ? 1 : 0;
+        aVal = $(a).find('#name a').text().toUpperCase()
+        bVal = $(b).find('#name a').text().toUpperCase()
+
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -58,7 +61,10 @@ $('.sort_name_up').click(function() {
     $(this).css('color', 'rgb(54, 161, 248)')
 
     $('#' + tableID + ' tbody tr').sort(function (a, b) {
-        return ($(a).find('#name a').text() < $(b).find('#name a').text()) ? -1 : ($(a).find('#name a').text() > $(b).find('#name a').text()) ? 1 : 0;
+        aVal = $(a).find('#name a').text().toUpperCase()
+        bVal = $(b).find('#name a').text().toUpperCase()
+
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -120,10 +126,10 @@ $('.sort_exec_down').click(function() {
     $(this).css('color', 'rgb(54, 161, 248)')
 
     $('#' + tableID + ' tbody tr').sort(function (a, b) {
-        aVal = $(a).find('#exec a').text()
-        bVal = $(b).find('#exec a').text()
+        aVal = $(a).find('#exec a').text().toUpperCase()
+        bVal = $(b).find('#exec a').text().toUpperCase()
 
-        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -133,10 +139,10 @@ $('.sort_exec_up').click(function() {
     $(this).css('color', 'rgb(54, 161, 248)')
 
     $('#' + tableID + ' tbody tr').sort(function (a, b) {
-        aVal = $(a).find('#exec a').text()
-        bVal = $(b).find('#exec a').text()
+        aVal = $(a).find('#exec a').text().toUpperCase()
+        bVal = $(b).find('#exec a').text().toUpperCase()
 
-        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
