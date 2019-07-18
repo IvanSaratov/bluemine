@@ -19,6 +19,23 @@ function customStat(status) {
     }
 }
 
+function customPriority(priority) {
+    switch (priority) {
+        case "Низкий": {
+            return 0;
+            break;
+        }
+        case "Средний": {
+            return 1;
+            break;
+        }
+        case "Высокий": {
+            return 2;
+            break;
+        }
+    }
+}
+
 $(document).ready(function() {
     $('.sort_stat_down').click()
 })
@@ -68,6 +85,58 @@ $('.sort_stat_up').click(function() {
         bVal = customStat($(b).find('#stat').text())
 
         return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
+    }).appendTo('#' + tableID + ' tbody')
+})
+
+$('.sort_pr_down').click(function() {
+    tableID = $(this).closest('table').attr('id');
+    $('#' + tableID + ' .sort_icon').css('color', 'white')
+    $(this).css('color', 'rgb(54, 161, 248)')
+
+    $('#' + tableID + ' tbody tr').sort(function (a, b) {
+        aVal = customPriority($(a).find('#pr').text())
+        bVal = customPriority($(b).find('#pr').text())
+
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
+    }).appendTo('#' + tableID + ' tbody')
+})
+
+$('.sort_pr_up').click(function() {
+    tableID = $(this).closest('table').attr('id');
+    $('#' + tableID + ' .sort_icon').css('color', 'white')
+    $(this).css('color', 'rgb(54, 161, 248)')
+
+    $('#' + tableID + ' tbody tr').sort(function (a, b) {
+        aVal = customPriority($(a).find('#pr').text())
+        bVal = customPriority($(b).find('#pr').text())
+
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
+    }).appendTo('#' + tableID + ' tbody')
+})
+
+$('.sort_exec_down').click(function() {
+    tableID = $(this).closest('table').attr('id');
+    $('#' + tableID + ' .sort_icon').css('color', 'white')
+    $(this).css('color', 'rgb(54, 161, 248)')
+
+    $('#' + tableID + ' tbody tr').sort(function (a, b) {
+        aVal = $(a).find('#exec a').text()
+        bVal = $(b).find('#exec a').text()
+
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
+    }).appendTo('#' + tableID + ' tbody')
+})
+
+$('.sort_exec_up').click(function() {
+    tableID = $(this).closest('table').attr('id');
+    $('#' + tableID + ' .sort_icon').css('color', 'white')
+    $(this).css('color', 'rgb(54, 161, 248)')
+
+    $('#' + tableID + ' tbody tr').sort(function (a, b) {
+        aVal = $(a).find('#exec a').text()
+        bVal = $(b).find('#exec a').text()
+
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -144,6 +213,32 @@ $('.sort_rate_up').click(function() {
     $('#' + tableID + ' tbody tr').sort(function (a, b) {
         aVal = parseInt($(a).find('#rate').text())
         bVal = parseInt($(b).find('#rate').text())
+
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
+    }).appendTo('#' + tableID + ' tbody')
+})
+
+$('.sort_update_down').click(function() {
+    tableID = $(this).closest('table').attr('id');
+    $('#' + tableID + ' .sort_icon').css('color', 'white')
+    $(this).css('color', 'rgb(54, 161, 248)')
+
+    $('#' + tableID + ' tbody tr').sort(function (a, b) {
+        aVal = $(a).find('#last_update').text()
+        bVal = $(b).find('#last_update').text()
+
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
+    }).appendTo('#' + tableID + ' tbody')
+})
+
+$('.sort_update_up').click(function() {
+    tableID = $(this).closest('table').attr('id');
+    $('#' + tableID + ' .sort_icon').css('color', 'white')
+    $(this).css('color', 'rgb(54, 161, 248)')
+
+    $('#' + tableID + ' tbody tr').sort(function (a, b) {
+        aVal = $(a).find('#last_update').text()
+        bVal = $(b).find('#last_update').text()
 
         return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
