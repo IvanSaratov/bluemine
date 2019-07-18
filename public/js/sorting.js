@@ -31,7 +31,7 @@ $('.sort_name_down').click(function() {
     $(this).css('color', 'rgb(54, 161, 248)')
 
     $('#' + tableID + ' tbody tr').sort(function (a, b) {
-        return $(a).find('#name a').text() < $(b).find('#name a').text()
+        return ($(a).find('#name a').text() > $(b).find('#name a').text()) ? -1 : ($(a).find('#name a').text() < $(b).find('#name a').text()) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -41,7 +41,7 @@ $('.sort_name_up').click(function() {
     $(this).css('color', 'rgb(54, 161, 248)')
 
     $('#' + tableID + ' tbody tr').sort(function (a, b) {
-        return $(a).find('#name a').text() > $(b).find('#name a').text()
+        return ($(a).find('#name a').text() < $(b).find('#name a').text()) ? -1 : ($(a).find('#name a').text() > $(b).find('#name a').text()) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -54,7 +54,7 @@ $('.sort_stat_down').click(function() {
         aVal = customStat($(a).find('#stat').text())
         bVal = customStat($(b).find('#stat').text())
 
-        return aVal > bVal
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -67,7 +67,7 @@ $('.sort_stat_up').click(function() {
         aVal = customStat($(a).find('#stat').text())
         bVal = customStat($(b).find('#stat').text())
 
-        return aVal < bVal
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -80,7 +80,7 @@ $('.sort_add_down').click(function() {
         aVal = $(a).find('#date_start').text()
         bVal = $(b).find('#date_start').text()
 
-        return aVal > bVal
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -93,7 +93,7 @@ $('.sort_add_up').click(function() {
         aVal = $(a).find('#date_start').text()
         bVal = $(b).find('#date_start').text()
 
-        return aVal < bVal
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -106,7 +106,7 @@ $('.sort_limit_down').click(function() {
         aVal = $(a).find('#date_end').text()
         bVal = $(b).find('#date_end').text()
 
-        return aVal > bVal
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -119,7 +119,7 @@ $('.sort_limit_up').click(function() {
         aVal = $(a).find('#date_end').text()
         bVal = $(b).find('#date_end').text()
 
-        return aVal < bVal
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -132,7 +132,7 @@ $('.sort_rate_down').click(function() {
         aVal = parseInt($(a).find('#rate').text())
         bVal = parseInt($(b).find('#rate').text())
 
-        return aVal > bVal
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
 
@@ -145,6 +145,6 @@ $('.sort_rate_up').click(function() {
         aVal = parseInt($(a).find('#rate').text())
         bVal = parseInt($(b).find('#rate').text())
 
-        return aVal < bVal
+        return (aVal > bVal) ? -1 : (aVal < bVal) ? 1 : 0;
     }).appendTo('#' + tableID + ' tbody')
 })
