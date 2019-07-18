@@ -40,7 +40,7 @@ func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 	}
 
 	isAdmin := false
-	_, err = DB.Query("SELET id FROM profiles")
+	_, err = DB.Query("SELEСT id FROM profiles")
 	if err != nil {
 		if err != sql.ErrNoRows {
 			return err

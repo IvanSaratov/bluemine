@@ -1,4 +1,4 @@
-CREATE DATABASE bluemine;
+CREATE DATABASE IF NOT EXISTS bluemine;
 USE bluemine;
 
 CREATE TABLE profiles (
