@@ -61,7 +61,6 @@ type Wiki struct {
 	WikiFatherID    int
 	WikiFatherIDStr string
 	WikiName        string
-	WikiChilds      []Wiki
 }
 
 //ViewData struct to show data on page
