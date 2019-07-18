@@ -11,7 +11,9 @@ $.get("/getwikilist", function(data) {
         } else {
             if (!nodeExists(data[i].WikiIDStr)) {
                 var wrap = $('#wikilist #main #' + data[i].WikiFatherIDStr);
-                $(wrap).append('<div class="nested" id="child_of_' + data[i].WikiFatherIDStr + '"></div>')
+                if (!nodeExists('child_of_' + data[i].WikiFatherIDStr + '')) {
+                    $(wrap).append('<div class="nested" id="child_of_' + data[i].WikiFatherIDStr + '"></div>')
+                }
                 var wrap = $('#wikilist #main #' + data[i].WikiFatherIDStr + ' #child_of_' + data[i].WikiFatherIDStr);
                 html = '<div id="' + data[i].WikiIDStr + '"><div class="nested_item"><a href="/wiki/show/' + data[i].WikiIDStr + '">' + data[i].WikiName + '</a></div></div>'
                 $(wrap).append(html);
