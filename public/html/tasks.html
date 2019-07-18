@@ -61,7 +61,7 @@
                                 {{end}}
                             </td>
                             <td id="stat">{{ .TaskStat }}</td>
-                            <td>{{ .TaskPriority}}</td>
+                            <td id="pr">{{ .TaskPriority}}</td>
                             {{ if (eq .TaskExecutorType "group") }}
                             <td id="exec"><a href="/group/show/{{ .TaskExecutorID }}">{{ .TaskExecutorName }}</a></td>
                             {{ else }}
