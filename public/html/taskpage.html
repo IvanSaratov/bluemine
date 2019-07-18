@@ -13,6 +13,10 @@
                         <div class="label">Статус:</div>
                         <div class="value">{{ .TaskData.TaskStat}}</div>
                     </div>
+                    <div class="record" id="task_priority">
+                        <div class="label">Приоритет:</div>
+                        <div class="value">{{ .TaskData.TaskPriority}}</div>
+                    </div>
                     <div class="record" id="task_exec">
                         <div class="label">Назначена:</div>
                         {{ if (eq .TaskData.TaskExecutorType "group") }}
@@ -20,6 +24,10 @@
                         {{ else }}
                         <div class="value"><a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a></div>
                         {{ end }}
+                    </div>
+                    <div class="record" id="task_rate">
+                        <div class="label">Приоритет:</div>
+                        <div class="value">{{ .TaskData.TaskRate}}</div>
                     </div>
                 </div>
                 <div id="task_info_left">
