@@ -6,39 +6,71 @@
         <div class="pagetitle">Список задач</div>
         <div id="tasklist">
             <div class="container_table">
-                <table>
+                <table id="tasks">
                     <thead>
                         <tr>
-                            <th>Имя задачи</th>
-                            <th>Статус</th>
-                            <th>Приоритет</th>
-                            <th>Назначена</th>
-                            <th>Добавлена</th>
-                            <th>Закончить до</th>
-                            <th>Рейтинг</th>
-                            <th>Обновлена</th>
+                            <th>
+                                <span class="sort_icon sort_icon_down sort_by_letter_down sort_name_down"></span>
+                                Имя задачи
+                                <span class="sort_icon sort_icon_up sort_by_letter_up sort_name_up"></span>
+                            </th>
+                            <th>
+                                <span class="sort_icon sort_icon_down sort_by_obj_down sort_stat_down"></span>
+                                Статус
+                                <span class="sort_icon sort_icon_up sort_by_obj_up sort_stat_up"></span>
+                            </th>
+                            <th>
+                                <span class="sort_icon sort_icon_down sort_by_obj_down sort_pr_down"></span>
+                                Приоритет
+                                <span class="sort_icon sort_icon_up sort_by_obj_up sort_pr_up"></span>
+                            </th>
+                            <th>
+                                <span class="sort_icon sort_icon_down sort_by_letter_down sort_exec_down"></span>
+                                Назначена
+                                <span class="sort_icon sort_icon_up sort_by_letter_up sort_exec_up"></span>
+                            </th>
+                            <th>
+                                <span class="sort_icon sort_icon_down sort_by_obj_down sort_add_down"></span>
+                                Добавлена
+                                <span class="sort_icon sort_icon_up sort_by_obj_up sort_add_up"></span>
+                            </th>
+                            <th>
+                                <span class="sort_icon sort_icon_down sort_by_obj_down sort_limit_down"></span>
+                                Закончить до
+                                <span class="sort_icon sort_icon_up sort_by_obj_up sort_limit_up"></span>
+                            </th>
+                            <th>
+                                <span class="sort_icon sort_icon_down sort_by_num_down sort_rate_down"></span>
+                                Рейтинг
+                                <span class="sort_icon sort_icon_up sort_by_num_up sort_rate_up"></span>
+                            </th>
+                            <th>
+                                <span class="sort_icon sort_icon_down sort_by_obj_down sort_update_down"></span>
+                                Обновлена
+                                <span class="sort_icon sort_icon_up sort_by_obj_up sort_update_up"></span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {{range .Tasks}}
                         <tr>
-                            <td>
+                            <td id="name">
                                 <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
                                 {{ if and (le .TaskDateDiff 36.0) (ne .TaskDateDiff 0.0) }}
                                 <span id="icofire"></span>
                                 {{end}}
                             </td>
-                            <td>{{ .TaskStat }}</td>
-                            <td>{{ .TaskPriority}}</td>
+                            <td id="stat">{{ .TaskStat }}</td>
+                            <td id="pr">{{ .TaskPriority}}</td>
                             {{ if (eq .TaskExecutorType "group") }}
-                            <td><a href="/group/show/{{ .TaskExecutorID }}">{{ .TaskExecutorName }}</a></td>
+                            <td id="exec"><a href="/group/show/{{ .TaskExecutorID }}">{{ .TaskExecutorName }}</a></td>
                             {{ else }}
-                            <td><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutorFIO }}</a></td>
+                            <td id="exec"><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutorFIO }}</a></td>
                             {{ end }}
-                            <td>{{ .TaskDateStart }}</td>
-                            <td>{{ .TaskDateEnd }}</td>
-                            <td>{{ .TaskRate }}</td>
-                            <td>{{ .TaskDateLastUpdate }}</td>
+                            <td id="date_start">{{ .TaskDateStart }}</td>
+                            <td id="date_end">{{ .TaskDateEnd }}</td>
+                            <td id="rate">{{ .TaskRate }}</td>
+                            <td id="last_update">{{ .TaskDateLastUpdate }}</td>
                         </tr>
                         {{end}}
                     </tbody>

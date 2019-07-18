@@ -295,6 +295,44 @@ table td a:hover{
     background-color: rgb(54, 161, 248);
 }
 
+.sort_icon{
+    cursor: pointer;
+    font-family: icomoon;
+    font-size: 12px;
+    color: white
+}
+.sort_icon:hover{
+    color: rgb(54, 161, 248);
+}
+
+.sort_icon_down{
+    margin-left: 5px;
+    float: left;
+}
+.sort_icon_up{
+    margin-right: 5px;
+    float: right;
+}
+
+.sort_by_letter_down::before{
+    content: "\ea48"
+}
+.sort_by_letter_up::before{
+    content: "\ea49"
+}
+.sort_by_obj_down::before{
+    content: "\ea4c"
+}
+.sort_by_obj_up::before{
+    content: "\ea4d"
+}
+.sort_by_num_down::before{
+    content: "\ea4a"
+}
+.sort_by_num_up::before{
+    content: "\ea4b"
+}
+
 #icotasks::before{
     content: "\e9ba";
 }

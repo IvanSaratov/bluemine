@@ -36,29 +36,49 @@
                 <div class="user_tasks" id="user_tasks_exec">
                     <div class="user_tasks_rec">Назначенные задачи</div>
                     <div class="container_table">
-                        <table>
+                        <table id="tasks_exec">
                             <thead>
                                 <tr>
-                                    <th>Имя задачи</th>
-                                    <th>Статус</th>
-                                    <th>Добавлена</th>
-                                    <th>Закончить до</th>
-                                    <th>Рейтинг</th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_letter_down sort_name_down"></span>
+                                        Имя задачи
+                                        <span class="sort_icon sort_icon_up sort_by_letter_up sort_name_up"></span>
+                                    </th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_obj_down sort_stat_down"></span>
+                                        Статус
+                                        <span class="sort_icon sort_icon_up sort_by_obj_up sort_stat_up"></span>
+                                    </th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_obj_down sort_add_down"></span>
+                                        Добавлена
+                                        <span class="sort_icon sort_icon_up sort_by_obj_up sort_add_up"></span>
+                                    </th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_obj_down sort_limit_down"></span>
+                                        Закончить до
+                                        <span class="sort_icon sort_icon_up sort_by_obj_up sort_limit_up"></span>
+                                    </th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_num_down sort_rate_down"></span>
+                                        Рейтинг
+                                        <span class="sort_icon sort_icon_up sort_by_num_up sort_rate_up"></span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{range .UserExecTasks}}
                                 <tr>
-                                    <td>
+                                    <td id="name">
                                         <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
                                         {{ if and (le .TaskDateDiff 36.0) (ne .TaskDateDiff 0.0) }}
                                         <span id="icofire"></span>
                                         {{end}}
                                     </td>
-                                    <td>{{ .TaskStat }}</td>
-                                    <td>{{ .TaskDateStart }}</td>
-                                    <td>{{ .TaskDateEnd }}</td>
-                                    <td>{{ .TaskRate }}</td>
+                                    <td id="stat">{{ .TaskStat }}</td>
+                                    <td id="date_start">{{ .TaskDateStart }}</td>
+                                    <td id="date_end">{{ .TaskDateEnd }}</td>
+                                    <td id="rate">{{ .TaskRate }}</td>
                                 </tr>
                                 {{end}}
                             </tbody>
@@ -68,29 +88,49 @@
                 <div class="user_tasks" id="user_tasks_creator">
                     <div class="user_tasks_rec">Созданные задачи</div>
                     <div class="container_table">
-                        <table>
+                        <table id="tasks_creator">
                             <thead>
                                 <tr>
-                                    <th>Имя задачи</th>
-                                    <th>Статус</th>
-                                    <th>Добавлена</th>
-                                    <th>Закончить до</th>
-                                    <th>Рейтинг</th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_letter_down sort_name_down"></span>
+                                        Имя задачи
+                                        <span class="sort_icon sort_icon_up sort_by_letter_up sort_name_up"></span>
+                                    </th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_obj_down sort_stat_down"></span>
+                                        Статус
+                                        <span class="sort_icon sort_icon_up sort_by_obj_up sort_stat_up"></span>
+                                    </th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_obj_down sort_add_down"></span>
+                                        Добавлена
+                                        <span class="sort_icon sort_icon_up sort_by_obj_up sort_add_up"></span>
+                                    </th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_obj_down sort_limit_down"></span>
+                                        Закончить до
+                                        <span class="sort_icon sort_icon_up sort_by_obj_up sort_limit_up"></span>
+                                    </th>
+                                    <th>
+                                        <span class="sort_icon sort_icon_down sort_by_num_down sort_rate_down"></span>
+                                        Рейтинг
+                                        <span class="sort_icon sort_icon_up sort_by_num_up sort_rate_up"></span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{range .UserCreatorTasks}}
                                 <tr>
-                                    <td>
+                                    <td id="name">
                                         <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
                                         {{ if and (le .TaskDateDiff 36.0) (ne .TaskDateDiff 0.0) }}
                                         <span id="icofire"></span>
                                         {{end}}
                                     </td>
-                                    <td>{{ .TaskStat }}</td>
-                                    <td>{{ .TaskDateStart }}</td>
-                                    <td>{{ .TaskDateEnd }}</td>
-                                    <td>{{ .TaskRate }}</td>
+                                    <td id="stat">{{ .TaskStat }}</td>
+                                    <td id="date_start">{{ .TaskDateStart }}</td>
+                                    <td id="date_end">{{ .TaskDateEnd }}</td>
+                                    <td id="rate">{{ .TaskRate }}</td>
                                 </tr>
                                 {{end}}
                             </tbody>
