@@ -1,6 +1,7 @@
 package db
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
 	"strconv"
@@ -38,8 +39,17 @@ func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 		listOfMembers = append(listOfMembers, x[strings.Index(x, "CN=")+3:strings.Index(x, ",")])
 	}
 
+	isAdmin := false
+	_, err = DB.Query("SELET id FROM profiles")
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return err
+		}
+		isAdmin = true
+	}
+
 	var userID int64
-	err = DB.QueryRow("INSERT INTO profiles (username, user_fio) VALUES ($1, $2) RETURNING id", login, userFIO).Scan(&userID)
+	err = DB.QueryRow("INSERT INTO profiles (username, user_fio, isadmin) VALUES ($1, $2, $3) RETURNING id", login, userFIO, isAdmin).Scan(&userID)
 	if err != nil {
 		return err
 	}
