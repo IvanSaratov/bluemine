@@ -241,8 +241,8 @@ function groupChange() {
 
 function wikiAdd() {
     var name = document.getElementById('input_wiki_name').value;
-    var article = document.getElementById('input_article').value;
-    var father_id = 0;//document.getElementById('wiki_father').value;
+    var article = document.getElementById('input_desc').value;
+    var father_id = $('#input_wiki_father :selected').attr('id');
 
     if (name.length == 0 || article.length == 0) {
         alert("Пустое значение")
