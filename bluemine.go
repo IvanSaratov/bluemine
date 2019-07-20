@@ -1,8 +1,13 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"net/http"
+	"time"
+
+	"github.com/IvanSaratov/bluemine/data"
+	"github.com/IvanSaratov/bluemine/db"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/handlers"
@@ -58,6 +63,59 @@ func main() {
 	router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
 	router.HandleFunc("/", handlers.RootHandler)
 
+	go taskAutoCloser()
+
 	log.Printf("Server listening on %s port", config.Conf.ListenPort)
 	log.Fatal(http.ListenAndServe(config.Conf.ListenPort, router))
+}
+
+//taskAutoCloser close task automatically when the term expires
+func taskAutoCloser() {
+	for range time.Tick(time.Minute * 5) {
+		tasks, err := db.GetAllTasks(server.Core.DB)
+		if err != nil {
+			log.Printf("Error getting task list to auto close: %s", err)
+		}
+
+		for _, task := range tasks {
+			go func(task data.Task) {
+				if task.TaskDateEnd != "" {
+					if task.TaskDateDiff < float64(-3*time.Hour) {
+						switch task.TaskExecutorType {
+						case "user":
+							{
+								_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating - $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutorFIO)
+								if err != nil {
+									log.Print(err)
+								}
+							}
+						case "group":
+							{
+								group, err := db.GetGroupbyID(server.Core.DB, task.TaskExecutorID)
+								if err != nil {
+									log.Print(err)
+								}
+
+								rate := task.TaskRate / group.GroupMembersCount
+
+								for _, user := range group.GroupMembers {
+									_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating - $1) WHERE user_fio = $2", rate, user.UserFIO)
+									if err != nil {
+										log.Print(err)
+									}
+								}
+							}
+						default:
+							log.Printf("Error updating rate for group members: %s", errors.New("Wrong ExecutorType"))
+						}
+
+						_, err = server.Core.DB.Exec("UPDATE tasks SET stat = 'Закрыта' WHERE id = $1", task.TaskID)
+						if err != nil {
+							log.Print(err)
+						}
+					}
+				}
+			}(task)
+		}
+	}
 }
