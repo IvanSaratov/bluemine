@@ -17,7 +17,8 @@ function tChange() {
             $('#input_task_date_start').val(data.TaskDateStart)
             $('#input_task_date_end').val(data.TaskDateEnd)
         });
-        $.get("/gettaskdesc", { id: id }).done(function(data){
+        var type = 'tasks';
+        $.get("/gettaskdesc", { id: id, type: type }).done(function(data){
             $('#input_desc').val(data)
         })
     }
