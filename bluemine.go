@@ -80,7 +80,7 @@ func taskAutoCloser() {
 		for _, task := range tasks {
 			go func(task data.Task) {
 				if task.TaskDateEnd != "" {
-					if task.TaskDateDiff < float64(-3*time.Hour) {
+					if task.TaskDateDiff < float64(-18*time.Hour) {
 						switch task.TaskExecutorType {
 						case "user":
 							{
