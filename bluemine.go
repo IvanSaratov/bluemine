@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
@@ -63,10 +64,41 @@ func main() {
 	router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
 	router.HandleFunc("/", handlers.RootHandler)
 
+	log.Printf("Server must listen on %s port", config.Conf.ListenPort)
+
+	go logRotator()
 	go taskAutoCloser()
 
-	log.Printf("Server listening on %s port", config.Conf.ListenPort)
 	log.Fatal(http.ListenAndServe(config.Conf.ListenPort, router))
+}
+
+//logRotate creates log files
+func logRotate() (*os.File, error) {
+	logFile, err := os.OpenFile("logs/"+time.Now().Format("2006-01-02")+".log", os.O_APPEND|os.O_CREATE, 0644)
+	if err != nil {
+		return nil, err
+	}
+
+	return logFile, nil
+}
+
+//logRotator rotate log files automatically
+func logRotator() {
+	logFile, err := logRotate()
+	if err != nil {
+		log.Printf("Error creating new %s log file: %s", time.Now().Format("2006-01-02"), err)
+	}
+	defer logFile.Close()
+	log.SetOutput(logFile)
+
+	for range time.Tick(time.Hour * 24) {
+		logFile, err := logRotate()
+		if err != nil {
+			log.Printf("Error creating new %s log file: %s", time.Now().Format("2006-01-02"), err)
+		}
+		defer logFile.Close()
+		log.SetOutput(logFile)
+	}
 }
 
 //taskAutoCloser close task automatically when the term expires
