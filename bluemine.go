@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/IvanSaratov/bluemine/data"
@@ -103,6 +104,8 @@ func logRotator() {
 
 //taskAutoCloser close task automatically when the term expires
 func taskAutoCloser() {
+	var wg sync.WaitGroup
+
 	for range time.Tick(time.Minute * 5) {
 		tasks, err := db.GetAllTasks(server.Core.DB)
 		if err != nil {
@@ -110,7 +113,11 @@ func taskAutoCloser() {
 		}
 
 		for _, task := range tasks {
+			wg.Add(1)
+
 			go func(task data.Task) {
+				defer wg.Done()
+
 				if task.TaskDateEnd != "" {
 					if task.TaskDateDiff < float64(-18*time.Hour) {
 						switch task.TaskExecutorType {
@@ -149,5 +156,6 @@ func taskAutoCloser() {
 				}
 			}(task)
 		}
+		wg.Wait()
 	}
 }
