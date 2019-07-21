@@ -30,6 +30,19 @@ $('#new_group .new_item_close').click(function() {
     $('#new_group').hide(300);
 });
 
+$(document).keyup(function(e) {
+    if (e.key === "Escape") {
+        var items = $('.new_item');
+        for (var i = 0; i < items.length; i++) {
+            var itemID = $(items[i]).attr('id');
+            var item = $('#' + itemID)
+            if (item.css('display') == 'block') {
+                item.hide(300);
+            }
+        }
+    }
+});
+
 function setDate() {
     var today = new Date();
     var dd = today.getDate();
