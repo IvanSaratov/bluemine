@@ -40,11 +40,14 @@ func main() {
 
 	router.PathPrefix("/private/").HandlerFunc(handlers.PrivateHandler)
 	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
+
 	router.HandleFunc("/login", handlers.LoginHandler)
 	router.HandleFunc("/logout", handlers.LogoutHandler)
+
 	router.HandleFunc("/profile/{user}", handlers.UserProfileHandler)
-	router.HandleFunc("/makeadmin", handlers.MakeAdminHandler).Methods("POST")
-	router.HandleFunc("/removeadmin", handlers.RemoveAdminHandler).Methods("POST")
+
+	router.HandleFunc("/admin/{action}", handlers.AdminActHandler).Methods("POST")
+
 	router.HandleFunc("/group/show/{id}", handlers.GroupHandler)
 	router.HandleFunc("/group/new", handlers.AddGroupHandler).Methods("POST")
 	router.HandleFunc("/groups", handlers.GroupsHandler)

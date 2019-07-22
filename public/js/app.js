@@ -86,7 +86,7 @@ function makeAdmin(){
     var ID = $('.pagetitle').attr("id");
 
     $.ajax({
-        url: "/makeadmin",
+        url: "/admin/make",
         method: "POST",
         data: {
             user_id: ID
@@ -100,7 +100,7 @@ function removeAdmin(){
     var ID = $('.pagetitle').attr("id");
 
     $.ajax({
-        url: "/removeadmin",
+        url: "/admin/remove",
         method: "POST",
         data: {
             user_id: ID

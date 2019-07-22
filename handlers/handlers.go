@@ -39,42 +39,39 @@ func PrivateHandler(w http.ResponseWriter, r *http.Request) {
 	realHandler(w, r)
 }
 
-//MakeAdminHandler gives user administrator status
-func MakeAdminHandler(w http.ResponseWriter, r *http.Request) {
+//AdminActHandler handle user administrator status change
+func AdminActHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
+
+	vars := mux.Vars(r)
+	act := vars["action"]
 
 	id, err := strconv.Atoi(r.FormValue("user_id"))
 	if err != nil {
 		log.Printf("Error converting string to int: %s", err)
 	}
 
-	_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", true, id)
-	if err != nil {
-		log.Printf("Error giving %d's user admin rigths: %s", id, err)
+	switch act {
+	case "make":
+		{
+			_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", true, id)
+			if err != nil {
+				log.Printf("Error giving %d's user admin rigths: %s", id, err)
+			}
+		}
+	case "remove":
+		{
+			_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", false, id)
+			if err != nil {
+				log.Printf("Error removing %d's user admin rigths: %s", id, err)
+			}
+		}
+	default:
+		log.Printf("Invalid action")
 	}
-
-}
-
-//RemoveAdminHandler removes user administrator status
-func RemoveAdminHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
-	id, err := strconv.Atoi(r.FormValue("user_id"))
-	if err != nil {
-		log.Printf("Error converting string to int: %s", err)
-	}
-
-	_, err = server.Core.DB.Exec("UPDATE profiles SET isadmin = $1 WHERE id = $2", false, id)
-	if err != nil {
-		log.Printf("Error removing %d's user admin rigths: %s", id, err)
-	}
-
 }
 
 //GetTaskData sends task data to change task
