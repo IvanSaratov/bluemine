@@ -143,7 +143,7 @@ func GetItemHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	case "taskdesc":
 		{
-			id := r.FormValue("task_id")
+			id := r.FormValue("id")
 			path := "private/docs/" + id + ".md"
 
 			bytes, err := ioutil.ReadFile(path)
@@ -156,7 +156,7 @@ func GetItemHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	case "wikiarticle":
 		{
-			id := r.FormValue("task_id")
+			id := r.FormValue("id")
 			path := "private/wiki/" + id + ".md"
 
 			bytes, err := ioutil.ReadFile(path)
