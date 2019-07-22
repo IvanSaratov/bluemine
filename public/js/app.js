@@ -257,7 +257,7 @@ function wikiAdd() {
     var article = document.getElementById('input_desc').value;
     var father_id = $('#input_wiki_father :selected').attr('id');
 
-    if (name.length == 0 || article.length == 0) {
+    if (name.length == 0) {
         alert("Пустое значение")
     } else {
         $.ajax({
