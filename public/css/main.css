@@ -199,6 +199,12 @@ table td a:hover{
     width: 45%;
 }
 
+pre{
+    background-color: wheat;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
 #footer{
     cursor: default;
     position: absolute;
