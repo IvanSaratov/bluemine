@@ -119,6 +119,7 @@ html, body{
 
 .container_table{
     height: calc(100% - 25px);
+    padding: 5px;
     overflow: auto;
 }
 table{
