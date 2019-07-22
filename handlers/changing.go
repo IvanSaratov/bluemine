@@ -40,8 +40,6 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	task.TaskName = r.FormValue("task_name")
 
-	task.TaskCreatorID = currentUser.UserID
-
 	task.TaskExecutorID, err = strconv.Atoi(r.FormValue("task_exec"))
 	if err != nil {
 		log.Printf("Error converting executor's ID to int: %s", err)
@@ -80,7 +78,7 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	description = r.FormValue("task_desc")
 
-	_, err = server.Core.DB.Exec("UPDATE tasks SET (task_name, task_creator, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) WHERE id = $11", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, &task.TaskID)
+	_, err = server.Core.DB.Exec("UPDATE tasks SET (task_name, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9) WHERE id = $11", task.TaskName, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, &task.TaskID)
 	if err != nil {
 		log.Print(err)
 	}
