@@ -20,7 +20,7 @@
                     <div class="record" id="task_exec">
                         <div class="label">Назначена:</div>
                         {{ if (eq .TaskData.TaskExecutorType "group") }}
-                        <div class="value"><a href="/group/{{ .TaskData.TaskExecutorID }}">{{ .TaskData.TaskExecutorName }}</a></div>
+                        <div class="value"><a href="/group/show/{{ .TaskData.TaskExecutorID }}">{{ .TaskData.TaskExecutorName }}</a></div>
                         {{ else }}
                         <div class="value"><a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a></div>
                         {{ end }}
