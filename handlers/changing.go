@@ -28,11 +28,6 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 		err         error
 	)
 
-	currentUser, err := helpers.GetCurrentUser(r)
-	if err != nil {
-		log.Printf("Error getting current user: %s", err)
-	}
-
 	task.TaskID, err = strconv.Atoi(r.FormValue("task_id"))
 	if err != nil {
 		log.Printf("Error converting task ID to int: %s", err)
