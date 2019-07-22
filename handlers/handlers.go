@@ -10,8 +10,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/IvanSaratov/bluemine/data"
-
 	"github.com/IvanSaratov/bluemine/db"
 	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
@@ -74,147 +72,116 @@ func AdminActHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//GetTaskData sends task data to change task
-func GetTaskData(w http.ResponseWriter, r *http.Request) {
+//GetItemHandler handle get requests
+func GetItemHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
-	id, err := strconv.Atoi(r.FormValue("task_id"))
-	if err != nil {
-		log.Printf("Error converting %d id to int: %s", id, err)
-	}
+	vars := mux.Vars(r)
+	item := vars["item"]
 
-	task, err := db.GetTaskbyID(server.Core.DB, id)
-	if err != nil {
-		log.Printf("Error getting task(%d) info: %s", id, err)
-	}
+	switch item {
+	case "taskdata":
+		{
+			id, err := strconv.Atoi(r.FormValue("task_id"))
+			if err != nil {
+				log.Printf("Error converting task id(%d) to int: %s", id, err)
+			}
 
-	task.TaskExecutorName = strconv.Itoa(task.TaskExecutorID)
+			task, err := db.GetTaskbyID(server.Core.DB, id)
+			if err != nil {
+				log.Printf("Error getting task(%d) info: %s", id, err)
+			}
 
-	formatTimeStart, err := time.Parse("02-01-2006", task.TaskDateStart)
-	if err != nil {
-		log.Printf("Error parsing date start for %s task for send to change page: %s", task.TaskName, err)
-	}
+			task.TaskExecutorName = strconv.Itoa(task.TaskExecutorID)
 
-	task.TaskDateStart = formatTimeStart.Format("2006-01-02")
+			formatTimeStart, err := time.Parse("02-01-2006", task.TaskDateStart)
+			if err != nil {
+				log.Printf("Error parsing date start for %s task for send to change page: %s", task.TaskName, err)
+			}
 
-	if task.TaskDateEnd != "" {
-		formatTimeEnd, err := time.Parse("02-01-2006", task.TaskDateEnd)
-		if err != nil {
-			log.Printf("Error parsing date end for %s task for send to change page: %s", task.TaskName, err)
+			task.TaskDateStart = formatTimeStart.Format("2006-01-02")
+
+			if task.TaskDateEnd != "" {
+				formatTimeEnd, err := time.Parse("02-01-2006", task.TaskDateEnd)
+				if err != nil {
+					log.Printf("Error parsing date end for %s task for send to change page: %s", task.TaskName, err)
+				}
+
+				task.TaskDateEnd = formatTimeEnd.Format("2006-01-02")
+			}
+
+			taskData, err := json.MarshalIndent(task, "", " ")
+			if err != nil {
+				log.Printf("Error marshalling JSON for %s task: %s", task.TaskName, err)
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(taskData)
 		}
+	case "tmpldata":
+		{
+			id, err := strconv.Atoi(r.FormValue("tmpl_id"))
+			if err != nil {
+				log.Printf("Error converting template id(%d) to int: %s", id, err)
+			}
 
-		task.TaskDateEnd = formatTimeEnd.Format("2006-01-02")
-	}
+			tmpl, err := db.GetTemplatebyID(server.Core.DB, id)
+			if err != nil {
+				log.Printf("Error getting template(%d) info: %s", id, err)
+			}
 
-	taskData, err := json.MarshalIndent(task, "", " ")
-	if err != nil {
-		log.Printf("Error marshalling JSON for %s task: %s", task.TaskName, err)
-	}
+			tmplData, err := json.MarshalIndent(tmpl, "", " ")
+			if err != nil {
+				log.Printf("Error marshalling JSON for %s template: %s", tmpl.TmplName, err)
+			}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(taskData)
-
-}
-
-//GetPrivateDesc sends task or wiki description to task page
-func GetPrivateDesc(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
-	id := r.FormValue("id")
-	var path string
-	switch r.FormValue("type") {
-	case "tasks":
-		path = "private/docs/" + id + ".md"
-	case "wiki":
-		path = "private/wiki/" + id + ".md"
-	default:
-		path = ""
-	}
-
-	bytes, err := ioutil.ReadFile(path)
-	if err != nil {
-		log.Printf("Error reading file with description for %s: %s", id, err)
-		w.Write([]byte("Ошибка при чтении файла с описанием: " + fmt.Sprintf("%s", err)))
-	}
-
-	w.Write(bytes)
-}
-
-//GetTmplData sends template data
-func GetTmplData(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
-	id, err := strconv.Atoi(r.FormValue("tmpl_id"))
-	if err != nil {
-		log.Printf("Error converting %d id to int: %s", id, err)
-	}
-
-	tmpl, err := db.GetTemplatebyID(server.Core.DB, id)
-	if err != nil {
-		log.Printf("Error getting template(%d) info: %s", id, err)
-	}
-
-	tmplData, err := json.MarshalIndent(tmpl, "", " ")
-	if err != nil {
-		log.Printf("Error marshalling JSON for %s template: %s", tmpl.TmplName, err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(tmplData)
-
-}
-
-//GetWikiTree gets wiki list
-func GetWikiTree(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
-		return
-	}
-
-	var (
-		wikies []data.Wiki
-		stmt   = "SELECT id FROM wiki"
-	)
-
-	rows, err := server.Core.DB.Query(stmt)
-	if err != nil {
-		log.Printf("Error making query for get wiki list: %s", err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var wiki data.Wiki
-
-		err = rows.Scan(&wiki.WikiID)
-		if err != nil {
-			log.Printf("Error scaning for wiki ID: %s", err)
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(tmplData)
 		}
+	case "taskdesc":
+		{
+			id := r.FormValue("task_id")
+			path := "private/docs/" + id + ".md"
 
-		wiki, err = db.GetWikibyID(server.Core.DB, wiki.WikiID)
-		if err != nil {
-			log.Printf("Error getting wiki by ID: %s", err)
+			bytes, err := ioutil.ReadFile(path)
+			if err != nil {
+				log.Printf("Error reading file with description for task with %s id: %s", id, err)
+				w.Write([]byte("Ошибка при чтении файла с описанием: " + fmt.Sprintf("%s", err)))
+			}
+
+			w.Write(bytes)
 		}
+	case "wikiarticle":
+		{
+			id := r.FormValue("task_id")
+			path := "private/wiki/" + id + ".md"
 
-		wikies = append(wikies, wiki)
-	}
+			bytes, err := ioutil.ReadFile(path)
+			if err != nil {
+				log.Printf("Error reading file with article for wiki with %s id: %s", id, err)
+				w.Write([]byte("Ошибка при чтении файла со статьей: " + fmt.Sprintf("%s", err)))
+			}
 
-	if r.Method == "GET" {
-		ans, err := json.MarshalIndent(wikies, "", "  ")
-		if err != nil {
-			log.Println("Error marshalling data to send: ", err)
+			w.Write(bytes)
 		}
+	case "wikilist":
+		{
+			wikies, err := db.GetAllWiki(server.Core.DB)
+			if err != nil {
+				log.Printf("Error getting wiki list: %s", err)
+			}
 
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(ans)
+			ans, err := json.MarshalIndent(wikies, "", "  ")
+			if err != nil {
+				log.Println("Error marshalling data to send: ", err)
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(ans)
+		}
 	}
 }
 

@@ -1,4 +1,4 @@
-$.get("/getwikilist", function(data) {
+$.get("/get/wikilist", function(data) {
     var wrap = $('#input_wiki_father');
     var html = '';
     for (var i = 0; i < data.length; i++) {

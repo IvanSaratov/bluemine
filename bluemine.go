@@ -54,18 +54,17 @@ func main() {
 	router.HandleFunc("/group/change", handlers.GroupChangeHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
-	router.HandleFunc("/gettaskdata", handlers.GetTaskData).Methods("GET")
-	router.HandleFunc("/getdesc", handlers.GetPrivateDesc).Methods("GET")
-	router.HandleFunc("/getwikilist", handlers.GetWikiTree)
 	router.HandleFunc("/tasks/new", handlers.AddTaskHandler).Methods("POST")
 	router.HandleFunc("/tasks/change", handlers.ChangeTaskHandler).Methods("POST")
 	router.HandleFunc("/tmpl/new", handlers.AddTmplHandler).Methods("POST")
-	router.HandleFunc("/gettmpldata", handlers.GetTmplData).Methods("GET")
 	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
 	router.HandleFunc("/tasks/open", handlers.TaskOpenHandler).Methods("POST")
 	router.HandleFunc("/wiki", handlers.WikiHandler)
 	router.HandleFunc("/wiki/show/{id}", handlers.WikiPageHandler)
 	router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
+
+	router.HandleFunc("/get/{item}", handlers.GetItemHandler).Methods("GET")
+
 	router.HandleFunc("/", handlers.RootHandler)
 
 	log.Printf("Server must listen on %s port", config.Conf.ListenPort)

@@ -4,7 +4,7 @@ function tChange() {
     if (id.length == 0) {
         alert("Пустое значение")
     } else {
-        $.get("/gettaskdata", {task_id: id}).done(function(data) {
+        $.get("/get/taskdata", {task_id: id}).done(function(data) {
             $('#task_change').show(0);
             $('#task_send').hide(0);
             $('#new_task').show(300);
@@ -18,7 +18,7 @@ function tChange() {
             $('#input_task_date_end').val(data.TaskDateEnd)
         });
         var type = 'tasks';
-        $.get("/gettaskdesc", { id: id, type: type }).done(function(data){
+        $.get("/get/taskdesc", { id: id, type: type }).done(function(data){
             $('#input_desc').val(data)
         })
     }

@@ -70,7 +70,7 @@ $('#input_task_tmpl').on('change', function() {
     var ID = $(this).children(":selected").attr("id");
 
     if (ID != undefined) {
-        $.get("/gettmpldata", {tmpl_id: ID}).done(function(data) {
+        $.get("/get/tmpldata", {tmpl_id: ID}).done(function(data) {
             $('#input_task_stat').val(data.TmplStat)
             $('#input_task_priority').val(data.TmplPriority)
             $('#input_task_rate').val(data.TmplRate)
