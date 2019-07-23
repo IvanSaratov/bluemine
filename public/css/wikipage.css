@@ -16,6 +16,9 @@
     text-decoration: none;
     color: black;
 }
+#wiki_about a:hover{
+    color: rgb(54, 161, 248);
+}
 
 .item, .nested_item{
     font-size: 20px;
