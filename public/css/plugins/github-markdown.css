@@ -660,6 +660,7 @@
   .markdown-body table th {
     border: 1px solid #dfe2e5;
     padding: 6px 13px;
+    color: black;
   }
   
   .markdown-body table tr {
