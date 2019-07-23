@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"errors"
 	"log"
 	"net/http"
 	"strconv"
@@ -549,4 +550,31 @@ func GetDefaultViewData(DB *sqlx.DB, r *http.Request) (data.ViewData, error) {
 	}
 
 	return viewData, nil
+}
+
+//DeleteRecord deleting user profile, template, wiki, task or groups
+func DeleteRecord(DB *sqlx.DB, typeField string, ID int) error {
+	var stmt string
+
+	switch typeField {
+	case "profile", "user":
+		stmt = "DELETE FROM profiles WHERE id = $1"
+	case "task":
+		stmt = "DELETE FROM tasks WHERE id = $1"
+	case "group":
+		stmt = "DELETE FROM groups WHERE id = $1"
+	case "template":
+		stmt = "DELETE FROM task_template WHERE id = $1"
+	case "wiki":
+		stmt = "DELETE FROM wiki WHERE id = $1"
+	default:
+		return errors.New("Wrong type")
+	}
+
+	_, err := DB.Exec(stmt, ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
