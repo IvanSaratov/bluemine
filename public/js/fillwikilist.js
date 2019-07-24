@@ -1,4 +1,4 @@
-$.get("/get/wikilist", function(data) {
+getWikiList(function(data) {
     var html = '';
     for (var i = 0; i < data.length; i++) {
         if (data[i].WikiFatherID == 0) {
@@ -24,8 +24,3 @@ $.get("/get/wikilist", function(data) {
         }
     }
 })
-
-function nodeExists(id) {
-    var node = document.getElementById(id)
-    return node != null;
-}

@@ -1,4 +1,4 @@
-$.get("/get/wikilist", function(data) {
+getWikiList(function(data) {
     var wrap = $('#input_wiki_father');
     var html = '';
     for (var i = 0; i < data.length; i++) {
@@ -18,17 +18,3 @@ $.get("/get/wikilist", function(data) {
         }
     }
 })
-
-function fatherCount(data, obj) {
-    var f = 0;
-    if (obj.WikiFatherIDStr == "0") {
-        return 0
-    } else {
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].WikiIDStr == obj.WikiFatherIDStr) {
-                f += 1;
-                return f += fatherCount(data, data[i]);
-            }
-        }
-    }
-}

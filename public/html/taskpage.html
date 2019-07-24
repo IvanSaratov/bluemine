@@ -46,18 +46,17 @@
                 <div class="value markdown-body"></div>
             </div>
             {{ if .CurrentUser.UserisAdmin}}
-            <button id="change" onclick="tChange()">Изменить</button>
+            <button id="change" onclick="taskFillForChange()">Изменить</button>
             {{end}}
             {{ if ( eq .TaskData.TaskStat "Закрыта") }}
-            <button id="open" onclick="tOpen()">Восстановить</button>
+            <button id="open" onclick="taskReOpen()">Восстановить</button>
             {{ else }}
-            <button id="close" onclick="tClose()">Закрыть</button>
+            <button id="close" onclick="taskClose()">Закрыть</button>
             {{ end }}
         </div>
     </div>
 </div>
 <script type="text/javascript" src="/public/js/changing.js"></script>
 <script type="text/javascript" src="/public/js/getdesc.js"></script>
-<script type="text/javascript" src="/public/js/closetask.js"></script>
-<script type="text/javascript" src="/public/js/opentask.js"></script>
+<script type="text/javascript" src="/public/js/chtaskstat.js"></script>
 {{end}}
