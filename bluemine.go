@@ -76,31 +76,30 @@ func main() {
 }
 
 //logRotate creates log files
-func logRotate() (*os.File, error) {
+func logRotate() error {
 	logFile, err := os.OpenFile("logs/"+time.Now().Format("2006-01-02")+".log", os.O_APPEND|os.O_CREATE, 0644)
 	if err != nil {
-		return nil, err
+		return err
 	}
+	defer logFile.Close()
 
-	return logFile, nil
+	log.SetOutput(logFile)
+
+	return nil
 }
 
 //logRotator rotate log files automatically
 func logRotator() {
-	logFile, err := logRotate()
+	err := logRotate()
 	if err != nil {
-		log.Printf("Error creating new %s log file: %s", time.Now().Format("2006-01-02"), err)
+		log.Printf("Error rotating %s log file: %s", time.Now().Format("2006-01-02"), err)
 	}
-	defer logFile.Close()
-	log.SetOutput(logFile)
 
 	for range time.Tick(time.Hour * 24) {
-		logFile, err := logRotate()
+		err := logRotate()
 		if err != nil {
-			log.Printf("Error creating new %s log file: %s", time.Now().Format("2006-01-02"), err)
+			log.Printf("Error rotating %s log file: %s", time.Now().Format("2006-01-02"), err)
 		}
-		defer logFile.Close()
-		log.SetOutput(logFile)
 	}
 }
 
