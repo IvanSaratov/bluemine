@@ -21,6 +21,7 @@ var Conf struct {
 	LdapPassword  string `toml:"ldapPassword"`
 	SessionKey    string `toml:"sessionKey"`
 	EncryptionKey string `toml:"encryptionKey"`
+	LogPath       string `toml:"logPath"`
 }
 
 //ParseConfig to parse .toml config
