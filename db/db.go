@@ -40,7 +40,7 @@ func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 	}
 
 	isAdmin := false
-	_, err = DB.Query("SELEСT id FROM profiles")
+	_, err = DB.Query("SELECT id FROM profiles")
 	if err != nil {
 		if err != sql.ErrNoRows {
 			return err
@@ -49,7 +49,7 @@ func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 	}
 
 	var userID int64
-	err = DB.QueryRow("INSERT INTO profiles (username, user_fio, isadmin) VALUES ($1, $2, $3) RETURNING id", login, userFIO, isAdmin).Scan(&userID)
+	err = DB.QueryRow("INSERT INTO profiles (username, user_fio, isAdmin) VALUES ($1, $2, $3) RETURNING id", login, userFIO, isAdmin).Scan(&userID)
 	if err != nil {
 		return err
 	}
