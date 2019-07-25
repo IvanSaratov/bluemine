@@ -71,7 +71,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
 
 	if r.Method == "GET" {
-		err := server.Core.Templates["login"].ExecuteTemplate(w, "base", nil)
+		err := server.Core.Templates["login"].ExecuteTemplate(w, "index", nil)
 		if err != nil {
 			log.Print("Error parse template: ", err)
 		}

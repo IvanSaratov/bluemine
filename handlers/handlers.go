@@ -225,7 +225,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting created by user tasks: %s", err)
 	}
 
-	err = server.Core.Templates["profile"].ExecuteTemplate(w, "base", viewData)
+	err = server.Core.Templates["profile"].ExecuteTemplate(w, "index", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -243,7 +243,7 @@ func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error getting default viewData: ", err)
 	}
 
-	err = server.Core.Templates["groups"].ExecuteTemplate(w, "base", viewData)
+	err = server.Core.Templates["groups"].ExecuteTemplate(w, "index", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -274,7 +274,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting info about %d group: %s", groupIDint, err)
 	}
 
-	err = server.Core.Templates["group"].ExecuteTemplate(w, "base", viewData)
+	err = server.Core.Templates["group"].ExecuteTemplate(w, "index", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -292,7 +292,7 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error getting default viewData: ", err)
 	}
 
-	err = server.Core.Templates["tasks"].ExecuteTemplate(w, "base", viewData)
+	err = server.Core.Templates["tasks"].ExecuteTemplate(w, "index", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -323,7 +323,7 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting task info from DB on %s task page: %s", taskIDstr, err)
 	}
 
-	err = server.Core.Templates["taskPage"].ExecuteTemplate(w, "base", viewData)
+	err = server.Core.Templates["taskPage"].ExecuteTemplate(w, "index", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -407,7 +407,7 @@ func WikiHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error getting viewData: ", err)
 	}
 
-	err = server.Core.Templates["wiki"].ExecuteTemplate(w, "base", viewData)
+	err = server.Core.Templates["wiki"].ExecuteTemplate(w, "index", viewData)
 	if err != nil {
 		log.Print("Error parse template: ", err)
 	}
@@ -438,7 +438,7 @@ func WikiPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error getting wiki data: ", err)
 	}
 
-	err = server.Core.Templates["wikiPage"].ExecuteTemplate(w, "base", viewData)
+	err = server.Core.Templates["wikiPage"].ExecuteTemplate(w, "index", viewData)
 	if err != nil {
 		log.Print(err)
 	}

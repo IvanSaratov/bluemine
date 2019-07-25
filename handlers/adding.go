@@ -182,7 +182,7 @@ func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 			log.Print("Error getting default viewData: ", err)
 		}
 
-		err = server.Core.Templates["addWiki"].ExecuteTemplate(w, "base", viewData)
+		err = server.Core.Templates["addWiki"].ExecuteTemplate(w, "index", viewData)
 		if err != nil {
 			log.Print(err)
 		}
