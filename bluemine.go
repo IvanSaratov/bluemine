@@ -79,13 +79,18 @@ func main() {
 
 //logRotate creates log files
 func logRotate() error {
-	logFile, err := os.OpenFile("logs/"+time.Now().Format("2006-01-02")+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		return err
-	}
+	var logFilePath = "logs/" + time.Now().Format("2006-01-02") + ".log"
+	if _, err := os.Stat(logFilePath); err != nil {
+		if os.IsNotExist(err) {
+			logFile, err := os.OpenFile("logs/"+time.Now().Format("2006-01-02")+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+			if err != nil {
+				return err
+			}
 
-	log.SetOutput(logFile)
-	log.Printf("Created log file %s", time.Now().Format("2006-01-02"))
+			log.SetOutput(logFile)
+			log.Printf("Created log file %s", time.Now().Format("2006-01-02"))
+		}
+	}
 
 	return nil
 }
