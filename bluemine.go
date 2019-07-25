@@ -124,7 +124,7 @@ func taskAutoCloser() {
 
 				if task.TaskStat != "Закрыта" {
 					if task.TaskDateEnd != "" {
-						if task.TaskDateDiff < float64(-18*time.Hour) {
+						if task.TaskDateDiff < float64(-18) {
 							switch task.TaskExecutorType {
 							case "user":
 								{
