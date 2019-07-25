@@ -19,6 +19,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var logFile *os.File
+
 func init() {
 	var configPath = "conf.toml"
 
@@ -77,13 +79,13 @@ func main() {
 
 //logRotate creates log files
 func logRotate() error {
-	logFile, err := os.OpenFile("logs/"+time.Now().Format("2006-01-02")+".log", os.O_APPEND|os.O_CREATE, 0644)
+	logFile, err := os.OpenFile("logs/"+time.Now().Format("2006-01-02")+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
-	defer logFile.Close()
 
 	log.SetOutput(logFile)
+	log.Printf("Created log file %s", time.Now().Format("2006-01-02"))
 
 	return nil
 }
@@ -96,7 +98,8 @@ func logRotator() {
 	}
 
 	for range time.Tick(time.Hour * 24) {
-		err := logRotate()
+		logFile.Close()
+		err = logRotate()
 		if err != nil {
 			log.Printf("Error rotating %s log file: %s", time.Now().Format("2006-01-02"), err)
 		}
