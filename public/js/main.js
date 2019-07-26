@@ -44,7 +44,7 @@ function MDParse(text, wrap) {
 
 function getTaskDescOrWikiArticle(type, id) {
     switch (type) {
-        case 'task': {
+        case 'tasks': {
             var descWrap = $('#task_desc .value');
             $.get("/get/taskdesc", { id: id }).done(function(data){
                 MDParse(data, descWrap)
