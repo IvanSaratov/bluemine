@@ -20,6 +20,7 @@ function taskFillForChange() {
         var type = 'tasks';
         $.get("/get/taskdesc", { id: id, type: type }).done(function(data){
             $('#input_desc').val(data)
+            MDParse(data, $('#markdown_output'))
         })
     }
 }
