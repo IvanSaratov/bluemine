@@ -174,6 +174,11 @@ func GetTaskbyID(DB *sqlx.DB, ID int) (data.Task, error) {
 		}
 	}
 
+	task.TaskChecklist, err = GetTaskCheckboxes(DB, task.TaskID)
+	if err != nil {
+		return task, err
+	}
+
 	return task, nil
 }
 
@@ -210,6 +215,36 @@ func GetAllTasks(DB *sqlx.DB) ([]data.Task, error) {
 	}
 
 	return tasks, nil
+}
+
+//GetTaskCheckboxes gets all task's checkboxes
+func GetTaskCheckboxes(DB *sqlx.DB, ID int) ([]data.Checkbox, error) {
+	var (
+		checkboxes []data.Checkbox
+		stmt       = "SELECT * from checkboxes WHERE task_id = $1"
+	)
+
+	rows, err := DB.Query(stmt, ID)
+	if err != nil {
+		return checkboxes, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var checkbox data.Checkbox
+
+		err = rows.Scan(&checkbox.CheckboxID, &checkbox.TaskID, &checkbox.Checked, &checkbox.CheckName)
+		if err != nil {
+			return checkboxes, err
+		}
+
+		checkboxes = append(checkboxes, checkbox)
+	}
+	if rows.Err() != nil {
+		return checkboxes, err
+	}
+
+	return checkboxes, nil
 }
 
 //GetAllTasksbyExecutor gets all task with this executor
