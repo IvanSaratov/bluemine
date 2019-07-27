@@ -32,7 +32,17 @@ type Task struct {
 	TaskDateEnd        string
 	TaskDateDiff       float64
 
+	TaskChecklist []Checkbox
+
 	TaskRate int
+}
+
+//Checkbox struct describe checkbox of checklist
+type Checkbox struct {
+	CheckboxID int
+	CheckName  string
+	TaskID     int
+	Checked    bool
 }
 
 //TaskTmpl struct describe task template
