@@ -74,7 +74,10 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error converting rating from string to int: %s", err)
 	}
 
-	description = r.FormValue("task_desc")
+	err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, executor_id, executor_type, stat, priority, date_added, date_last_update, date_start, date_end, rating) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateAdded, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate).Scan(&task.TaskID)
+	if err != nil {
+		log.Print(err)
+	}
 
 	checklist = strings.Split(r.FormValue("task_checklist"), "&")
 	for _, checkboxStr := range checklist {
@@ -95,10 +98,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, executor_id, executor_type, stat, priority, date_added, date_last_update, date_start, date_end, rating) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateAdded, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate).Scan(&task.TaskID)
-	if err != nil {
-		log.Print(err)
-	}
+	description = r.FormValue("task_desc")
 
 	f, err := os.OpenFile("private/docs/"+strconv.Itoa(task.TaskID)+".md", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
