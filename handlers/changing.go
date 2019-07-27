@@ -73,7 +73,7 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	description = r.FormValue("task_desc")
 
-	_, err = server.Core.DB.Exec("UPDATE tasks SET (task_name, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9) WHERE id = $11", task.TaskName, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, &task.TaskID)
+	_, err = server.Core.DB.Exec("UPDATE tasks SET (task_name, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9) WHERE id = $10", task.TaskName, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, &task.TaskID)
 	if err != nil {
 		log.Print(err)
 	}
