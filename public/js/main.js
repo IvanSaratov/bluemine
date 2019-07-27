@@ -47,6 +47,9 @@ function getTaskDescOrWikiArticle(type, id) {
         case 'tasks': {
             var descWrap = $('#task_desc .value');
             $.get("/get/taskdesc", { id: id }).done(function(data){
+                if (data == '') {
+                    $('#task_desc').hide(0);
+                }
                 MDParse(data, descWrap)
             })
             break
