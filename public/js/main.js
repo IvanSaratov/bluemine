@@ -44,7 +44,7 @@ function MDParse(text, wrap) {
 
 function addCheckbox() {
     var checkName = $('#input_task_checkbox').val();
-    var html = '<div style="width=100%;"><input type="checkbox" name="checkbox" value="' + checkName + '"><label for="' + checkName + '">' + checkName + '</label></div>';
+    var html = '<div style="width=100%;"><input class="checkbox" type="checkbox" name="checkbox" value="' + checkName + '"><label for="' + checkName + '">' + checkName + '</label></div>';
     $('#task_checklist_wrap').append(html);
 }
 
