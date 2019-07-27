@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     rating INT DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS task_template (
+CREATE TABLE IF NOT EXISTS templates (
     id SERIAL PRIMARY KEY,
     tmpl_name STRING NOT NULL,
     stat STRING NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS task_template (
     rating INT DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS checkboxs (
+CREATE TABLE IF NOT EXISTS checkboxes (
     id INT,
     task_id INT,
     checked BOOLEAN DEFAULT false,

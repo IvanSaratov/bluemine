@@ -89,7 +89,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error setting %s checkbox check status for %s task: %s", checkbox.CheckName, task.TaskName, err)
 		}
 
-		_, err = server.Core.DB.Exec("INSERT INTO checkboxs (task_id, checked, desk) VALUES ($1, $2, $3)", task.TaskID, checkbox.Checked, checkbox.CheckName)
+		_, err = server.Core.DB.Exec("INSERT INTO checkboxes (task_id, checked, desk) VALUES ($1, $2, $3)", task.TaskID, checkbox.Checked, checkbox.CheckName)
 		if err != nil {
 			log.Printf("Error inserting %s checkbox into DB for %s task: %s", checkbox.CheckName, task.TaskName, err)
 		}
@@ -134,7 +134,7 @@ func AddTmplHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error converting rating from string to int: %s", err)
 	}
 
-	_, err = server.Core.DB.Exec("INSERT INTO task_template (tmpl_name, stat, priority, rating) VALUES ($1, $2, $3, $4) RETURNING id", tmpl.TmplName, tmpl.TmplStat, tmpl.TmplPriority, tmpl.TmplRate)
+	_, err = server.Core.DB.Exec("INSERT INTO templates (tmpl_name, stat, priority, rating) VALUES ($1, $2, $3, $4) RETURNING id", tmpl.TmplName, tmpl.TmplStat, tmpl.TmplPriority, tmpl.TmplRate)
 	if err != nil {
 		log.Print(err)
 	}
