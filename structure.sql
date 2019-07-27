@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS templates (
 );
 
 CREATE TABLE IF NOT EXISTS checkboxes (
-    id INT,
+    id SERIAL PRIMARY KEY,
     task_id INT,
     checked BOOLEAN DEFAULT false,
     desk STRING NOT NULL
