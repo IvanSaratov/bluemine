@@ -24,6 +24,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 	var (
 		task        data.Task
 		description string
+		checklist   []string
 	)
 
 	currentUser, err := helpers.GetCurrentUser(r)
@@ -75,6 +76,25 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	description = r.FormValue("task_desc")
 
+	checklist = strings.Split(r.FormValue("task_checklist"), "&")
+	for _, checkboxStr := range checklist {
+		var (
+			checkbox data.Checkbox
+			checkmap = strings.Split(checkboxStr, "=")
+		)
+
+		checkbox.CheckName = checkmap[0]
+		checkbox.Checked, err = strconv.ParseBool(checkmap[1])
+		if err != nil {
+			log.Printf("Error setting %s checkbox check status for %s task: %s", checkbox.CheckName, task.TaskName, err)
+		}
+
+		_, err = server.Core.DB.Exec("INSERT INTO checkboxs (task_id, checked, desk) VALUES ($1, $2, $3)", task.TaskID, checkbox.Checked, checkbox.CheckName)
+		if err != nil {
+			log.Printf("Error inserting %s checkbox into DB for %s task: %s", checkbox.CheckName, task.TaskName, err)
+		}
+	}
+
 	err = server.Core.DB.QueryRow("INSERT INTO tasks (task_name, task_creator, executor_id, executor_type, stat, priority, date_added, date_last_update, date_start, date_end, rating) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id", task.TaskName, task.TaskCreatorID, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateAdded, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate).Scan(&task.TaskID)
 	if err != nil {
 		log.Print(err)
@@ -89,7 +109,6 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Print(err)
 	}
-
 }
 
 //AddTmplHandler handle template adding
@@ -119,7 +138,6 @@ func AddTmplHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Print(err)
 	}
-
 }
 
 //AddGroupHandler handle group create page
