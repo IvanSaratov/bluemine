@@ -79,22 +79,24 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
-	checklist = strings.Split(r.FormValue("task_checklist"), "&")
-	for _, checkboxStr := range checklist {
-		var (
-			checkbox data.Checkbox
-			checkmap = strings.Split(checkboxStr, "=")
-		)
+	if r.FormValue("task_checklist") != "" {
+		checklist = strings.Split(r.FormValue("task_checklist"), "&")
+		for _, checkboxStr := range checklist {
+			var (
+				checkbox data.Checkbox
+				checkmap = strings.Split(checkboxStr, "=")
+			)
 
-		checkbox.CheckName = checkmap[0]
-		checkbox.Checked, err = strconv.ParseBool(checkmap[1])
-		if err != nil {
-			log.Printf("Error setting %s checkbox check status for %s task: %s", checkbox.CheckName, task.TaskName, err)
-		}
+			checkbox.CheckName = checkmap[0]
+			checkbox.Checked, err = strconv.ParseBool(checkmap[1])
+			if err != nil {
+				log.Printf("Error setting %s checkbox check status for %s task: %s", checkbox.CheckName, task.TaskName, err)
+			}
 
-		_, err = server.Core.DB.Exec("INSERT INTO checkboxes (task_id, checked, desk) VALUES ($1, $2, $3)", task.TaskID, checkbox.Checked, checkbox.CheckName)
-		if err != nil {
-			log.Printf("Error inserting %s checkbox into DB for %s task: %s", checkbox.CheckName, task.TaskName, err)
+			_, err = server.Core.DB.Exec("INSERT INTO checkboxes (task_id, checked, desk) VALUES ($1, $2, $3)", task.TaskID, checkbox.Checked, checkbox.CheckName)
+			if err != nil {
+				log.Printf("Error inserting %s checkbox into DB for %s task: %s", checkbox.CheckName, task.TaskName, err)
+			}
 		}
 	}
 
