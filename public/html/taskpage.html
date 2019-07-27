@@ -50,7 +50,7 @@
                     <div class="label">Чеклист</div>
                     {{ range .TaskData.TaskChecklist }}
                     <div style="width: 100%">
-                        <input type="checkbox" value="{{ .CheckboxID }}" {{ if .Checked}} checked {{end}}>
+                        <input class="checkbox" type="checkbox" value="{{ .CheckboxID }}" {{ if .Checked}} checked {{end}}>
                         <label for="{{ .CheckboxID }}">{{ .CheckName }}</label>
                     </div>
                     {{end}}
