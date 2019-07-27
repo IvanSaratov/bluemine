@@ -38,7 +38,12 @@
 }
 
 #content #wrap #task_about #task_desc{
+    margin-bottom: 5px;
     padding-bottom: 5px;
+    border-bottom: 1px solid rgb(29, 29, 29);
+}
+
+#content #wrap #task_about #task_checklist{
     border-bottom: 1px solid rgb(29, 29, 29);
 }
 
