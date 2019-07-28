@@ -1,0 +1,22 @@
+{{ define "navbar" }}
+<div id="topbar">
+    <div id="service">BlueMine</div>
+    <span id="icotasks" class="topbar_icons" onclick="location='/tasks'"></span>
+    <span id="icoprofile" class="topbar_icons" onclick="location='/profile/{{ .CurrentUser.UserName}}'"></span>
+    <span id="icogroups" class="topbar_icons" onclick="location='/groups'"></span>
+    <span id="icowiki" class="topbar_icons" onclick="location='/wiki'"></span>
+    <span id="iconew" class="topbar_icons">
+        <ul id="new_item" style="display: none;">
+            <li id="add_new_task">Добавить задачу</li>
+            {{ if .CurrentUser.UserisAdmin}}
+            <li id="add_new_tmpl">Добавить шаблон</li>
+            <li id="add_new_group">Добавить группу</li>
+            {{ end }}
+        </ul>
+    </span>
+    <div id="user">You're log in as 
+        <a href="/profile/{{ .CurrentUser.UserName}}">{{ .CurrentUser.UserName}}</a>
+    </div>
+    <span id="icoout" class="topbar_icons" onclick="location='/logout'"></span>
+</div>
+{{ end }}
