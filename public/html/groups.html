@@ -1,7 +1,15 @@
-{{define "styles"}}
+{{ define "groups" }}
+<!DOCTYPE html>
+<html>
+<head>
+    {{ template "header" .}}
     <link href="/public/css/groups.css" rel="stylesheet">
-{{end}}
-{{define "content"}}
+</head>
+<body>
+    <header>
+        {{ template "navbar" .}}
+        {{ template "newItem" .}}
+    </header>
     <div id="content">
         <div class="pagetitle">Список групп</div>
         <div id="grouplist">
@@ -27,4 +35,8 @@
             </div>
         </div>
     </div>
-{{end}}
+    {{ template "bottomScripts" .}}
+    {{ template "footer" .}}
+</body>
+</html>
+{{ end }}

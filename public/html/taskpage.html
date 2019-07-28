@@ -1,62 +1,74 @@
-{{define "styles"}}
-<link href="/public/css/taskpage.css" rel="stylesheet">
-{{end}}
-{{define "content"}}
-<div id="content">
-    <div class="pagetitle" id="{{ .TaskData.TaskID}}">{{ .TaskData.TaskName}}</div>
-    <div id="wrap">
-        <div id="task_about">
-            <div id="task_creator">Добавил(а) <a href="/profile/{{ .TaskData.TaskCreatorName }}">{{ .TaskData.TaskCreatorFIO }}</a></div>
-            <div id="task_info">
-                <div id="task_info_left">
-                    <div class="record" id="task_stat">
-                        <div class="label">Статус:</div>
-                        <div class="value">{{ .TaskData.TaskStat}}</div>
+{{ define "taskPage" }}
+<!DOCTYPE html>
+<html>
+<head>
+    {{ template "header" .}}
+    <link href="/public/css/taskpage.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        {{ template "navbar" .}}
+        {{ template "newItem" .}}
+    </header>
+    <div id="content">
+        <div class="pagetitle" id="{{ .TaskData.TaskID}}">{{ .TaskData.TaskName}}</div>
+        <div id="wrap">
+            <div id="task_about">
+                <div id="task_creator">Добавил(а) <a href="/profile/{{ .TaskData.TaskCreatorName }}">{{ .TaskData.TaskCreatorFIO }}</a></div>
+                <div id="task_info">
+                    <div id="task_info_left">
+                        <div class="record" id="task_stat">
+                            <div class="label">Статус:</div>
+                            <div class="value">{{ .TaskData.TaskStat}}</div>
+                        </div>
+                        <div class="record" id="task_priority">
+                            <div class="label">Приоритет:</div>
+                            <div class="value">{{ .TaskData.TaskPriority}}</div>
+                        </div>
+                        <div class="record" id="task_exec">
+                            <div class="label">Назначена:</div>
+                            {{ if (eq .TaskData.TaskExecutorType "group") }}
+                            <div class="value"><a href="/group/show/{{ .TaskData.TaskExecutorID }}">{{ .TaskData.TaskExecutorName }}</a></div>
+                            {{ else }}
+                            <div class="value"><a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a></div>
+                            {{ end }}
+                        </div>
+                        <div class="record" id="task_rate">
+                            <div class="label">Рейтинг:</div>
+                            <div class="value">{{ .TaskData.TaskRate}}</div>
+                        </div>
                     </div>
-                    <div class="record" id="task_priority">
-                        <div class="label">Приоритет:</div>
-                        <div class="value">{{ .TaskData.TaskPriority}}</div>
-                    </div>
-                    <div class="record" id="task_exec">
-                        <div class="label">Назначена:</div>
-                        {{ if (eq .TaskData.TaskExecutorType "group") }}
-                        <div class="value"><a href="/group/show/{{ .TaskData.TaskExecutorID }}">{{ .TaskData.TaskExecutorName }}</a></div>
-                        {{ else }}
-                        <div class="value"><a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a></div>
-                        {{ end }}
-                    </div>
-                    <div class="record" id="task_rate">
-                        <div class="label">Рейтинг:</div>
-                        <div class="value">{{ .TaskData.TaskRate}}</div>
+                    <div id="task_info_left">
+                        <div class="record" id="task_date_start">
+                            <div class="label">Дата начала:</div>
+                            <div class="value">{{ .TaskData.TaskDateStart}}</div>
+                        </div>
+                        <div class="record" id="task_date_end">
+                            <div class="label">Срок:</div>
+                            <div class="value">{{ .TaskData.TaskDateEnd}}</div>
+                        </div>
                     </div>
                 </div>
-                <div id="task_info_left">
-                    <div class="record" id="task_date_start">
-                        <div class="label">Дата начала:</div>
-                        <div class="value">{{ .TaskData.TaskDateStart}}</div>
-                    </div>
-                    <div class="record" id="task_date_end">
-                        <div class="label">Срок:</div>
-                        <div class="value">{{ .TaskData.TaskDateEnd}}</div>
-                    </div>
+                <div id="task_desc">
+                    <div class="label">Описание</div>
+                    <div class="value markdown-body"></div>
                 </div>
+                {{ if .CurrentUser.UserisAdmin}}
+                <button id="change" onclick="taskFillForChange()">Изменить</button>
+                {{end}}
+                {{ if ( eq .TaskData.TaskStat "Закрыта") }}
+                <button id="open" onclick="taskReOpen()">Восстановить</button>
+                {{ else }}
+                <button id="close" onclick="taskClose()">Закрыть</button>
+                {{ end }}
             </div>
-            <div id="task_desc">
-                <div class="label">Описание</div>
-                <div class="value markdown-body"></div>
-            </div>
-            {{ if .CurrentUser.UserisAdmin}}
-            <button id="change" onclick="taskFillForChange()">Изменить</button>
-            {{end}}
-            {{ if ( eq .TaskData.TaskStat "Закрыта") }}
-            <button id="open" onclick="taskReOpen()">Восстановить</button>
-            {{ else }}
-            <button id="close" onclick="taskClose()">Закрыть</button>
-            {{ end }}
         </div>
     </div>
-</div>
-<script type="text/javascript" src="/public/js/changing.js"></script>
-<script type="text/javascript" src="/public/js/getdesc.js"></script>
-<script type="text/javascript" src="/public/js/chtaskstat.js"></script>
-{{end}}
+    {{ template "bottomScripts" .}}
+    <script type="text/javascript" src="/public/js/changing.js"></script>
+    <script type="text/javascript" src="/public/js/getdesc.js"></script>
+    <script type="text/javascript" src="/public/js/chtaskstat.js"></script>
+    {{ template "footer" .}}
+</body>
+</html>
+{{ end }}

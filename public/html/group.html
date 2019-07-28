@@ -1,34 +1,46 @@
-{{define "styles"}}
+{{ define "group" }}
+<!DOCTYPE html>
+<html>
+<head>
+    {{ template "header" .}}
     <link href="/public/css/groups.css" rel="stylesheet">
-{{end}}   
-{{define "content"}}
-<div id="content">
-    <div class="pagetitle" id="{{ .GroupData.GroupID}}">{{ .GroupData.GroupName}}</div>
-    <div id="grouplist">
-        <div class="container_table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Логин пользователя</th>
-                        <th>Имя пользователя</th>
-                        <th>Рейтинг</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{range .GroupData.GroupMembers}}
-                    <tr>
-                        <td><a href="/profile/{{ .UserName }}">{{ .UserName }}</a></td>
-                        <td><a href="/profile/{{ .UserName }}">{{ .UserFIO }}</a></td>
-                        <td>{{ .UserRate }}</td>
-                    </tr>
-                    {{end}}
-                </tbody>
-            </table>
+</head>
+<body>
+    <header>
+        {{ template "navbar" .}}
+        {{ template "newItem" .}}
+    </header>
+    <div id="content">
+        <div class="pagetitle" id="{{ .GroupData.GroupID}}">{{ .GroupData.GroupName}}</div>
+        <div id="grouplist">
+            <div class="container_table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Логин пользователя</th>
+                            <th>Имя пользователя</th>
+                            <th>Рейтинг</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range .GroupData.GroupMembers}}
+                        <tr>
+                            <td><a href="/profile/{{ .UserName }}">{{ .UserName }}</a></td>
+                            <td><a href="/profile/{{ .UserName }}">{{ .UserFIO }}</a></td>
+                            <td>{{ .UserRate }}</td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </div>
+            {{ if .CurrentUser.UserisAdmin}}
+                <button id="close" onclick="groupFillForChange()">Изменить</button>
+            {{end}}
         </div>
-        {{ if .CurrentUser.UserisAdmin}}
-            <button id="close" onclick="groupFillForChange()">Изменить</button>
-        {{end}}
     </div>
-</div>
-<script type="text/javascript" src="/public/js/changing.js"></script>
-{{end}}
+    {{ template "bottomScripts" .}}
+    <script type="text/javascript" src="/public/js/changing.js"></script>
+    {{ template "footer" .}}
+</body>
+</html>
+{{ end }}
