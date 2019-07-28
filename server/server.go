@@ -1,34 +1,20 @@
 package server
 
 import (
-	"html/template"
 	"log"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/gorilla/sessions"
 	"github.com/jmoiron/sqlx"
+	"github.com/thedevsaddam/renderer"
 )
 
 //Core struct contains main vars of server
 var Core struct {
-	DB        *sqlx.DB
-	Store     *sessions.CookieStore
-	Templates map[string]*template.Template
+	DB    *sqlx.DB
+	Store *sessions.CookieStore
+	Rnd   *renderer.Render
 }
-
-var (
-	loginHTML    = "public/html/login.html"
-	layoutHTML   = "public/html/layout.html"
-	newItemHTML  = "public/html/newItem.html"
-	tasksHTML    = "public/html/tasks.html"
-	profileHTML  = "public/html/profile.html"
-	taskPageHTML = "public/html/taskpage.html"
-	groupHTML    = "public/html/group.html"
-	groupsHTML   = "public/html/groups.html"
-	wikiHTML     = "public/html/wiki.html"
-	wikiPageHTML = "public/html/wikipage.html"
-	addWikiHTML  = "public/html/addwiki.html"
-)
 
 //Init function initializes server
 func Init() {
@@ -46,25 +32,11 @@ func Init() {
 	}
 	log.Println("Created cookie store")
 
-	Core.Templates = make(map[string]*template.Template)
-	temp := template.Must(template.ParseFiles(loginHTML))
-	Core.Templates["login"] = temp
-	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, tasksHTML))
-	Core.Templates["tasks"] = temp
-	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, profileHTML))
-	Core.Templates["profile"] = temp
-	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, taskPageHTML))
-	Core.Templates["taskPage"] = temp
-	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, groupHTML))
-	Core.Templates["group"] = temp
-	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, groupsHTML))
-	Core.Templates["groups"] = temp
-	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, wikiHTML))
-	Core.Templates["wiki"] = temp
-	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, wikiPageHTML))
-	Core.Templates["wikiPage"] = temp
-	temp = template.Must(template.ParseFiles(layoutHTML, newItemHTML, addWikiHTML))
-	Core.Templates["addWiki"] = temp
+	Core.Rnd = renderer.New(
+		renderer.Options{
+			ParseGlobPattern: "public/html/*.html",
+		},
+	)
 
 	log.Println("All templates parsed")
 }
