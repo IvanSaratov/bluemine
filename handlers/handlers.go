@@ -225,9 +225,9 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting created by user tasks: %s", err)
 	}
 
-	err = server.Core.Templates["profile"].ExecuteTemplate(w, "index", viewData)
+	err = server.Core.Rnd.HTML(w, http.StatusOK, "profile", viewData)
 	if err != nil {
-		log.Print(err)
+		log.Print("Error parse template: ", err)
 	}
 }
 
@@ -243,7 +243,7 @@ func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error getting default viewData: ", err)
 	}
 
-	err = server.Core.Templates["groups"].ExecuteTemplate(w, "index", viewData)
+	err = server.Core.Rnd.HTML(w, http.StatusOK, "groups", viewData)
 	if err != nil {
 		log.Print(err)
 	}
@@ -274,9 +274,9 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting info about %d group: %s", groupIDint, err)
 	}
 
-	err = server.Core.Templates["group"].ExecuteTemplate(w, "index", viewData)
+	err = server.Core.Rnd.HTML(w, http.StatusOK, "group", viewData)
 	if err != nil {
-		log.Print(err)
+		log.Print("Error parse template: ", err)
 	}
 }
 
@@ -292,9 +292,9 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error getting default viewData: ", err)
 	}
 
-	err = server.Core.Templates["tasks"].ExecuteTemplate(w, "index", viewData)
+	err = server.Core.Rnd.HTML(w, http.StatusOK, "tasks", viewData)
 	if err != nil {
-		log.Print(err)
+		log.Print("Error parse template: ", err)
 	}
 }
 
@@ -323,9 +323,9 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error getting task info from DB on %s task page: %s", taskIDstr, err)
 	}
 
-	err = server.Core.Templates["taskPage"].ExecuteTemplate(w, "index", viewData)
+	err = server.Core.Rnd.HTML(w, http.StatusOK, "taskPage", viewData)
 	if err != nil {
-		log.Print(err)
+		log.Print("Error parse template: ", err)
 	}
 }
 
@@ -407,7 +407,7 @@ func WikiHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error getting viewData: ", err)
 	}
 
-	err = server.Core.Templates["wiki"].ExecuteTemplate(w, "index", viewData)
+	err = server.Core.Rnd.HTML(w, http.StatusOK, "wiki", viewData)
 	if err != nil {
 		log.Print("Error parse template: ", err)
 	}
@@ -438,8 +438,8 @@ func WikiPageHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error getting wiki data: ", err)
 	}
 
-	err = server.Core.Templates["wikiPage"].ExecuteTemplate(w, "index", viewData)
+	err = server.Core.Rnd.HTML(w, http.StatusOK, "wikiPage", viewData)
 	if err != nil {
-		log.Print(err)
+		log.Print("Error parse template: ", err)
 	}
 }
