@@ -291,6 +291,14 @@ table td a:hover{
 #icoaddcheckbox:hover{
     color: rgb(54, 161, 248);
 }
+#icoremovecheckbox{
+    cursor: pointer;
+    font-family: icomoon;
+    margin-left: 10px;
+}
+#icoremovecheckbox:hover{
+    color: rgb(54, 161, 248);
+}
 
 .send_button{
     cursor: pointer;
@@ -368,6 +376,9 @@ table td a:hover{
 }
 #icoaddcheckbox::before{
     content: "\ea0a";
+}
+#icoremovecheckbox::before{
+    content: "\ea0d";
 }
 
 @font-face{
