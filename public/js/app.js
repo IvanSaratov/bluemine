@@ -18,6 +18,27 @@ $('#add_new_group').click(function() {
     $('#group_change').hide(0);
 });
 
+$(document).keyup(function(e) {
+    switch (e.key) {
+        case "1": {
+            $('#new_task').show(300);
+            $('#task_send').show(300);
+            $('#task_change').hide(0);
+            break;
+        }
+        case "2": {
+            $('#new_tmpl').show(300);
+            break;
+        }
+        case "3": {
+            $('#new_group').show(300);
+            $('#group_send').show(300);
+            $('#group_change').hide(0);
+            break;
+        }
+    }
+});
+
 $('#new_task .new_item_close').click(function() {
     $('#new_task').hide(300);
 });
