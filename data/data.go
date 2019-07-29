@@ -39,10 +39,11 @@ type Task struct {
 
 //Checkbox struct describe checkbox of checklist
 type Checkbox struct {
-	CheckboxID int
-	CheckName  string
-	TaskID     int
-	Checked    bool
+	CheckboxID    int
+	CheckboxIDStr string
+	CheckName     string
+	TaskID        int
+	Checked       bool
 }
 
 //TaskTmpl struct describe task template
