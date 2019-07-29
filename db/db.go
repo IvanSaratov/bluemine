@@ -174,6 +174,11 @@ func GetTaskbyID(DB *sqlx.DB, ID int) (data.Task, error) {
 		}
 	}
 
+	task.TaskChecklist, err = GetTaskCheckboxes(DB, task.TaskID)
+	if err != nil {
+		return task, err
+	}
+
 	return task, nil
 }
 
@@ -210,6 +215,36 @@ func GetAllTasks(DB *sqlx.DB) ([]data.Task, error) {
 	}
 
 	return tasks, nil
+}
+
+//GetTaskCheckboxes gets all task's checkboxes
+func GetTaskCheckboxes(DB *sqlx.DB, ID int) ([]data.Checkbox, error) {
+	var (
+		checkboxes []data.Checkbox
+		stmt       = "SELECT * from checkboxes WHERE task_id = $1"
+	)
+
+	rows, err := DB.Query(stmt, ID)
+	if err != nil {
+		return checkboxes, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var checkbox data.Checkbox
+
+		err = rows.Scan(&checkbox.CheckboxID, &checkbox.TaskID, &checkbox.Checked, &checkbox.CheckName)
+		if err != nil {
+			return checkboxes, err
+		}
+
+		checkboxes = append(checkboxes, checkbox)
+	}
+	if rows.Err() != nil {
+		return checkboxes, err
+	}
+
+	return checkboxes, nil
 }
 
 //GetAllTasksbyExecutor gets all task with this executor
@@ -286,7 +321,7 @@ func GetAllTasksbyCreator(DB *sqlx.DB, ID int) ([]data.Task, error) {
 func GetTemplatebyID(DB *sqlx.DB, ID int) (data.TaskTmpl, error) {
 	var (
 		tmpl data.TaskTmpl
-		stmt = "SELECT * FROM task_template WHERE id = $1"
+		stmt = "SELECT * FROM templates WHERE id = $1"
 	)
 
 	err := DB.QueryRow(stmt, ID).Scan(&tmpl.TmplID, &tmpl.TmplName, &tmpl.TmplStat, &tmpl.TmplPriority, &tmpl.TmplRate)
@@ -301,7 +336,7 @@ func GetTemplatebyID(DB *sqlx.DB, ID int) (data.TaskTmpl, error) {
 func GetAllTemplates(DB *sqlx.DB) ([]data.TaskTmpl, error) {
 	var (
 		tmpls []data.TaskTmpl
-		stmt  = "SELECT id FROM task_template"
+		stmt  = "SELECT id FROM templates"
 	)
 
 	rows, err := DB.Query(stmt)
@@ -564,7 +599,7 @@ func DeleteRecord(DB *sqlx.DB, typeField string, ID int) error {
 	case "group":
 		stmt = "DELETE FROM groups WHERE id = $1"
 	case "template":
-		stmt = "DELETE FROM task_template WHERE id = $1"
+		stmt = "DELETE FROM templates WHERE id = $1"
 	case "wiki":
 		stmt = "DELETE FROM wiki WHERE id = $1"
 	default:

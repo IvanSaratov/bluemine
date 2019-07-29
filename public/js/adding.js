@@ -8,6 +8,12 @@ function taskAdd(){
     var rate = document.getElementById("input_task_rate").value;
     var date_start = document.getElementById("input_task_date_start").value;
     var date_end = document.getElementById("input_task_date_end").value;
+    var checklist = '';
+
+    $('#new_task .checkbox').each(function() {
+        checklist += $(this).val() + '=' + $(this).prop('checked') + '&';
+    });
+    checklist = checklist.slice(0, -1);
 
     if (name.length == 0 || exec.length == 0) {
         alert("Пустое значение")
@@ -24,7 +30,8 @@ function taskAdd(){
                 task_exec_type: exec_type,
                 task_rate: rate,
                 task_start: date_start,
-                task_end: date_end
+                task_end: date_end,
+                task_checklist: checklist
             },
             success: function(){
                 location.href = "/tasks";

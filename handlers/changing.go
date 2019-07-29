@@ -25,6 +25,7 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 	var (
 		task        data.Task
 		description string
+		checklist   []string
 		err         error
 	)
 
@@ -71,12 +72,38 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error converting rating from string to int: %s", err)
 	}
 
-	description = r.FormValue("task_desc")
-
 	_, err = server.Core.DB.Exec("UPDATE tasks SET (task_name, executor_id, executor_type, stat, priority, date_last_update, date_start, date_end, rating) = ($1, $2, $3, $4, $5, $6, $7, $8, $9) WHERE id = $10", task.TaskName, task.TaskExecutorID, task.TaskExecutorType, task.TaskStat, task.TaskPriority, task.TaskDateLastUpdate, task.TaskDateStart, task.TaskDateEnd, task.TaskRate, &task.TaskID)
 	if err != nil {
 		log.Print(err)
 	}
+
+	_, err = server.Core.DB.Exec("DELETE FROM checkboxes WHERE task_id = $1", task.TaskID)
+	if err != nil {
+		log.Printf("Error deleting checkboxes for update for %s task: %s", task.TaskName, err)
+	}
+
+	if r.FormValue("task_checklist") != "" {
+		checklist = strings.Split(r.FormValue("task_checklist"), "&")
+		for _, checkboxStr := range checklist {
+			var (
+				checkbox data.Checkbox
+				checkmap = strings.Split(checkboxStr, "=")
+			)
+
+			checkbox.CheckName = checkmap[0]
+			checkbox.Checked, err = strconv.ParseBool(checkmap[1])
+			if err != nil {
+				log.Printf("Error setting %s checkbox check status for %s task: %s", checkbox.CheckName, task.TaskName, err)
+			}
+
+			_, err = server.Core.DB.Exec("INSERT INTO checkboxes (task_id, checked, desk) VALUES ($1, $2, $3)", task.TaskID, checkbox.Checked, checkbox.CheckName)
+			if err != nil {
+				log.Printf("Error inserting %s checkbox into DB for %s task: %s", checkbox.CheckName, task.TaskName, err)
+			}
+		}
+	}
+
+	description = r.FormValue("task_desc")
 
 	f, err := os.OpenFile("private/docs/"+strconv.Itoa(task.TaskID)+".md", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {

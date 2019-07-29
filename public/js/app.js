@@ -96,6 +96,12 @@ $(document).ready(function() {
     })
 })
 
+$(document).ready(function() {
+    if ($('#task_checklist .checkbox').length == 0) {
+        $('#task_checklist').hide(0);
+    }
+})
+
 function makeAdmin(){
     var ID = $('.pagetitle').attr("id");
 

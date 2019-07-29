@@ -42,6 +42,15 @@ function MDParse(text, wrap) {
     $(wrap).html(html);
 }
 
+function addCheckbox() {
+    var checkName = $('#input_checkbox').val();
+    var html = '<div id="check_container" style="width=100%;"><input class="checkbox" type="checkbox" name="checkbox" value="' + checkName + '"><label for="' + checkName + '">' + checkName + '</label><span id="icoremovecheckbox" onclick="removeCheckbox(this)"></span></div>';
+    $('#checklist_wrap').append(html);
+}
+function removeCheckbox(element) {
+    $(element).parent('#check_container').remove();
+};
+
 function getTaskDescOrWikiArticle(type, id) {
     switch (type) {
         case 'tasks': {

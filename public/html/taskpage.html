@@ -53,6 +53,17 @@
                     <div class="label">Описание</div>
                     <div class="value markdown-body"></div>
                 </div>
+                <div id="task_checklist">
+                    <div class="record">
+                        <div class="label">Чеклист</div>
+                        {{ range .TaskData.TaskChecklist }}
+                        <div style="width: 100%">
+                            <input class="checkbox" type="checkbox" value="{{ .CheckboxID }}" {{ if .Checked}} checked {{end}}>
+                            <label for="{{ .CheckboxID }}" {{ if .Checked}} style="text-decoration-line:line-through;" {{end}}>{{ .CheckName }}</label>
+                        </div>
+                        {{end}}
+                    </div>
+                </div>
                 {{ if .CurrentUser.UserisAdmin}}
                 <button id="change" onclick="taskFillForChange()">Изменить</button>
                 {{end}}

@@ -234,6 +234,8 @@ table td a:hover{
     padding-left: 180px;
     padding-bottom: 5px;
     clear: left;
+    min-height: 23px;
+    line-height: 23px;
 }
 .label{
     cursor: default;
@@ -279,6 +281,23 @@ table td a:hover{
     float: right;
     margin-right: 5px;
     color: orangered;
+}
+
+#icoaddcheckbox{
+    cursor: pointer;
+    font-family: icomoon;
+    margin-left: 3px;
+}
+#icoaddcheckbox:hover{
+    color: rgb(54, 161, 248);
+}
+#icoremovecheckbox{
+    cursor: pointer;
+    font-family: icomoon;
+    margin-left: 10px;
+}
+#icoremovecheckbox:hover{
+    color: rgb(54, 161, 248);
 }
 
 .send_button{
@@ -354,6 +373,12 @@ table td a:hover{
 }
 #icofire::before{
     content: "\e9a9";
+}
+#icoaddcheckbox::before{
+    content: "\ea0a";
+}
+#icoremovecheckbox::before{
+    content: "\ea0d";
 }
 
 @font-face{
