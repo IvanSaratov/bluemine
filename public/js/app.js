@@ -4,7 +4,7 @@ $('#new_group').hide(0);
 
 $('#add_new_task').click(function() {
     $('#new_task').show(300);
-    $('#task_send').show(300);
+    $('#task_send').show(0);
     $('#task_change').hide(0);
 });
 
@@ -14,7 +14,7 @@ $('#add_new_tmpl').click(function() {
 
 $('#add_new_group').click(function() {
     $('#new_group').show(300);
-    $('#group_send').show(300);
+    $('#group_send').show(0);
     $('#group_change').hide(0);
 });
 
@@ -22,7 +22,7 @@ $(document).keyup(function(e) {
     switch (e.key) {
         case "1": {
             $('#new_task').show(300);
-            $('#task_send').show(300);
+            $('#task_send').show(0);
             $('#task_change').hide(0);
             break;
         }
@@ -32,7 +32,7 @@ $(document).keyup(function(e) {
         }
         case "3": {
             $('#new_group').show(300);
-            $('#group_send').show(300);
+            $('#group_send').show(0);
             $('#group_change').hide(0);
             break;
         }
