@@ -201,6 +201,25 @@ table td a:hover{
     width: 45%;
 }
 
+#bar{
+    background-color: whitesmoke;
+    margin-top: 7.5px;
+    width: 50%;
+    height: 10px;
+    float: left;
+}
+#bar_status{
+    background-color: #1973BD;
+    width: 0%;
+    height: 100%;
+    line-height: 10px;
+}
+#percent_number{
+    cursor: default;
+    display: inline-block;
+    margin-left: 5px;
+}
+
 #footer{
     cursor: default;
     position: absolute;
