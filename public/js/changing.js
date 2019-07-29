@@ -18,7 +18,7 @@ function taskFillForChange() {
             $('#input_task_date_end').val(data.TaskDateEnd)
 
             for (i = 0; i < data.TaskChecklist.length; i++) {
-                var html = '<div id="check_container" style="width=100%;"><input id="' + data.TaskChecklist[i].CheckboxIDStr + '" class="checkbox" type="checkbox" name="checkbox" value="' + data.TaskChecklist[i].CheckName + '"><label for="' + data.TaskChecklist[i].CheckName + '">' + data.TaskChecklist[i].CheckName + '</label><span id="icoremovecheckbox" onclick="removeCheckbox(this)"></span></div>';
+                var html = '<div id="check_container" style="width=100%;"><input class="checkbox" type="checkbox" name="checkbox" value="' + data.TaskChecklist[i].CheckName + '"><label for="' + data.TaskChecklist[i].CheckName + '">' + data.TaskChecklist[i].CheckName + '</label><span id="icoremovecheckbox" onclick="removeCheckbox(this)"></span></div>';
                 $('#checklist_wrap').append(html);
                 if (data.TaskChecklist[i].Checked) {
                     $("input[value='"+data.TaskChecklist[i].CheckName+"']").prop('checked', true);
@@ -62,7 +62,7 @@ function taskChange(){
     var checklist = '';
 
     $('#new_task .checkbox').each(function() {
-        checklist += $(this).attr("id") + '=' + $(this).val() + '|' + $(this).prop('checked') + '&';
+        checklist += $(this).val() + '=' + $(this).prop('checked') + '&';
     });
     checklist = checklist.slice(0, -1);
 

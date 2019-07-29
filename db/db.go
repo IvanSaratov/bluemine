@@ -238,8 +238,6 @@ func GetTaskCheckboxes(DB *sqlx.DB, ID int) ([]data.Checkbox, error) {
 			return checkboxes, err
 		}
 
-		checkbox.CheckboxIDStr = strconv.Itoa(checkbox.CheckboxID)
-
 		checkboxes = append(checkboxes, checkbox)
 	}
 	if rows.Err() != nil {
