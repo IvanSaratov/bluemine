@@ -16,6 +16,14 @@ function taskFillForChange() {
             $('#input_task_rate').val(data.TaskRate)
             $('#input_task_date_start').val(data.TaskDateStart)
             $('#input_task_date_end').val(data.TaskDateEnd)
+
+            for (i = 0; i < data.TaskChecklist.length; i++) {
+                var html = '<div style="width=100%;"><input id="' + data.TaskChecklist[i].CheckboxIDStr + '" class="checkbox" type="checkbox" name="checkbox" value="' + data.TaskChecklist[i].CheckName + '"><label for="' + data.TaskChecklist[i].CheckName + '">' + data.TaskChecklist[i].CheckName + '</label></div>';
+                $('#checklist_wrap').append(html);
+                if (data.TaskChecklist[i].Checked) {
+                    $("input[value='"+data.TaskChecklist[i].CheckName+"']").prop('checked', true);
+                }
+            };
         });
         var type = 'tasks';
         $.get("/get/taskdesc", { id: id, type: type }).done(function(data){
@@ -51,6 +59,12 @@ function taskChange(){
     var rate = document.getElementById("input_task_rate").value;
     var date_start = document.getElementById("input_task_date_start").value;
     var date_end = document.getElementById("input_task_date_end").value;
+    var checklist = '';
+
+    $('#new_task .checkbox').each(function() {
+        checklist += $(this).attr("id") + '=' + $(this).val() + '|' + $(this).prop('checked') + '&';
+    });
+    checklist = checklist.slice(0, -1);
 
     if (name.length == 0 || exec.length == 0) {
         alert("Пустое значение")
@@ -68,7 +82,8 @@ function taskChange(){
                 task_exec_type: exec_type,
                 task_rate: rate,
                 task_start: date_start,
-                task_end: date_end
+                task_end: date_end,
+                task_checklist: checklist
             },
             success: function(){
                 location.reload();

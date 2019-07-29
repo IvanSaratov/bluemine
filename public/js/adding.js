@@ -10,7 +10,7 @@ function taskAdd(){
     var date_end = document.getElementById("input_task_date_end").value;
     var checklist = '';
 
-    $('.checkbox').each(function() {
+    $('#new_task .checkbox').each(function() {
         checklist += $(this).val() + '=' + $(this).prop('checked') + '&';
     });
     checklist = checklist.slice(0, -1);
