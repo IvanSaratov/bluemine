@@ -34,7 +34,7 @@ func Init() {
 
 	Core.Rnd = renderer.New(
 		renderer.Options{
-			ParseGlobPattern: "public/html/*.html",
+			ParseGlobPattern: "html/*.html",
 		},
 	)
 
