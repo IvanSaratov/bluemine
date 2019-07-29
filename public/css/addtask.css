@@ -27,7 +27,7 @@
     margin-top: 10px;
     margin-left: 10px;
 }
-#container_desc #desc{
+#container_desc #task_desc{
     padding-left: 180px;
     clear: left;
     font-size: 18px;
@@ -55,7 +55,7 @@
     background-color: white;
     color: black;
 }
-#container_desc #input_desc{
+#container_desc #input_task_desc{
     float: left;
     margin-top: 5px;
     padding: 5px 5px 0 5px;

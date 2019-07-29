@@ -43,9 +43,9 @@ function MDParse(text, wrap) {
 }
 
 function addCheckbox() {
-    var checkName = $('#input_checkbox').val();
+    var checkName = $('#input_task_checkbox').val();
     var html = '<div id="check_container" style="width=100%;"><input class="checkbox" type="checkbox" name="checkbox" value="' + checkName + '"><label for="' + checkName + '">' + checkName + '</label><span id="icoremovecheckbox" onclick="removeCheckbox(this)"></span></div>';
-    $('#checklist_wrap').append(html);
+    $('#task_checklist_wrap').append(html);
 }
 function removeCheckbox(element) {
     $(element).parent('#check_container').remove();
@@ -54,10 +54,10 @@ function removeCheckbox(element) {
 function getTaskDescOrWikiArticle(type, id) {
     switch (type) {
         case 'tasks': {
-            var descWrap = $('#task_desc .value');
+            var descWrap = $('#desc .value');
             $.get("/get/taskdesc", { id: id }).done(function(data){
                 if (data == '') {
-                    $('#task_desc').hide(0);
+                    $('#desc').hide(0);
                 }
                 MDParse(data, descWrap)
             })

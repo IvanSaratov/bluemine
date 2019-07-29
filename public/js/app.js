@@ -111,20 +111,20 @@ $('#input_task_tmpl').on('change', function() {
 });
 
 $(document).ready(function() {
-    $('#input_desc').bind('input propertychange', function() {
-        var markdown = $('#input_desc').val();
+    $('#input_task_desc').bind('input propertychange', function() {
+        var markdown = $('#input_task_desc').val();
         MDParse(markdown, $('#markdown_output'))
     })
 })
 
 $(document).ready(function() {
-    if ($('#task_checklist .checkbox').length == 0) {
-        $('#task_checklist').hide(0);
+    if ($('#checklist .checkbox').length == 0) {
+        $('#checklist').hide(0);
     } else {
-        $('#date_end').parent('#task_info_left').append('<div class="record" id="task_progress"><div class="label">Готовность:</div><div class="value"><div id="bar"><div id="bar_status"></div></div></div><div id="percent_number">0%</div></div>')
+        $('#date_end').parent('#task_info_left').append('<div class="record" id="progress"><div class="label">Готовность:</div><div class="value"><div id="bar"><div id="bar_status"></div></div></div><div id="percent_number">0%</div></div>')
         var width = 0;
         var bar = $('#bar_status');
-        var checkedPercent = $('#task_checklist .checkbox:checked').length / $('#task_checklist .checkbox').length * 100;
+        var checkedPercent = $('#checklist .checkbox:checked').length / $('#checklist .checkbox').length * 100;
         var interval = setInterval(frame, 10);
 
         function frame() {

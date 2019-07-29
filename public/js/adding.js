@@ -1,6 +1,6 @@
 function taskAdd(){
     var name = document.getElementById("input_task_name").value;
-    var desc = document.getElementById("input_desc").value;
+    var desc = document.getElementById("input_task_desc").value;
     var stat = document.getElementById("input_task_stat").value;
     var priority = document.getElementById("input_task_priority").value;
     var exec = $('#input_task_exec :selected').attr('id');

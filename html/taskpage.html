@@ -17,15 +17,15 @@
                 <div id="task_creator">Добавил(а) <a href="/profile/{{ .TaskData.TaskCreatorName }}">{{ .TaskData.TaskCreatorFIO }}</a></div>
                 <div id="task_info">
                     <div id="task_info_left">
-                        <div class="record" id="task_stat">
+                        <div class="record" id="stat">
                             <div class="label">Статус:</div>
                             <div class="value">{{ .TaskData.TaskStat}}</div>
                         </div>
-                        <div class="record" id="task_priority">
+                        <div class="record" id="priority">
                             <div class="label">Приоритет:</div>
                             <div class="value">{{ .TaskData.TaskPriority}}</div>
                         </div>
-                        <div class="record" id="task_exec">
+                        <div class="record" id="exec">
                             <div class="label">Назначена:</div>
                             {{ if (eq .TaskData.TaskExecutorType "group") }}
                             <div class="value"><a href="/group/show/{{ .TaskData.TaskExecutorID }}">{{ .TaskData.TaskExecutorName }}</a></div>
@@ -33,7 +33,7 @@
                             <div class="value"><a href="/profile/{{ .TaskData.TaskExecutorName }}">{{ .TaskData.TaskExecutorFIO }}</a></div>
                             {{ end }}
                         </div>
-                        <div class="record" id="task_rate">
+                        <div class="record" id="rate">
                             <div class="label">Рейтинг:</div>
                             <div class="value">{{ .TaskData.TaskRate}}</div>
                         </div>
@@ -49,11 +49,11 @@
                         </div>
                     </div>
                 </div>
-                <div id="task_desc">
+                <div id="desc">
                     <div class="label">Описание</div>
                     <div class="value markdown-body"></div>
                 </div>
-                <div id="task_checklist">
+                <div id="checklist">
                     <div class="record">
                         <div class="label">Чеклист</div>
                         {{ range .TaskData.TaskChecklist }}

@@ -19,7 +19,7 @@ function taskFillForChange() {
 
             for (i = 0; i < data.TaskChecklist.length; i++) {
                 var html = '<div id="check_container" style="width=100%;"><input class="checkbox" type="checkbox" name="checkbox" value="' + data.TaskChecklist[i].CheckName + '"><label for="' + data.TaskChecklist[i].CheckName + '">' + data.TaskChecklist[i].CheckName + '</label><span id="icoremovecheckbox" onclick="removeCheckbox(this)"></span></div>';
-                $('#checklist_wrap').append(html);
+                $('#task_checklist_wrap').append(html);
                 if (data.TaskChecklist[i].Checked) {
                     $("input[value='"+data.TaskChecklist[i].CheckName+"']").prop('checked', true);
                 }
@@ -27,7 +27,7 @@ function taskFillForChange() {
         });
         var type = 'tasks';
         $.get("/get/taskdesc", { id: id, type: type }).done(function(data){
-            $('#input_desc').val(data)
+            $('#input_task_desc').val(data)
             MDParse(data, $('#markdown_output'))
         })
     }
@@ -51,7 +51,7 @@ function groupFillForChange() {
 function taskChange(){
     var id = $('.pagetitle').attr("id");
     var name = document.getElementById("input_task_name").value;
-    var desc = document.getElementById("input_desc").value;
+    var desc = document.getElementById("input_task_desc").value;
     var stat = document.getElementById("input_task_stat").value;
     var priority = document.getElementById("input_task_priority").value;
     var exec = $('#input_task_exec :selected').attr('id');
