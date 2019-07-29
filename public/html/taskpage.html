@@ -51,7 +51,7 @@
                     {{ range .TaskData.TaskChecklist }}
                     <div style="width: 100%">
                         <input class="checkbox" type="checkbox" value="{{ .CheckboxID }}" {{ if .Checked}} checked {{end}}>
-                        <label for="{{ .CheckboxID }}">{{ .CheckName }}</label>
+                        <label for="{{ .CheckboxID }}" {{ if .Checked}} style="text-decoration-line:line-through;" {{end}}>{{ .CheckName }}</label>
                     </div>
                     {{end}}
                 </div>
