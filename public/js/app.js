@@ -118,6 +118,15 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
+    $('.group_user').sort(function (a, b) {
+        aVal = $(a).find('label').text().toUpperCase()
+        bVal = $(b).find('label').text().toUpperCase()
+    
+        return (aVal < bVal) ? -1 : (aVal > bVal) ? 1 : 0;
+    }).appendTo($('.group_user').parent('.record'))
+})
+
+$(document).ready(function() {
     if ($('#checklist .checkbox').length == 0) {
         $('#checklist').hide(0);
     } else {
