@@ -297,6 +297,22 @@ table td a:hover{
     right: 0;
 }
 
+#icowikishow, #icowikihide{
+    cursor: pointer;
+    font-family: icomoon;
+    font-size: 14px;
+    margin-right: 5px;
+}
+#icowikishow:hover, #icowikihide:hover{
+    color: white;
+}
+#icowikishow::before{
+    content: "\ea0a"
+}
+#icowikihide::before{
+    content: "\ea0b"
+}
+
 #icofire{
     font-family: icomoon;
     float: right;

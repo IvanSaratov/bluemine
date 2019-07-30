@@ -29,7 +29,6 @@
 }
 .item:hover, .nested_item:hover{
     background-color: rgb(54, 161, 248);
-    color: white;
 }
 .item a, .nested_item a{
     text-decoration: none;

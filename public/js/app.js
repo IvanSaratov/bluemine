@@ -51,6 +51,23 @@ $('#new_group .new_item_close').click(function() {
     $('#new_group').hide(300);
 });
 
+$(document).on('click', '#icowikihide', function() {
+    var wikiid = $(this).parent('.item').closest('.wiki_art').attr('id')
+    if (wikiid == undefined) {
+        wikiid = $(this).parent('.nested_item').closest('.wiki_art').attr('id')
+    }
+    $('#child_of_' + wikiid).hide(200)
+    $(this).attr('id', 'icowikishow')
+})
+$(document).on('click', '#icowikishow', function() {
+    var wikiid = $(this).parent('.item').closest('.wiki_art').attr('id')
+    if (wikiid == undefined) {
+        wikiid = $(this).parent('.nested_item').closest('.wiki_art').attr('id')
+    }
+    $('#child_of_' + wikiid).show(200)
+    $(this).attr('id', 'icowikihide')
+})
+
 $(document).keyup(function(e) {
     if (e.key === "Escape") {
         var items = $('.new_item');
