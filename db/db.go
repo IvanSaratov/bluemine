@@ -356,7 +356,7 @@ func GetTemplatebyID(DB *sqlx.DB, ID int) (data.TaskTmpl, error) {
 		stmt = "SELECT * FROM templates WHERE id = $1"
 	)
 
-	err := DB.QueryRow(stmt, ID).Scan(&tmpl.TmplID, &tmpl.TmplName, &tmpl.TmplStat, &tmpl.TmplPriority, &tmpl.TmplRate)
+	err := DB.QueryRow(stmt, ID).Scan(&tmpl.TmplID, &tmpl.TmplName, &tmpl.TmplExec, &tmpl.TmplExecType, &tmpl.TmplPriority, &tmpl.TmplRate)
 	if err != nil {
 		return tmpl, err
 	}
