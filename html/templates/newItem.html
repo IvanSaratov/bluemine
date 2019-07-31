@@ -101,12 +101,16 @@
         <div id="container_labels">
             <div id="container_labels_left">
                 <div class="record">
-                    <div id="tmpl_stat" class="label">Статус</div>
-                    <select id="input_tmpl_stat">
-                        <option selected>Новая</option>
-                        <option>В процессе</option>
-                        <option>Закрыта</option>
-                        <option>Отложена</option>
+                    <div id="tmpl_exec" class="label">Назначена</div>
+                    <select id="input_tmpl_exec">
+                        <option disabled selected>Работники</option>
+                        {{range .Users}}
+                        <option class="user" id="{{ .UserID}}">{{ .UserFIO}}</option>
+                        {{end}}
+                        <option disabled>Группы</option>
+                        {{range .Groups}}
+                        <option class="group" id="{{ .GroupID}}">{{ .GroupName}}</option>
+                        {{end}}
                     </select>
                 </div>
                 <div class="record">
