@@ -42,7 +42,8 @@ function taskAdd(){
 
 function tmplAdd(){
     var name = document.getElementById("input_tmpl_name").value;
-    var stat = document.getElementById("input_tmpl_stat").value;
+    var exec = $('#input_tmpl_exec :selected').attr('id');
+    var exec_type = $('#input_tmpl_exec :selected').attr('class');
     var priority = document.getElementById("input_tmpl_priority").value;
     var rate = document.getElementById("input_tmpl_rate").value;
 
@@ -54,7 +55,8 @@ function tmplAdd(){
             method: "POST",
             data: {
                 tmpl_name: name,
-                tmpl_stat: stat,
+                tmpl_exec: exec,
+                tmpl_exec_type: exec_type,
                 tmpl_priority: priority,
                 tmpl_rate: rate,
             },

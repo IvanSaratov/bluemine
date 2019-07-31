@@ -122,12 +122,11 @@ $('#input_task_tmpl').on('change', function() {
 
     if (ID != undefined) {
         $.get("/get/tmpldata", {tmpl_id: ID}).done(function(data) {
-            $('#input_task_stat').val(data.TmplStat)
-            $('#input_task_priority').val(data.TmplPriority)
+            $('#' + data.TmplExecType).prop('selected', true);
             $('#input_task_rate').val(data.TmplRate)
         })
     } else {
-        $('#input_task_stat').val("Новая")
+        $('#input_task_stat').val("В процессе")
         $('#input_task_priority').val("Низкий")
         $('#input_task_rate').val(0)
     }
