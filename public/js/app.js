@@ -21,19 +21,25 @@ $('#add_new_group').click(function() {
 $(document).keyup(function(e) {
     switch (e.key) {
         case "1": {
-            $('#new_task').show(300);
-            $('#task_send').show(0);
-            $('#task_change').hide(0);
+            if ($('#new_tmpl').css('display') != 'block' && $('#new_group').css('display') != 'block') {
+                $('#new_task').show(300);
+                $('#task_send').show(0);
+                $('#task_change').hide(0);
+            }
             break;
         }
         case "2": {
-            $('#new_tmpl').show(300);
+            if ($('#new_task').css('display') != 'block' && $('#new_group').css('display') != 'block') {
+                $('#new_tmpl').show(300);
+            }
             break;
         }
         case "3": {
-            $('#new_group').show(300);
-            $('#group_send').show(0);
-            $('#group_change').hide(0);
+            if ($('#new_task').css('display') != 'block' && $('#new_tmpl').css('display') != 'block') {
+                $('#new_group').show(300);
+                $('#group_send').show(0);
+                $('#group_change').hide(0);
+            }
             break;
         }
     }
