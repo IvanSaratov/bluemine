@@ -49,7 +49,8 @@ type Checkbox struct {
 type TaskTmpl struct {
 	TmplID       int
 	TmplName     string
-	TmplStat     string
+	TmplExec     int
+	TmplExecType string
 	TmplPriority string
 	TmplRate     int
 }
