@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS tasks (
 CREATE TABLE IF NOT EXISTS templates (
     id SERIAL PRIMARY KEY,
     tmpl_name STRING NOT NULL,
-    stat STRING NOT NULL,
+    executor_id INT NOT NULL,
+    executor_type STRING NOT NULL,
     priority STRING NOT NULL,
     rating INT DEFAULT 0
 );
