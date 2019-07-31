@@ -127,16 +127,21 @@ func AddTmplHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl.TmplName = r.FormValue("tmpl_name")
 
-	tmpl.TmplStat = r.FormValue("tmpl_stat")
+	tmpl.TmplExecType = r.FormValue("tmpl_exec_type")
 
 	tmpl.TmplPriority = r.FormValue("tmpl_priority")
+
+	tmpl.TmplExec, err = strconv.Atoi(r.FormValue("tmpl_exec"))
+	if err != nil {
+		log.Printf("Error converting executor from string to int: %s", err)
+	}
 
 	tmpl.TmplRate, err = strconv.Atoi(r.FormValue("tmpl_rate"))
 	if err != nil {
 		log.Printf("Error converting rating from string to int: %s", err)
 	}
 
-	_, err = server.Core.DB.Exec("INSERT INTO templates (tmpl_name, stat, priority, rating) VALUES ($1, $2, $3, $4) RETURNING id", tmpl.TmplName, tmpl.TmplStat, tmpl.TmplPriority, tmpl.TmplRate)
+	_, err = server.Core.DB.Exec("INSERT INTO templates (tmpl_name, executor_id, executor_type, priority, rating) VALUES ($1, $2, $3, $4, $5) RETURNING id", tmpl.TmplName, tmpl.TmplExec, tmpl.TmplExecType, tmpl.TmplPriority, tmpl.TmplRate)
 	if err != nil {
 		log.Print(err)
 	}

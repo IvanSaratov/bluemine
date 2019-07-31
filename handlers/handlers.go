@@ -133,6 +133,8 @@ func GetItemHandler(w http.ResponseWriter, r *http.Request) {
 				log.Printf("Error getting template(%d) info: %s", id, err)
 			}
 
+			tmpl.TmplExecType = strconv.Itoa(tmpl.TmplExec)
+
 			tmplData, err := json.MarshalIndent(tmpl, "", " ")
 			if err != nil {
 				log.Printf("Error marshalling JSON for %s template: %s", tmpl.TmplName, err)
