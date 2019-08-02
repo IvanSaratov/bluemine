@@ -58,7 +58,7 @@ func auth(login, password string) (int64, string, error) {
 			return 0, "", err
 		}
 	} else {
-		err = server.Core.DB.QueryRow("SELECT username FROM profiles WHERE username = $1", login).Scan(&userID)
+		err = server.Core.DB.QueryRow("SELECT id FROM profiles WHERE username = $1", login).Scan(&userID)
 		if err != nil {
 			return 0, "", err
 		}
