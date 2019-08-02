@@ -17,7 +17,7 @@ import (
 //AddTaskHandler handle task adding
 func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -116,7 +116,7 @@ func AddTaskHandler(w http.ResponseWriter, r *http.Request) {
 //AddTmplHandler handle template adding
 func AddTmplHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -150,7 +150,7 @@ func AddTmplHandler(w http.ResponseWriter, r *http.Request) {
 //AddGroupHandler handle group create page
 func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -197,7 +197,7 @@ func AddGroupHandler(w http.ResponseWriter, r *http.Request) {
 //AddWikiHandler handle wiki adding page
 func AddWikiHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 

@@ -18,7 +18,7 @@ import (
 //ChangeTaskHandler changes task
 func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -129,7 +129,7 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 //GroupChangeHandler handler page to change group settings
 func GroupChangeHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 

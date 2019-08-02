@@ -19,10 +19,10 @@ import (
 //RootHandler handle root path
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 	} else {
 		session, _ := server.Core.Store.Get(r, "bluemine_session")
-		http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), http.StatusMovedPermanently)
+		http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), http.StatusFound)
 	}
 }
 
@@ -190,7 +190,7 @@ func GetItemHandler(w http.ResponseWriter, r *http.Request) {
 //UserProfileHandler handle user's profile page
 func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -236,7 +236,7 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 //GroupsHandler handle page with all groups
 func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -254,7 +254,7 @@ func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 //GroupHandler handle group's profile page
 func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -285,7 +285,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 //TasksHandler handle page with tasks
 func TasksHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -303,7 +303,7 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 //TaskPageHandler handle page of task
 func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -334,7 +334,7 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 //TaskCloseHandler handle page to close task
 func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -381,7 +381,7 @@ func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
 //TaskOpenHandler handle page to reopen task
 func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -400,7 +400,7 @@ func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
 //WikiHandler handle page to wiki
 func WikiHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
@@ -418,7 +418,7 @@ func WikiHandler(w http.ResponseWriter, r *http.Request) {
 //WikiPageHandler handle wiki page
 func WikiPageHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
 
