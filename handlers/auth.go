@@ -114,9 +114,9 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	session.Values["userName"] = nil
+	session.Values["userid"] = nil
+	session.Values["username"] = nil
 	session.Values["user"] = nil
-	session.Options.MaxAge = -1
 
 	err = session.Save(r, w)
 	if err != nil {
