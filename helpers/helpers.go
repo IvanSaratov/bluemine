@@ -12,7 +12,8 @@ import (
 //AlreadyLogin check user log status
 func AlreadyLogin(r *http.Request) bool {
 	session, _ := server.Core.Store.Get(r, "bluemine_session")
-	return session.Values["userName"] != nil
+	err := server.Core.DB.QueryRow("SELECT id from profiles WHERE id = $1", session.Values["userid"])
+	return err != nil
 }
 
 //ConvertIDToExecName convert executor's ID to executor's name

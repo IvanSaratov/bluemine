@@ -14,50 +14,57 @@ import (
 	"github.com/go-ldap/ldap"
 )
 
-func auth(login, password string) (string, error) {
+func auth(login, password string) (int64, string, error) {
 	if password == "" {
-		return "", errors.New("Empty password")
+		return 0, "", errors.New("Empty password")
 	}
 
 	l, err := ldap.Dial("tcp", config.Conf.LdapServer)
 	if err != nil {
-		return "", err
+		return 0, "", err
 	}
 	defer l.Close()
 
 	if err := l.Bind(config.Conf.LdapUser, config.Conf.LdapPassword); err != nil {
-		return "", err
+		return 0, "", err
 	}
 
 	searchRequest := ldap.NewSearchRequest(config.Conf.LdapBaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, "(&(sAMAccountName="+login+"))", []string{"cn"}, nil)
 
 	sr, err := l.Search(searchRequest)
 	if err != nil {
-		return "", err
+		return 0, "", err
 	}
 	if len(sr.Entries) != 1 {
-		return "", errors.New("User not found")
+		return 0, "", errors.New("User not found")
 	}
 
 	username := sr.Entries[0].GetAttributeValue("cn")
 
 	if err = l.Bind(username, password); err != nil {
-		return "", err
+		return 0, "", err
 	}
+
+	var userID int64
 
 	err = userExists(login)
 	if err != nil {
 		if err != sql.ErrNoRows {
-			return "", err
+			return 0, "", err
 		}
 
-		err = db.RegisterUser(server.Core.DB, l, login, username)
+		userID, err = db.RegisterUser(server.Core.DB, l, login, username)
 		if err != nil {
-			return "", err
+			return 0, "", err
+		}
+	} else {
+		err = server.Core.DB.QueryRow("SELECT username FROM profiles WHERE username = $1", login).Scan(&userID)
+		if err != nil {
+			return 0, "", err
 		}
 	}
 
-	return username, err
+	return userID, username, err
 }
 
 func userExists(login string) error {
@@ -82,7 +89,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		login = strings.ToLower(login)
 
-		userName, err := auth(login, password)
+		userID, userName, err := auth(login, password)
 		if err != nil {
 			log.Printf("Failed to log in from %s using \"%s\" username: %s", r.RemoteAddr, login, err)
 
@@ -91,7 +98,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		log.Printf("User \"%s\" successfully log in from %s", login, r.RemoteAddr)
-		session.Values["userName"] = userName
+		session.Values["userid"] = userID
+		session.Values["username"] = userName
 		session.Values["user"] = login
 		session.Save(r, w)
 		http.Redirect(w, r, "/profile/"+login, http.StatusMovedPermanently)

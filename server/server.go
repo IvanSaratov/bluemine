@@ -27,7 +27,6 @@ func Init() {
 	)
 
 	Core.Store.Options = &sessions.Options{
-		MaxAge:   24 * 60 * 60,
 		HttpOnly: true,
 	}
 	log.Println("Created cookie store")

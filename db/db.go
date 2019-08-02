@@ -18,7 +18,7 @@ import (
 )
 
 //RegisterUser adds user to DB
-func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
+func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) (int64, error) {
 	result, err := l.Search(ldap.NewSearchRequest(
 		config.Conf.LdapBaseDN,
 		ldap.ScopeWholeSubtree,
@@ -31,7 +31,7 @@ func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 		nil,
 	))
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	var listOfMembers []string
@@ -43,7 +43,7 @@ func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 	_, err = DB.Query("SELECT id FROM profiles")
 	if err != nil {
 		if err != sql.ErrNoRows {
-			return err
+			return 0, err
 		}
 		isAdmin = true
 	}
@@ -51,12 +51,12 @@ func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 	var userID int64
 	err = DB.QueryRow("INSERT INTO profiles (username, user_fio, isAdmin) VALUES ($1, $2, $3) RETURNING id", login, userFIO, isAdmin).Scan(&userID)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	rows, err := DB.Query("SELECT id, group_name FROM groups")
 	if err != nil {
-		return err
+		return 0, err
 	}
 	defer rows.Close()
 
@@ -64,20 +64,20 @@ func RegisterUser(DB *sqlx.DB, l *ldap.Conn, login, userFIO string) error {
 		var groupID int
 		var groupName string
 		if err = rows.Scan(&groupID, &groupName); err != nil {
-			return err
+			return 0, err
 		}
 		for _, ldapGroupName := range listOfMembers {
 			if groupName == ldapGroupName {
 				_, err = DB.Exec("INSERT INTO groups_profiles (group_id, profile_id) VALUES ($1, $2)", groupID, userID)
 				if err != nil {
-					return err
+					return 0, err
 				}
 				break
 			}
 		}
 	}
 
-	return nil
+	return userID, nil
 }
 
 //GetUserbyID gets user info from DB
