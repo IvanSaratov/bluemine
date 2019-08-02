@@ -18,6 +18,34 @@ $('#add_new_group').click(function() {
     $('#group_change').hide(0);
 });
 
+$(document).ready(function() {
+    $('legend').click(function() {
+        if ($('#filters').hasClass('show')) {
+            $({deg: 0}).animate({deg: -90}, {
+                duration: 200,
+                step: function(now){
+                    $('#icoarrowright').css({
+                        transform: "rotate(" + now + "deg)"
+                    });
+                }
+            })
+            $('#filters').hide(200)
+            $('#filters').removeClass('show')
+        } else {
+            $({deg: 0}).animate({deg: 360}, {
+                duration: 200,
+                step: function(now){
+                    $('#icoarrowright').css({
+                        transform: "rotate(" + now + "deg)"
+                    });
+                }
+            })
+            $('#filters').show(200)
+            $('#filters').addClass('show')
+        }
+    })
+})
+
 $(document).keyup(function(e) {
     switch (e.key) {
         case "1": {

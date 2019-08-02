@@ -12,7 +12,26 @@
     </header>
         <div id="content">
             <div class="pagetitle">Список задач</div>
-            <div id="tasklist">
+            <div id="wrap" style="overflow: visible">
+                <fieldset id="filter">
+                    <legend style="min-height: 20px; line-height: 20px; cursor: pointer;">
+                        <span id="icoarrowright"></span>
+                        <div style="float: left;">Фильтр</div>
+                    </legend>
+                    <div id="filters" class="show">
+                        <div class="label" style="margin-left: 0">Статус</div>
+                        <div class="record" style="padding-left: 0" id="filter_stat">
+                            <input type="checkbox" name="new" checked>
+                            <label for="new">Новая</label>
+                            <input type="checkbox" name="in_process" checked>
+                            <label for="in_process">В процессе</label>
+                            <input type="checkbox" name="closed">
+                            <label for="closed">Закрыта</label>
+                            <input type="checkbox" name="delayed" checked>
+                            <label for="delayed">Отложена</label>
+                        </div>
+                    </div>
+                </fieldset>
                 <div class="container_table">
                     <table id="tasks">
                         <thead>

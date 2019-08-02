@@ -320,6 +320,15 @@ table td a:hover{
     color: orangered;
 }
 
+#icoarrowright{
+    font-family: icomoon;
+    font-size: 12px;
+    float: left;
+}
+#icoarrowright:hover{
+    color: rgb(54, 161, 248);
+}
+
 #icoaddcheckbox{
     cursor: pointer;
     font-family: icomoon;
@@ -416,6 +425,9 @@ table td a:hover{
 }
 #icoremovecheckbox::before{
     content: "\ea0d";
+}
+#icoarrowright::before{
+    content: "\ea43"
 }
 
 @font-face{
