@@ -44,6 +44,41 @@ $(document).ready(function() {
             $('#filters').addClass('show')
         }
     })
+    $('legend').click()
+})
+
+function showIt(prop, filter) {
+    $('#tasks tbody tr').each(function() {
+        if ($(this).find('#' + prop).text() == filter) {
+            $(this).show(200);
+        }
+    })
+}
+
+function hideIt(prop, filter) {
+    $('#tasks tbody tr').each(function() {
+        if ($(this).find('#' + prop).text() == filter) {
+            $(this).hide(200);
+        }
+    })
+}
+
+$(document).ready(function() {
+    $('#filters').find('.record :checkbox').change(function() {
+        if (this.checked) {
+            showIt($(this).parent('.record').attr('id'), $('label[for="' + $(this).attr('name') + '"]').text())
+        } else {
+            hideIt($(this).parent('.record').attr('id'), $('label[for="' + $(this).attr('name') + '"]').text())
+        }
+    })
+})
+
+$(document).ready(function() {
+    $('#filters').find('.record :checkbox').each(function() {
+        if (!this.checked) {
+            hideIt($(this).parent('.record').attr('id'), $('label[for="' + $(this).attr('name') + '"]').text())
+        }
+    })
 })
 
 $(document).keyup(function(e) {
