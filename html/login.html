@@ -1,24 +1,39 @@
 {{define "login"}}
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BlueMine</title>
-        <link href="/public/css/main.css" rel="stylesheet">
-        <link href="/public/css/login.css" rel="stylesheet">
-    </head>
-    <body>
-        <div id="wrap">
-            <div id="login">
-                <form method="post"> 
-                    <div>Log into BlueMine</div>
-                    <input type="text" placeholder="Login" name="username">
-                    <input type="password" placeholder="Password" name="password">
-                    <button>Log in</button>
-                </form>
-            </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMine</title>
+    <link href="/public/css/main.css" rel="stylesheet">
+    <link href="/public/css/login.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="login">
+            <form name="login_form">
+                <div>Log into BlueMine</div>
+                <input type="text" placeholder="Login" name="username">
+                <input type="password" placeholder="Password" name="password">
+                <button type="button" onclick="auth(this.form)">Log in</button>
+            </form>
         </div>
-    </body>
+    </div>
+    <div class="overlay js-overlay">
+        <div class="popup js-popup">
+            <div class="popup-text">
+                <h2>Ошибка</h2>
+                <p id="error_text">Большой полосатый мух!</p>
+            </div>
+            <div class="close-popup js-close-popup"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/public/js/plugins/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/public/js/login.js"></script>
+</body>
+
 </html>
 {{end}}
