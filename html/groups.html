@@ -1,20 +1,21 @@
 {{ define "groups" }}
 <!DOCTYPE html>
 <html>
+
 <head>
     {{ template "header" .}}
     <link href="/public/css/groups.css" rel="stylesheet">
 </head>
+
 <body>
     <header>
-        {{ template "navbar" .}}
-        {{ template "newItem" .}}
+        {{ template "navbar" .}} {{ template "newItem" .}}
     </header>
     <div id="content">
-        <div class="pagetitle">Список групп</div>
-        <div id="grouplist">
+        <div class="pagetitle">Список групп и пользователей</div>
+        <div id="list">
             <div class="container_table">
-                <table>
+                <table class="grouplist">
                     <thead>
                         <tr>
                             <th>Имя группы</th>
@@ -32,11 +33,29 @@
                         {{end}}
                     </tbody>
                 </table>
+                <table class="userlist">
+                    <thead>
+                        <tr>
+                            <th>Имя пользователя</th>
+                            <th>Логин</th>
+                            <th>Рейтинг</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range .Users}}
+                        <tr>
+                            <td><a href="/profile/show/{{ .UserName }}">{{ .UserFIO }}</a></td>
+                            <td>{{ .UserName}}</td>
+                            <td>{{ .UserRate}}</td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    {{ template "bottomScripts" .}}
-    {{ template "footer" .}}
+    {{ template "bottomScripts" .}} {{ template "footer" .}}
 </body>
+
 </html>
 {{ end }}

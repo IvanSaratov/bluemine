@@ -1,9 +1,9 @@
-#topbar #icogroups{
+#topbar #icogroups {
     background-color: white;
     color: rgb(29, 29, 29);
 }
 
-#content #grouplist{
+#content #list {
     width: calc(100% - 60px);
     height: calc(100% - 60px);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -11,7 +11,7 @@
     background-color: rgb(221, 221, 221);
 }
 
-#content button{
+#content button {
     display: inline-block;
     position: absolute;
     right: 15px;
@@ -23,6 +23,17 @@
     color: white;
     transition: 0.2s;
 }
-#content button:hover{
+
+#content button:hover {
     background-color: rgb(54, 161, 248);
+}
+
+.container_table .grouplist {
+    float: left;
+    width: 48%;
+}
+
+.container_table .userlist {
+    float: right;
+    width: 48%;
 }
