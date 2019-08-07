@@ -64,9 +64,9 @@ func main() {
 
 	router.HandleFunc("/groups", handlers.GroupsHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
-	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
-	router.HandleFunc("/tasks/open", handlers.TaskOpenHandler).Methods("POST")
 	router.HandleFunc("/wiki", handlers.WikiHandler)
+
+	router.HandleFunc("/task/{action}", handlers.TaskActHandler).Methods("POST")
 
 	router.HandleFunc("/get/{item}", handlers.GetItemHandler).Methods("GET")
 

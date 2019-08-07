@@ -331,12 +331,15 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//TaskCloseHandler handle page to close task
-func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
+//TaskActHandler handle actions with tasks
+func TaskActHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
+
+	vars := mux.Vars(r)
+	act := vars["action"]
 
 	taskID, _ := strconv.Atoi(r.FormValue("id"))
 	task, err := db.GetTaskbyID(server.Core.DB, taskID)
@@ -344,56 +347,51 @@ func TaskCloseHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
-	switch task.TaskExecutorType {
-	case "user":
+	switch act {
+	case "close":
 		{
-			_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutorFIO)
+			switch task.TaskExecutorType {
+			case "user":
+				{
+					_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", task.TaskRate, task.TaskExecutorFIO)
+					if err != nil {
+						log.Print(err)
+					}
+				}
+			case "group":
+				{
+					group, err := db.GetGroupbyID(server.Core.DB, task.TaskExecutorID)
+					if err != nil {
+						log.Print(err)
+					}
+
+					rate := task.TaskRate / group.GroupMembersCount
+
+					for _, user := range group.GroupMembers {
+						_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", rate, user.UserFIO)
+						if err != nil {
+							log.Print(err)
+						}
+					}
+				}
+			default:
+				log.Printf("Error updating rate for group members: %s", errors.New("Wrong ExecutorType"))
+			}
+
+			_, err = server.Core.DB.Exec("UPDATE tasks SET stat = 'Закрыта' WHERE id = $1", task.TaskID)
 			if err != nil {
 				log.Print(err)
 			}
 		}
-	case "group":
+	case "open":
 		{
-			group, err := db.GetGroupbyID(server.Core.DB, task.TaskExecutorID)
+			_, err = server.Core.DB.Exec("UPDATE tasks SET (stat, rating) = ($1, $2) WHERE id = $3", "В процессе", 0, task.TaskID)
 			if err != nil {
-				log.Print(err)
-			}
-
-			rate := task.TaskRate / group.GroupMembersCount
-
-			for _, user := range group.GroupMembers {
-				_, err = server.Core.DB.Exec("UPDATE profiles SET rating = (rating + $1) WHERE user_fio = $2", rate, user.UserFIO)
-				if err != nil {
-					log.Print(err)
-				}
+				log.Printf("Error reopening task: %s", err)
 			}
 		}
 	default:
-		log.Printf("Error updating rate for group members: %s", errors.New("Wrong ExecutorType"))
-	}
-
-	_, err = server.Core.DB.Exec("UPDATE tasks SET stat = 'Закрыта' WHERE id = $1", task.TaskID)
-	if err != nil {
-		log.Print(err)
-	}
-}
-
-//TaskOpenHandler handle page to reopen task
-func TaskOpenHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
-	taskID, _ := strconv.Atoi(r.FormValue("id"))
-	task, err := db.GetTaskbyID(server.Core.DB, taskID)
-	if err != nil {
-		log.Print(err)
-	}
-
-	_, err = server.Core.DB.Exec("UPDATE tasks SET (stat, rating) = ($1, $2) WHERE id = $3", "В процессе", 0, task.TaskID)
-	if err != nil {
-		log.Print("Can't update task: ", err)
+		log.Printf("Error changing task status: %s", errors.New("Unknown task action"))
 	}
 }
 

@@ -5,13 +5,13 @@ function taskReOpen(){
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/tasks/open",
+            url: "/task/open",
             method: "POST",
             data: {
                 id: id
             },
             success: function(){
-                location.href = "/tasks/show/" + id;
+                location.href = "/task/" + id;
             }
         });
     }
@@ -24,7 +24,7 @@ function taskClose(){
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/tasks/close",
+            url: "/task/close",
             method: "POST",
             data: {
                 id: id
