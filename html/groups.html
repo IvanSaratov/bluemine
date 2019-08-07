@@ -26,7 +26,7 @@
                     <tbody>
                         {{range .Groups}}
                         <tr>
-                            <td><a href="/group/show/{{ .GroupID }}">{{ .GroupName }}</a></td>
+                            <td><a href="/group/{{ .GroupID }}">{{ .GroupName }}</a></td>
                             <td>{{ .GroupMembersCount}}</td>
                             <td>{{ .GroupRate}}</td>
                         </tr>
@@ -44,7 +44,7 @@
                     <tbody>
                         {{range .Users}}
                         <tr>
-                            <td><a href="/profile/show/{{ .UserName }}">{{ .UserFIO }}</a></td>
+                            <td><a href="/profile/{{ .UserName }}">{{ .UserFIO }}</a></td>
                             <td>{{ .UserName}}</td>
                             <td>{{ .UserRate}}</td>
                         </tr>

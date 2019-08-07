@@ -82,7 +82,7 @@
                             {{range .Tasks}}
                             <tr>
                                 <td id="name">
-                                    <a href="/tasks/show/{{ .TaskID }}">{{ .TaskName }}</a>
+                                    <a href="/task/{{ .TaskID }}">{{ .TaskName }}</a>
                                     {{ if and (le .TaskDateDiff 36.0) (ne .TaskDateDiff 0.0) }}
                                     <span id="icofire"></span>
                                     {{end}}
@@ -90,7 +90,7 @@
                                 <td id="stat">{{ .TaskStat }}</td>
                                 <td id="pr">{{ .TaskPriority}}</td>
                                 {{ if (eq .TaskExecutorType "group") }}
-                                <td id="exec"><a href="/group/show/{{ .TaskExecutorID }}">{{ .TaskExecutorName }}</a></td>
+                                <td id="exec"><a href="/group/{{ .TaskExecutorID }}">{{ .TaskExecutorName }}</a></td>
                                 {{ else }}
                                 <td id="exec"><a href="/profile/{{ .TaskExecutorName }}">{{ .TaskExecutorFIO }}</a></td>
                                 {{ end }}

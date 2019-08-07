@@ -58,14 +58,15 @@ func main() {
 	router.HandleFunc("/change/task", handlers.ChangeTaskHandler).Methods("POST")
 	router.HandleFunc("/change/group", handlers.ChangeGroupHandler)
 
-	router.HandleFunc("/group/show/{id}", handlers.GroupHandler)
+	router.HandleFunc("/task/{id}", handlers.TaskPageHandler)
+	router.HandleFunc("/group/{id}", handlers.GroupHandler)
+	router.HandleFunc("/wiki/{id}", handlers.WikiPageHandler)
+
 	router.HandleFunc("/groups", handlers.GroupsHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
-	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
 	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
 	router.HandleFunc("/tasks/open", handlers.TaskOpenHandler).Methods("POST")
 	router.HandleFunc("/wiki", handlers.WikiHandler)
-	router.HandleFunc("/wiki/show/{id}", handlers.WikiPageHandler)
 
 	router.HandleFunc("/get/{item}", handlers.GetItemHandler).Methods("GET")
 
