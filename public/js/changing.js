@@ -36,7 +36,7 @@ function taskFillForChange() {
 function groupFillForChange() {
     var id = $('.pagetitle').attr("id");
 
-    $.get("/group/change", { id: id }).done(function(data){
+    $.get("/change/group", { id: id }).done(function(data){
         $('#group_change').show(0);
         $('#group_send').hide(0);
         $('#new_group').show(300);
@@ -70,7 +70,7 @@ function taskChange(){
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/tasks/change",
+            url: "/change/task",
             method: "POST",
             data: {
                 task_id: id,
@@ -101,7 +101,7 @@ function groupChange() {
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/group/change",
+            url: "/change/group",
             method: "POST",
             data: {
                 group_id: groupID,

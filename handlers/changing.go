@@ -126,8 +126,8 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//GroupChangeHandler handler page to change group settings
-func GroupChangeHandler(w http.ResponseWriter, r *http.Request) {
+//ChangeGroupHandler handler page to change group settings
+func ChangeGroupHandler(w http.ResponseWriter, r *http.Request) {
 	if !helpers.AlreadyLogin(r) {
 		http.Redirect(w, r, "/login", http.StatusFound)
 		return
