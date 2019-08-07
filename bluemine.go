@@ -50,20 +50,21 @@ func main() {
 
 	router.HandleFunc("/admin/{action}", handlers.AdminActHandler).Methods("POST")
 
+	router.HandleFunc("/new/task", handlers.AddTaskHandler).Methods("POST")
+	router.HandleFunc("/new/tmpl", handlers.AddTmplHandler).Methods("POST")
+	router.HandleFunc("/new/group", handlers.AddGroupHandler).Methods("POST")
+	router.HandleFunc("/new/wiki", handlers.AddWikiHandler)
+
 	router.HandleFunc("/group/show/{id}", handlers.GroupHandler)
-	router.HandleFunc("/group/new", handlers.AddGroupHandler).Methods("POST")
 	router.HandleFunc("/groups", handlers.GroupsHandler)
 	router.HandleFunc("/group/change", handlers.GroupChangeHandler)
 	router.HandleFunc("/tasks", handlers.TasksHandler)
 	router.HandleFunc("/tasks/show/{id}", handlers.TaskPageHandler)
-	router.HandleFunc("/tasks/new", handlers.AddTaskHandler).Methods("POST")
 	router.HandleFunc("/tasks/change", handlers.ChangeTaskHandler).Methods("POST")
-	router.HandleFunc("/tmpl/new", handlers.AddTmplHandler).Methods("POST")
 	router.HandleFunc("/tasks/close", handlers.TaskCloseHandler)
 	router.HandleFunc("/tasks/open", handlers.TaskOpenHandler).Methods("POST")
 	router.HandleFunc("/wiki", handlers.WikiHandler)
 	router.HandleFunc("/wiki/show/{id}", handlers.WikiPageHandler)
-	router.HandleFunc("/wiki/new", handlers.AddWikiHandler)
 
 	router.HandleFunc("/get/{item}", handlers.GetItemHandler).Methods("GET")
 

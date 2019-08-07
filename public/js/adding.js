@@ -19,7 +19,7 @@ function taskAdd(){
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/tasks/new",
+            url: "/new/task",
             method: "POST",
             data: {
                 task_name: name,
@@ -51,7 +51,7 @@ function tmplAdd(){
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/tmpl/new",
+            url: "/new/tmpl",
             method: "POST",
             data: {
                 tmpl_name: name,
@@ -75,7 +75,7 @@ function groupAdd() {
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/group/new",
+            url: "/new/group",
             method: "POST",
             data: {
                 group_name: name,
@@ -97,7 +97,7 @@ function wikiAdd() {
         alert("Пустое значение")
     } else {
         $.ajax({
-            url: "/wiki/new",
+            url: "/new/wiki",
             method: "POST",
             data: {
                 wiki_name: name,
