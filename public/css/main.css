@@ -176,22 +176,6 @@ table td a:hover{
     border-radius: 3px;
 }
 
-.new_item_close{
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-family: icomoon;
-    font-size: 24px;
-    transition: 0.2s;
-}
-.new_item_close:hover{
-    color: rgb(54, 161, 248);
-}
-.new_item_close::before{
-    content: "\ea0f";
-}
-
 .group_user{
     display: inline-block;
     width: 45%;
@@ -233,19 +217,6 @@ table td a:hover{
     text-decoration: none;
     color: grey;
 }
-#footer a #icogithub{
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    font-family: icomoon;
-}
-#footer a #icogithub:hover{
-    color: rgb(54, 161, 248);
-}
-#footer a #icogithub::before{
-    content: "\eab0";
-}
 
 .record{
     padding-left: 180px;
@@ -264,84 +235,6 @@ table td a:hover{
     text-overflow: ellipsis;
 }
 
-.topbar_icons{
-    cursor: pointer;
-    width: 35px;
-    text-align: center;
-    font-family: icomoon;
-    font-size: 18px;
-    transition: 0.2s;
-}
-.topbar_icons:hover{
-    background-color: rgb(29, 29, 29);
-}
-.hovered{
-    background-color: rgb(29, 29, 29);
-}
-
-#icoprofile{
-    font-size: 20px;
-}
-#icogroups{
-    font-size: 18px;
-}
-#icowiki{
-    font-size: 26px;
-}
-#icoout{
-    position: absolute;
-    right: 0;
-}
-
-#icowikishow, #icowikihide{
-    cursor: pointer;
-    font-family: icomoon;
-    font-size: 14px;
-    margin-right: 5px;
-}
-#icowikishow:hover, #icowikihide:hover{
-    color: white;
-}
-#icowikishow::before{
-    content: "\ea0a"
-}
-#icowikihide::before{
-    content: "\ea0b"
-}
-
-#icofire{
-    font-family: icomoon;
-    float: right;
-    margin-right: 5px;
-    color: orangered;
-}
-
-#icoarrowright{
-    font-family: icomoon;
-    font-size: 12px;
-    float: left;
-}
-#icoarrowright:hover{
-    color: rgb(54, 161, 248);
-}
-
-#icoaddcheckbox{
-    cursor: pointer;
-    font-family: icomoon;
-    margin-left: 3px;
-}
-#icoaddcheckbox:hover{
-    color: rgb(54, 161, 248);
-}
-#icoremovecheckbox{
-    cursor: pointer;
-    font-family: icomoon;
-    margin-left: 10px;
-}
-#icoremovecheckbox:hover{
-    color: rgb(54, 161, 248);
-}
-
 .send_button{
     cursor: pointer;
     margin-top: 10px;
@@ -355,80 +248,4 @@ table td a:hover{
 }
 .send_button:hover{
     background-color: rgb(54, 161, 248);
-}
-
-.sort_icon{
-    cursor: pointer;
-    font-family: icomoon;
-    font-size: 12px;
-    color: white
-}
-.sort_icon:hover{
-    color: rgb(54, 161, 248);
-}
-
-.sort_icon_down{
-    margin-left: 5px;
-    float: left;
-}
-.sort_icon_up{
-    margin-right: 5px;
-    float: right;
-}
-
-.sort_by_letter_down::before{
-    content: "\ea48"
-}
-.sort_by_letter_up::before{
-    content: "\ea49"
-}
-.sort_by_obj_down::before{
-    content: "\ea4c"
-}
-.sort_by_obj_up::before{
-    content: "\ea4d"
-}
-.sort_by_num_down::before{
-    content: "\ea4a"
-}
-.sort_by_num_up::before{
-    content: "\ea4b"
-}
-
-#icotasks::before{
-    content: "\e9ba";
-}
-#icoprofile::before{
-    content: "\e971";
-}
-#icogroups::before{
-    content: "\e972";
-}
-#icowiki::before{
-    content: "\eac8";
-}
-#iconew::before{
-    content: "\ea0a"
-}
-#icoout::before{
-    content: "\ea14"
-}
-#icofire::before{
-    content: "\e9a9";
-}
-#icoaddcheckbox::before{
-    content: "\ea0a";
-}
-#icoremovecheckbox::before{
-    content: "\ea0d";
-}
-#icoarrowright::before{
-    content: "\ea43"
-}
-
-@font-face{
-    font-family: "icomoon";
-    src: url("/public/font/icomoon.ttf");
-    font-style: normal; 
-    font-weight: normal;
 }
