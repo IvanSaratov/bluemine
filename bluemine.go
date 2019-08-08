@@ -41,7 +41,6 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.PathPrefix("/private/").HandlerFunc(helpers.AuthCheck(handlers.PrivateHandler))
 	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
 
 	router.HandleFunc("/login", handlers.LoginHandler)

@@ -22,12 +22,6 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), http.StatusFound)
 }
 
-//PrivateHandler handle private file server
-func PrivateHandler(w http.ResponseWriter, r *http.Request) {
-	realHandler := http.StripPrefix("/private/", http.FileServer(http.Dir("./private/"))).ServeHTTP
-	realHandler(w, r)
-}
-
 //AdminActHandler handle user administrator status change
 func AdminActHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
