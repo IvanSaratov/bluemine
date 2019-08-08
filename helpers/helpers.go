@@ -16,6 +16,18 @@ func AlreadyLogin(r *http.Request) bool {
 	return err != nil
 }
 
+//AuthCheck is a middleware for handlers
+func AuthCheck(handler http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if !AlreadyLogin(r) {
+			http.Redirect(w, r, "/login", http.StatusFound)
+			return
+		}
+
+		handler(w, r)
+	}
+}
+
 //ConvertIDToExecName convert executor's ID to executor's name
 func ConvertIDToExecName(ID int, executorType string) (string, error) {
 	var (

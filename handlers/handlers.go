@@ -18,32 +18,18 @@ import (
 
 //RootHandler handle root path
 func RootHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-	} else {
-		session, _ := server.Core.Store.Get(r, "bluemine_session")
-		http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), http.StatusFound)
-	}
+	session, _ := server.Core.Store.Get(r, "bluemine_session")
+	http.Redirect(w, r, "/profile/"+fmt.Sprintf("%v", session.Values["user"]), http.StatusFound)
 }
 
 //PrivateHandler handle private file server
 func PrivateHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	realHandler := http.StripPrefix("/private/", http.FileServer(http.Dir("./private/"))).ServeHTTP
 	realHandler(w, r)
 }
 
 //AdminActHandler handle user administrator status change
 func AdminActHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	vars := mux.Vars(r)
 	act := vars["action"]
 
@@ -74,11 +60,6 @@ func AdminActHandler(w http.ResponseWriter, r *http.Request) {
 
 //GetItemHandler handle get requests
 func GetItemHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	vars := mux.Vars(r)
 	item := vars["item"]
 
@@ -189,11 +170,6 @@ func GetItemHandler(w http.ResponseWriter, r *http.Request) {
 
 //UserProfileHandler handle user's profile page
 func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
 		log.Print("Error getting default viewData: ", err)
@@ -235,11 +211,6 @@ func UserProfileHandler(w http.ResponseWriter, r *http.Request) {
 
 //GroupsHandler handle page with all groups
 func GroupsHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
 		log.Print("Error getting default viewData: ", err)
@@ -253,11 +224,6 @@ func GroupsHandler(w http.ResponseWriter, r *http.Request) {
 
 //GroupHandler handle group's profile page
 func GroupHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
 		log.Print("Error getting default viewData: ", err)
@@ -284,11 +250,6 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 
 //TasksHandler handle page with tasks
 func TasksHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
 		log.Print("Error getting default viewData: ", err)
@@ -302,11 +263,6 @@ func TasksHandler(w http.ResponseWriter, r *http.Request) {
 
 //TaskPageHandler handle page of task
 func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
 		log.Print("Error getting default viewData: ", err)
@@ -333,11 +289,6 @@ func TaskPageHandler(w http.ResponseWriter, r *http.Request) {
 
 //TaskActHandler handle actions with tasks
 func TaskActHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	vars := mux.Vars(r)
 	act := vars["action"]
 
@@ -397,11 +348,6 @@ func TaskActHandler(w http.ResponseWriter, r *http.Request) {
 
 //WikiHandler handle page to wiki
 func WikiHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
 		log.Print("Error getting viewData: ", err)
@@ -415,11 +361,6 @@ func WikiHandler(w http.ResponseWriter, r *http.Request) {
 
 //WikiPageHandler handle wiki page
 func WikiPageHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	viewData, err := db.GetDefaultViewData(server.Core.DB, r)
 	if err != nil {
 		log.Print("Error getting default viewData: ", err)

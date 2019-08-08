@@ -11,17 +11,11 @@ import (
 
 	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/db"
-	"github.com/IvanSaratov/bluemine/helpers"
 	"github.com/IvanSaratov/bluemine/server"
 )
 
 //ChangeTaskHandler changes task
 func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	var (
 		task        data.Task
 		description string
@@ -128,11 +122,6 @@ func ChangeTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 //ChangeGroupHandler handler page to change group settings
 func ChangeGroupHandler(w http.ResponseWriter, r *http.Request) {
-	if !helpers.AlreadyLogin(r) {
-		http.Redirect(w, r, "/login", http.StatusFound)
-		return
-	}
-
 	if r.Method == "GET" {
 		id, err := strconv.Atoi(r.FormValue("id"))
 		if err != nil {

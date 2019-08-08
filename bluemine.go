@@ -10,6 +10,7 @@ import (
 
 	"github.com/IvanSaratov/bluemine/data"
 	"github.com/IvanSaratov/bluemine/db"
+	"github.com/IvanSaratov/bluemine/helpers"
 
 	"github.com/IvanSaratov/bluemine/config"
 	"github.com/IvanSaratov/bluemine/handlers"
@@ -40,37 +41,37 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.PathPrefix("/private/").HandlerFunc(handlers.PrivateHandler)
+	router.PathPrefix("/private/").HandlerFunc(helpers.AuthCheck(handlers.PrivateHandler))
 	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
 
 	router.HandleFunc("/login", handlers.LoginHandler)
 	router.HandleFunc("/logout", handlers.LogoutHandler)
 
-	router.HandleFunc("/profile/{user}", handlers.UserProfileHandler)
+	router.HandleFunc("/profile/{user}", helpers.AuthCheck(handlers.UserProfileHandler))
 
-	router.HandleFunc("/admin/{action}", handlers.AdminActHandler).Methods("POST")
+	router.HandleFunc("/admin/{action}", helpers.AuthCheck(handlers.AdminActHandler)).Methods("POST")
 
-	router.HandleFunc("/new/task", handlers.AddTaskHandler).Methods("POST")
-	router.HandleFunc("/new/tmpl", handlers.AddTmplHandler).Methods("POST")
-	router.HandleFunc("/new/group", handlers.AddGroupHandler).Methods("POST")
-	router.HandleFunc("/new/wiki", handlers.AddWikiHandler)
+	router.HandleFunc("/new/task", helpers.AuthCheck(handlers.AddTaskHandler)).Methods("POST")
+	router.HandleFunc("/new/tmpl", helpers.AuthCheck(handlers.AddTmplHandler)).Methods("POST")
+	router.HandleFunc("/new/group", helpers.AuthCheck(handlers.AddGroupHandler)).Methods("POST")
+	router.HandleFunc("/new/wiki", helpers.AuthCheck(handlers.AddWikiHandler))
 
-	router.HandleFunc("/change/task", handlers.ChangeTaskHandler).Methods("POST")
-	router.HandleFunc("/change/group", handlers.ChangeGroupHandler)
+	router.HandleFunc("/change/task", helpers.AuthCheck(handlers.ChangeTaskHandler)).Methods("POST")
+	router.HandleFunc("/change/group", helpers.AuthCheck(handlers.ChangeGroupHandler))
 
-	router.HandleFunc("/task/{id}", handlers.TaskPageHandler)
-	router.HandleFunc("/group/{id}", handlers.GroupHandler)
-	router.HandleFunc("/wiki/{id}", handlers.WikiPageHandler)
+	router.HandleFunc("/task/{id}", helpers.AuthCheck(handlers.TaskPageHandler))
+	router.HandleFunc("/group/{id}", helpers.AuthCheck(handlers.GroupHandler))
+	router.HandleFunc("/wiki/{id}", helpers.AuthCheck(handlers.WikiPageHandler))
 
-	router.HandleFunc("/tasks", handlers.TasksHandler)
-	router.HandleFunc("/groups", handlers.GroupsHandler)
-	router.HandleFunc("/wiki", handlers.WikiHandler)
+	router.HandleFunc("/tasks", helpers.AuthCheck(handlers.TasksHandler))
+	router.HandleFunc("/groups", helpers.AuthCheck(handlers.GroupsHandler))
+	router.HandleFunc("/wiki", helpers.AuthCheck(handlers.WikiHandler))
 
-	router.HandleFunc("/task/{action}", handlers.TaskActHandler).Methods("POST")
+	router.HandleFunc("/task/{action}", helpers.AuthCheck(handlers.TaskActHandler)).Methods("POST")
 
-	router.HandleFunc("/get/{item}", handlers.GetItemHandler).Methods("GET")
+	router.HandleFunc("/get/{item}", helpers.AuthCheck(handlers.GetItemHandler)).Methods("GET")
 
-	router.HandleFunc("/", handlers.RootHandler)
+	router.HandleFunc("/", helpers.AuthCheck(handlers.RootHandler))
 
 	log.Printf("Server must listen on %s port", config.Conf.ListenPort)
 
