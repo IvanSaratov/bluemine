@@ -1,0 +1,12 @@
+[Unit]
+Description=Bluemine WEB application
+After=network-online.target cockroachdb.service
+
+[Service]
+WorkingDirectory=/var/www/bluemine/
+ExecStart=/var/www/bluemine/bluemine
+User=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
